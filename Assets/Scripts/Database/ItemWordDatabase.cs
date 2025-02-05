@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+[Serializable]
+[CreateAssetMenu(fileName = "ItemWordDatabase", menuName = "ScriptableObject/ItemWordDatabase")]
 
 public class ItemWordDatabase : ScriptableObject
 {
@@ -15,12 +18,15 @@ public class ItemWordDatabase : ScriptableObject
 
     public ItemWord GetItemWord(string word)
     {
-        var found = itemWords.Where(w => w.Word.Equals(word));
-        if (found.Count()>1)
+        ItemWord foundItemWord = itemWords.FirstOrDefault(w => w.Word.Equals(word));
+        if (foundItemWord!=null)
         {
-            Logger.Log($"指定されたItemWord: {word}が複数見つかりました。");
+            return foundItemWord;
+        }
+        else
+        {
+            Logger.Log($"存在しないItemWordです。: {word}");
             return null;
         }
-        return (ItemWord)found;
     }
 }
