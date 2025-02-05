@@ -37,6 +37,7 @@ public class SearchWorldDatabase : ScriptableObject
     {
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
+        
         if (indexA==indexB)
         {
             Logger.Log($"同じItemWordが選択されました。: {itemWordA.Word}");
@@ -46,8 +47,8 @@ public class SearchWorldDatabase : ScriptableObject
         {
             return null;
         }
-        string recipeResultId = !recipeData[indexA][indexB].Equals("-") ? recipeData[indexA][indexB] : recipeData[indexB][indexA];
 
+        string recipeResultId = !recipeData[indexA][indexB].Equals("-") ? recipeData[indexA][indexB] : recipeData[indexB][indexA];
         if (!recipeData[indexA][indexB].Equals("-"))
         {
             recipeResultId = recipeData[indexA][indexB];
@@ -61,6 +62,7 @@ public class SearchWorldDatabase : ScriptableObject
             Logger.Log($"次のItemWordの組み合わせはsearchWorldRecipeに含まれていません。: ({itemWordA.Word}, {itemWordB.Word})");
             return null;
         }
+
         return searchWorlds.FirstOrDefault(w => w.Id.Equals(recipeResultId));
     }
 
