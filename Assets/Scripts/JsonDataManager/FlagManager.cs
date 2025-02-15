@@ -11,7 +11,8 @@ public class FlagManager : JsonDataManager
 
     void Start()
     {
-        filePath = "Flags";
+        loadFilePath = "InitialFlags";
+        saveFilePath = "LatestFlags";
         Load();
     }
 
@@ -19,7 +20,7 @@ public class FlagManager : JsonDataManager
     {
         try
         {
-            string flagJsonText = Resources.Load<TextAsset>(filePath).text;
+            string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
             data = JsonUtility.FromJson<FlagData>(flagJsonText);
             return true;
         }
@@ -40,7 +41,7 @@ public class FlagManager : JsonDataManager
         try
         {
             string flagJsonText = JsonUtility.ToJson(data, true);
-            File.WriteAllText(filePath, flagJsonText);
+            File.WriteAllText(saveFilePath, flagJsonText);
             return true;
         }
         catch (Exception e)

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class FlagSave : MonoBehaviour
+public class FlagTester : MonoBehaviour
 {
     public void Load()
     {

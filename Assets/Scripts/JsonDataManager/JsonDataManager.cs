@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class JsonDataManager : DontDestroySingleton<JsonDataManager>
 {
-    protected string filePath;
+    protected string loadFilePath;
+    protected string saveFilePath;
     public abstract bool Load();
     public abstract void Change(string name, bool value);
     public abstract bool Save();
