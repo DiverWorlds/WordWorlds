@@ -1,13 +1,20 @@
+
+
 using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FlagManager : JsonDataManager
 {
-    private string filePath = "Flags";
+    //TODO: デバッグ用のフラグファイルを読み込めるように、SerializeFieldでファイルパスを指定できるようにする。
     private Flags data;
     public Flags Data => data;
+
+    void Start()
+    {
+        filePath = "Flags";
+        Load();
+    }
 
     public override bool Load()
     {
