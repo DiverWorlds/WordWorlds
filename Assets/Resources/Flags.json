@@ -1,5 +1,7 @@
 {
-    "DummyA": false,
-    "DummyB": true,
-    "DummyC": false
+    "Flags": {
+        "DummyA": false,
+        "DummyB": true,
+        "DummyC": false
+    }
 }

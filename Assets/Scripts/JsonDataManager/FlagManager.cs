@@ -1,14 +1,13 @@
-
-
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class FlagManager : JsonDataManager
 {
     //TODO: デバッグ用のフラグファイルを読み込めるように、SerializeFieldでファイルパスを指定できるようにする。
-    private Flags data;
-    public Flags Data => data;
+    private FlagData data;
+    public FlagData Data => data;
 
     void Start()
     {
@@ -21,7 +20,7 @@ public class FlagManager : JsonDataManager
         try
         {
             string flagJsonText = Resources.Load<TextAsset>(filePath).text;
-            data = JsonUtility.FromJson<Flags>(flagJsonText);
+            data = JsonUtility.FromJson<FlagData>(flagJsonText);
             return true;
         }
         catch (Exception e)
@@ -29,6 +28,11 @@ public class FlagManager : JsonDataManager
             Debug.Log(e);
             return false;
         }
+    }
+
+    public override void Change(string name, bool value)
+    {
+        data.Flags[name] = value;
     }
 
     public override bool Save()
