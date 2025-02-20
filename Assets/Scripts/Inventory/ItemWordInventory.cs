@@ -5,7 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemWordInventory : MonoBehaviour
+public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
     public class ItemEntry
     {
