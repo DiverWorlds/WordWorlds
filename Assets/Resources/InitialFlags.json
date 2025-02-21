@@ -1,7 +1,12 @@
 {
-    "flags": {
-        "DummyA": false,
-        "DummyB": true,
-        "DummyC": false
-    }
+    "flags": [
+        {
+            "key": "DummyA",
+            "value": true
+        },
+        {
+            "key": "DummyB",
+            "value": false
+        }
+    ]
 }

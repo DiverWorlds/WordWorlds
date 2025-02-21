@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class FlagManager : JsonDataManager
@@ -8,8 +9,8 @@ public class FlagManager : JsonDataManager
     //TODO: デバッグ用のフラグファイルを読み込めるように、SerializeFieldでファイルパスを指定できるようにする。
     [SerializeField] private string InitialFlagsPath = "InitialFlags";
     [SerializeField] private string SavedFlagsPath = "SavedFlags";
-    private Dictionary<string, bool> data = new();
-    public Dictionary<string, bool> Data => data;
+    private HashSet<Flag> data = new();
+    public HashSet<Flag> Data => data;
 
     void Start()
     {
@@ -24,11 +25,8 @@ public class FlagManager : JsonDataManager
         {
             string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
             Logger.Log("flagJsonText", flagJsonText);
-            // data = JsonUtility.FromJson<FlagData>(flagJsonText).ToTupleList();
-            Logger.LogElements("data Keys", data.Keys);
-            Logger.Log("DummyA", data["DummyA"]);
-            Logger.Log("DummyB", data["DummyB"]);
-            Logger.Log("DummyC", data["DummyC"]);
+            data = JsonUtility.FromJson<FlagData>(flagJsonText).ToHashSet();
+            Logger.LogElements("data", data.Select(f => f.ToString()));
             return true;
         }
         catch (Exception e)
@@ -38,18 +36,24 @@ public class FlagManager : JsonDataManager
         }
     }
 
+    public bool Get(string key)
+    {
+        // data
+        return true;
+    }
+
     public override void Change(string name, bool value)
     {
-        data[name] = value;
+        // data[name] = value;
     }
 
     public override bool Save()
     {
         try
         {
-            // string flagJsonText = JsonUtility.ToJson(data, true);
-            string flagJsonText = JsonUtility.ToJson(new FlagData(new(){new("DummyA", true),new("DummyB", false)}));
-            Logger.Log("ToJson; flagJsonText", flagJsonText);
+            Logger.LogElements("data", data.Select(f => f.ToString()));
+            string flagJsonText = JsonUtility.ToJson(data);
+            Logger.Log("flagJsonText", flagJsonText);
             File.WriteAllText(saveFilePath+".json", flagJsonText);
             return true;
         }
@@ -67,11 +71,11 @@ public class FlagManager : JsonDataManager
 
     public override void Log()
     {
-        string result = $"{name} Log\n";
-        foreach (var record in data)
-        {
-            result += $"{record.Key}: {record.Value}\n";
-        }
-        Logger.Log(result);
+        // string result = $"{name} Log\n";
+        // foreach (var record in data)
+        // {
+        //     result += $"{record.Key}: {record.Value}\n";
+        // }
+        // Logger.Log(result);
     }
 }
