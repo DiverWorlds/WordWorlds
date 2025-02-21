@@ -16,7 +16,7 @@ public class Flag
         this.value = value;
     }
 
-    public string ToString()
+    public override string ToString()
     {
         return $"{key}: {value}";
     }

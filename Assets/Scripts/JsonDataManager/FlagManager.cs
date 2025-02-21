@@ -23,6 +23,7 @@ public class FlagManager : JsonDataManager
     {
         try
         {
+            Logger.Log("Load()");
             string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
             Logger.Log("flagJsonText", flagJsonText);
             data = JsonUtility.FromJson<FlagData>(flagJsonText).ToHashSet();
@@ -51,10 +52,11 @@ public class FlagManager : JsonDataManager
     {
         try
         {
+            Logger.Log("Save()");
             Logger.LogElements("data", data.Select(f => f.ToString()));
-            string flagJsonText = JsonUtility.ToJson(data);
+            string flagJsonText = JsonUtility.ToJson(new FlagData(data), true);
             Logger.Log("flagJsonText", flagJsonText);
-            File.WriteAllText(saveFilePath+".json", flagJsonText);
+            File.WriteAllText($"Assets/Resources/{saveFilePath}.json", flagJsonText);
             return true;
         }
         catch (Exception e)
