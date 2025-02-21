@@ -6,13 +6,15 @@ using UnityEngine;
 public class FlagManager : JsonDataManager
 {
     //TODO: デバッグ用のフラグファイルを読み込めるように、SerializeFieldでファイルパスを指定できるようにする。
+    [SerializeField] private string InitialFlagsPath = "InitialFlags";
+    [SerializeField] private string SavedFlagsPath = "SavedFlags";
     private FlagData data;
     public FlagData Data => data;
 
     void Start()
     {
-        loadFilePath = "InitialFlags";
-        saveFilePath = "LatestFlags";
+        loadFilePath = InitialFlagsPath;
+        saveFilePath = SavedFlagsPath;
         Load();
     }
 
@@ -21,7 +23,12 @@ public class FlagManager : JsonDataManager
         try
         {
             string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
+            Logger.Log("flagJsonText", flagJsonText);
             data = JsonUtility.FromJson<FlagData>(flagJsonText);
+            Logger.Log("data_A", data.Flags["DummyA"]);
+            Logger.Log("DummyA", data.DummyA);
+            Logger.Log("DummyB", data.DummyB);
+            Logger.Log("DummyC", data.DummyC);
             return true;
         }
         catch (Exception e)
@@ -49,5 +56,20 @@ public class FlagManager : JsonDataManager
             Debug.Log(e);
             return false;
         }
+    }
+
+    public override void Clear()
+    {
+        data.Flags = new();
+    }
+
+    public override void Log()
+    {
+        string result = $"{name} Log\n";
+        foreach (var record in data.Flags)
+        {
+            result += $"{record.Key}: {record.Value}\n";
+        }
+        Logger.Log(result);
     }
 }

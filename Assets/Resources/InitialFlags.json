@@ -3,5 +3,8 @@
         "DummyA": false,
         "DummyB": true,
         "DummyC": false
-    }
+    },
+    "DummyA": false,
+    "DummyB": true,
+    "DummyC": false
 }
