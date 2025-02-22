@@ -7,6 +7,10 @@
         {
             "key": "DummyB",
             "value": false
+        },
+        {
+            "key": "DummyC",
+            "value": false
         }
     ]
 }

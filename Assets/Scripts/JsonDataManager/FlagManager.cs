@@ -4,35 +4,33 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class FlagManager : JsonDataManager
+public class FlagManager : DontDestroySingleton<FlagManager>
 {
-    [SerializeField] private string InitialFlagsPath = "InitialFlags";
-    [SerializeField] private string SavedFlagsPath = "SavedFlags";
+    [SerializeField] protected string initialFilePath = "InitialFlags";
+    [SerializeField] protected string saveFilePath = "SavedFlags";
     private Dictionary<string, bool> flags = new();
 
-    void Start()
+    public bool LoadInitialFlags()
     {
-        loadFilePath = InitialFlagsPath;
-        saveFilePath = SavedFlagsPath;
-        Load();
+        return Load(initialFilePath);
     }
-
-    public override bool Load()
+    public bool LoadSavedFlags()
     {
-        // try
-        // {
-            Logger.Log("Load()");
-            string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
-            Logger.Log("flagJsonText", flagJsonText);
+        return Load(saveFilePath);
+    }
+    private bool Load(string filePath)
+    {
+        try
+        {
+            string flagJsonText = Resources.Load<TextAsset>(filePath).text;
             flags = JsonUtility.FromJson<FlagData>(flagJsonText).ToDictionary();
-            Logger.LogElements("flags", flags.Select(f => $"{f.Key}: {f.Value}"));
             return true;
-        // }
-        // catch (Exception e)
-        // {
-        //     Debug.Log(e);
-        //     return false;
-        // }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return false;
+        }
     }
 
     public bool Get(string key)
@@ -40,35 +38,27 @@ public class FlagManager : JsonDataManager
         return flags[key];
     }
 
-    public override void Change(string key, bool value)
+    public void Change(string key, bool value)
     {
         flags[key] = value;
     }
 
-    public override bool Save()
+    public bool Save()
     {
-        // try
-        // {
-            Logger.Log("Save()");
+        try
+        {
             string flagJsonText = JsonUtility.ToJson(new FlagData(flags), true);
-            Logger.Log("flagJsonText", flagJsonText);
             File.WriteAllText($"Assets/Resources/{saveFilePath}.json", flagJsonText);
             return true;
-        // }
-        // catch (Exception e)
-        // {
-        //     Debug.Log(e);
-        //     return false;
-        // }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return false;
+        }
     }
 
-    public override void Clear()
-    {
-        flags = new();
-        // ここでセーブまでした方がいい？
-    }
-
-    public override void Log()
+    public void LogAllObjects()
     {
         string result = $"{name} Log\n";
         foreach (var flag in flags)

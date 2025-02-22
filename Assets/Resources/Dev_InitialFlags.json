@@ -2,10 +2,14 @@
     "flagList": [
         {
             "key": "DummyA",
-            "value": true
+            "value": false
         },
         {
             "key": "DummyB",
+            "value": true
+        },
+        {
+            "key": "DummyC",
             "value": false
         }
     ]
