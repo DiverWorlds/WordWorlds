@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class FlagManager : JsonDataManager
 {
-    //TODO: デバッグ用のフラグファイルを読み込めるように、SerializeFieldでファイルパスを指定できるようにする。
     [SerializeField] private string InitialFlagsPath = "InitialFlags";
     [SerializeField] private string SavedFlagsPath = "SavedFlags";
-    private HashSet<Flag> data = new();
-    public HashSet<Flag> Data => data;
+    private Dictionary<string, bool> flags = new();
 
     void Start()
     {
@@ -21,63 +19,62 @@ public class FlagManager : JsonDataManager
 
     public override bool Load()
     {
-        try
-        {
+        // try
+        // {
             Logger.Log("Load()");
             string flagJsonText = Resources.Load<TextAsset>(loadFilePath).text;
             Logger.Log("flagJsonText", flagJsonText);
-            data = JsonUtility.FromJson<FlagData>(flagJsonText).ToHashSet();
-            Logger.LogElements("data", data.Select(f => f.ToString()));
+            flags = JsonUtility.FromJson<FlagData>(flagJsonText).ToDictionary();
+            Logger.LogElements("flags", flags.Select(f => $"{f.Key}: {f.Value}"));
             return true;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return false;
-        }
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.Log(e);
+        //     return false;
+        // }
     }
 
     public bool Get(string key)
     {
-        // data
-        return true;
+        return flags[key];
     }
 
-    public override void Change(string name, bool value)
+    public override void Change(string key, bool value)
     {
-        // data[name] = value;
+        flags[key] = value;
     }
 
     public override bool Save()
     {
-        try
-        {
+        // try
+        // {
             Logger.Log("Save()");
-            Logger.LogElements("data", data.Select(f => f.ToString()));
-            string flagJsonText = JsonUtility.ToJson(new FlagData(data), true);
+            string flagJsonText = JsonUtility.ToJson(new FlagData(flags), true);
             Logger.Log("flagJsonText", flagJsonText);
             File.WriteAllText($"Assets/Resources/{saveFilePath}.json", flagJsonText);
             return true;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return false;
-        }
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.Log(e);
+        //     return false;
+        // }
     }
 
     public override void Clear()
     {
-        data = new();
+        flags = new();
+        // ここでセーブまでした方がいい？
     }
 
     public override void Log()
     {
-        // string result = $"{name} Log\n";
-        // foreach (var record in data)
-        // {
-        //     result += $"{record.Key}: {record.Value}\n";
-        // }
-        // Logger.Log(result);
+        string result = $"{name} Log\n";
+        foreach (var flag in flags)
+        {
+            result += $"{flag.Key}: {flag.Value}\n";
+        }
+        Logger.Log(result);
     }
 }

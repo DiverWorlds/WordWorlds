@@ -2,20 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [Serializable]
 public class FlagData
 {
-    [SerializeField] List<Flag> flags = new();
-    public HashSet<Flag> ToHashSet()
-    { 
-        Logger.LogElements("ToDictionary(); flags", flags.Select(f => f.ToString()));
-        return flags.ToHashSet();
+    [SerializeField] List<Flag> flagList = new();
+    public Dictionary<string, bool> ToDictionary()
+    {
+        Logger.Log("ToDictionary()");
+        Logger.LogElements("flagList", flagList);
+        Dictionary<string, bool> flagDict = new();
+        foreach(Flag flag in flagList)
+        {
+            flagDict.Add(flag.Key, flag.Value);
+        }
+        Logger.LogElements("flagDict", flagDict);
+        return flagDict;
     }
 
-    public FlagData(HashSet<Flag> flags)
+    public FlagData(Dictionary<string, bool> flagDict)
     {
-        this.flags = flags.ToList();
+        Logger.Log("FlagData() constructor");
+        Logger.LogElements("flagDict", flagDict);
+        flagList = flagDict.Select(f => new Flag(f.Key, f.Value)).ToList();
+        Logger.LogElements("flagList", flagList.Select(f => f.ToString()));
     }
 }

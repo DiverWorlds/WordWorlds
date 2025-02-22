@@ -7,8 +7,16 @@ public class Flag
 {
     [SerializeField] private string key;
     [SerializeField] private bool value;
-    public string Key { get; set; }
-    public bool Value { get; set; }
+    public string Key
+    {
+        get { return key; }
+        set { key = value; }
+    }
+    public bool Value
+    {
+        get { return value; }
+        set { this.value = value; }
+    }
 
     public Flag(string key, bool value)
     {
