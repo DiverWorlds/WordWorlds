@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
+    //TODO: Homeに戻る機能作る
+    //TODO: Dive画面用のInventoryPrefabを作る。
+    //TODO: Inventoryの中にHomeに戻るボタンを置く
     [SerializeField] private int maxSize = 15;
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private List<ItemEntry> inventory = new();
