@@ -1,16 +1,15 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemWordButton : MonoBehaviour
 {
-    private HomeManager homeManager;
-    private ItemWordInventory.ItemEntry item;
+    private RecallButton recallButton;
+    private ItemEntry item;
     [SerializeField] private Text text;
     [SerializeField] private Button button;
-    public void Initialize(HomeManager homeManager, ItemWordInventory.ItemEntry item)
+    public void Initialize(RecallButton recallButton, ItemEntry item)
     {
-        this.homeManager = homeManager;
+        this.recallButton = recallButton;
         this.item = item;
         text.text = item.ItemWord.name;//名前表示
     }
@@ -23,23 +22,11 @@ public class ItemWordButton : MonoBehaviour
 
     public void OnClick()
     {
-        homeManager.SendMessage("SelectMixWord", this.gameObject);
+        recallButton.SelectWord(this.gameObject);
     }
 
-    public ItemWordInventory.ItemEntry GetItem()
+    public ItemEntry GetItem()
     {
         return item;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
