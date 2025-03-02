@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class FlagManager : DontDestroySingleton<FlagManager>
 {
-    [SerializeField] protected string initialFilePath = "InitialFlags";
-    [SerializeField] protected string saveFilePath = "SavedFlags";
+    [SerializeField] private string initialFilePath = "InitialFlags";
+    [SerializeField] private string saveFilePath = "SavedFlags";
     private Dictionary<string, bool> flags = new();
 
     public bool LoadInitialFlags()
