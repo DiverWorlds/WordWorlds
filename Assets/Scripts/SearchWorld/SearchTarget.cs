@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ public class SearchTarget : MonoBehaviour
     public void OnClick()
     {
         DisplayText();
-        ItemWordInventory.Instance.AddItemWord(foundItemWord);
+        ItemWordInventory wordInv = ItemWordInventory.Instance;
+        wordInv.AddItemWord(foundItemWord);
+        Logger.LogElements("Inventory", wordInv.Inventory.Select(w => w.ItemWord.Word));
     }
 
     private void DisplayText()
