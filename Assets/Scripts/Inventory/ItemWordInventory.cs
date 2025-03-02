@@ -25,6 +25,11 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
         }
     }
 
+    public bool IsContains(ItemWord itemWord)
+    {
+        return inventory.Select(e => e.ItemWord).Contains(itemWord);
+    }
+
     public SearchWorld RecallWorld(ItemWord itemWord1, ItemWord itemWord2)
     {
         SearchWorld searchWorld = searchWorldDatabase.GetRecalledWorld(itemWord1, itemWord2);

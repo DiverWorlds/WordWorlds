@@ -7,13 +7,21 @@ public class SearchTarget : MonoBehaviour
     [SerializeField] private string onClickText;
     [SerializeField] private ItemWord foundItemWord;
     [SerializeField] private TextMeshProUGUI textBox;
+    private ItemWordInventory wordInv;
 
+    void Start()
+    {
+        wordInv = ItemWordInventory.Instance;
+    }
     public void OnClick()
     {
-        DisplayText();
-        ItemWordInventory wordInv = ItemWordInventory.Instance;
-        wordInv.AddItemWord(foundItemWord);
-        Logger.LogElements("Inventory", wordInv.Inventory.Select(w => w.ItemWord.Word));
+        if (!wordInv.IsContains(foundItemWord))
+        {
+            DisplayText();
+            ItemWordInventory wordInv = ItemWordInventory.Instance;
+            wordInv.AddItemWord(foundItemWord);
+            Logger.LogElements("Inventory", wordInv.Inventory.Select(w => w.ItemWord.Word));
+        }
     }
 
     private void DisplayText()
