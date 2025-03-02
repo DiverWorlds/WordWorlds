@@ -7,16 +7,6 @@ using UnityEngine;
 
 public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
-    public class ItemEntry
-    {
-        public ItemWord ItemWord { get; set; }
-        public bool IsUsed { get; set; }
-        public ItemEntry(ItemWord itemWord)
-        {
-            ItemWord = itemWord;
-            IsUsed = false;
-        }
-    }
     [SerializeField] private int maxSize = 15;
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private List<ItemEntry> inventory = new();
@@ -49,13 +39,13 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private void UseItemWord(params ItemWord[] itemWords)
     {
         int count = 0;
-        foreach(ItemEntry itemEntry in inventory)
+        foreach (ItemEntry itemEntry in inventory)
         {
             if (itemWords.Contains(itemEntry.ItemWord))
             {
                 itemEntry.IsUsed = true;
                 count++;
-                if (count==itemWords.Length) return;
+                if (count == itemWords.Length) return;
             }
         }
     }

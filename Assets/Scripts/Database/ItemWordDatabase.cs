@@ -19,7 +19,7 @@ public class ItemWordDatabase : ScriptableObject
     public ItemWord GetItemWord(string word)
     {
         ItemWord foundItemWord = itemWords.FirstOrDefault(w => w.Word.Equals(word));
-        if (foundItemWord!=null)
+        if (foundItemWord != null)
         {
             return foundItemWord;
         }
