@@ -49,13 +49,13 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private void UseItemWord(params ItemWord[] itemWords)
     {
         int count = 0;
-        foreach(ItemEntry itemEntry in inventory)
+        foreach (ItemEntry itemEntry in inventory)
         {
             if (itemWords.Contains(itemEntry.ItemWord))
             {
                 itemEntry.IsUsed = true;
                 count++;
-                if (count==itemWords.Length) return;
+                if (count == itemWords.Length) return;
             }
         }
     }

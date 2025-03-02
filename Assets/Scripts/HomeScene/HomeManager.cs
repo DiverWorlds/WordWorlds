@@ -17,7 +17,7 @@ public class HomeManager : MonoBehaviour
     //シーン内のオブジェクト(UI)をSerializeFieldとして格納
     [SerializeField] Text debugText;
     [SerializeField] GameObject currentWorldImage;//世界の外観
-    [SerializeField] GameObject itemWordUIPrefab;//ワードのUIPrefab
+    [SerializeField] GameObject ItemWordButtonPrefab;//ワードのUIPrefab
     [SerializeField] GameObject inventoryScrollContent;//インベントリのスクロールビュー
     private List<GameObject> uiInventory = new List<GameObject>();
     void Awake()
@@ -42,9 +42,9 @@ public class HomeManager : MonoBehaviour
 
         foreach (ItemWordInventory.ItemEntry item in itemWordInventory.Inventory)
         {
-            GameObject uiObject = Instantiate(itemWordUIPrefab, inventoryScrollContent.transform);
-            ItemWordUI itemWordUI = uiObject.GetComponent<ItemWordUI>();
-            itemWordUI.Initialize(this, item);
+            GameObject uiObject = Instantiate(ItemWordButtonPrefab, inventoryScrollContent.transform);
+            ItemWordButton ItemWordButton = uiObject.GetComponent<ItemWordButton>();
+            ItemWordButton.Initialize(this, item);
             uiInventory.Add(uiObject);
         }
 
@@ -60,8 +60,8 @@ public class HomeManager : MonoBehaviour
     {
         string text = "";
         if (currentWorld) text += "現在の世界" + currentWorld.name + "\n";
-        if (mixWord1) text += "合成用ワード1:" + mixWord1.GetComponent<ItemWordUI>().GetItem().ItemWord.name + "\n";
-        if (mixWord2) text += "合成用ワード2:" + mixWord2.GetComponent<ItemWordUI>().GetItem().ItemWord.name + "\n";
+        if (mixWord1) text += "合成用ワード1:" + mixWord1.GetComponent<ItemWordButton>().GetItem().ItemWord.name + "\n";
+        if (mixWord2) text += "合成用ワード2:" + mixWord2.GetComponent<ItemWordButton>().GetItem().ItemWord.name + "\n";
         if (nextWorld) text += "生まれる世界:" + nextWorld.name + "\n";
         text += "所持ワード\n";
         foreach (ItemWordInventory.ItemEntry item in itemWordInventory.Inventory)
@@ -87,12 +87,12 @@ public class HomeManager : MonoBehaviour
 
     public void MixWord(GameObject word1, GameObject word2)//実際にワードをミックス、世界を生成する
     {
-        ItemWordUI itemWordUI1 = word1.GetComponent<ItemWordUI>();
-        ItemWordInventory.ItemEntry itemEntry1 = itemWordUI1.GetItem();
+        ItemWordButton ItemWordButton1 = word1.GetComponent<ItemWordButton>();
+        ItemWordInventory.ItemEntry itemEntry1 = ItemWordButton1.GetItem();
         ItemWord itemWord1 = itemEntry1.ItemWord;
 
-        ItemWordUI itemWordUI2 = word2.GetComponent<ItemWordUI>();
-        ItemWordInventory.ItemEntry itemEntry2 = itemWordUI2.GetItem();
+        ItemWordButton ItemWordButton2 = word2.GetComponent<ItemWordButton>();
+        ItemWordInventory.ItemEntry itemEntry2 = ItemWordButton2.GetItem();
         ItemWord itemWord2 = itemEntry2.ItemWord;
 
         nextWorld = itemWordInventory.RecallWorld(itemWord1, itemWord2);//ItemWord二つからSearchWorld一つを生成}
@@ -100,8 +100,8 @@ public class HomeManager : MonoBehaviour
     public void ChangeWorld()//世界を生成したものに変更する
     {
         MixWord(mixWord1, mixWord2);
-        mixWord1.GetComponent<ItemWordUI>().CheckIsUsed();
-        mixWord2.GetComponent<ItemWordUI>().CheckIsUsed();
+        mixWord1.GetComponent<ItemWordButton>().CheckIsUsed();
+        mixWord2.GetComponent<ItemWordButton>().CheckIsUsed();
         currentWorld = nextWorld;//今の世界を次の世界に置き換える
 
         //リセット

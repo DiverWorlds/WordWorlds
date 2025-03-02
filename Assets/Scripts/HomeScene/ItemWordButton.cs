@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemWordUI : MonoBehaviour
+public class ItemWordButton : MonoBehaviour
 {
     private HomeManager homeManager;
     private ItemWordInventory.ItemEntry item;
@@ -21,7 +21,7 @@ public class ItemWordUI : MonoBehaviour
         button.interactable = !item.IsUsed;
     }
 
-    public void SendWordData()
+    public void OnClick()
     {
         homeManager.SendMessage("SelectMixWord", this.gameObject);
     }

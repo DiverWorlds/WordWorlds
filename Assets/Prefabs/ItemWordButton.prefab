@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 4238526501859820044}
   - component: {fileID: 2994913012450127978}
   m_Layer: 5
-  m_Name: ItemWordUIPrefab
+  m_Name: ItemWordButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,8 +202,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2994913012450127978}
-        m_TargetAssemblyTypeName: ItemWordUI, Assembly-CSharp
-        m_MethodName: SendWordData
+        m_TargetAssemblyTypeName: ItemWordButton, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
