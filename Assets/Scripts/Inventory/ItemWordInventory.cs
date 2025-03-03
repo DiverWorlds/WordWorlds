@@ -50,5 +50,13 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
         }
     }
 
-    //TODO: セーブデータからInventory情報を読み取って再度入れるメソッドは、必要があれば後で行う
+    public void LoadSaveData(List<ItemEntry> loadedInventory)
+    {
+        inventory = new(loadedInventory);
+    }
+
+    public void Log()
+    {
+        Logger.LogElements("inventory", ItemWordInventory.Instance.Inventory.Select(e => $"{e.ItemWord.Word}: {e.IsUsed}"));
+    }
 }
