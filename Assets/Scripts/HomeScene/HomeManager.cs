@@ -2,20 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HomeManager : MonoBehaviour
+public class HomeManager : Singleton
 {
-    //＊注意：HomeSceneでのみ扱われるクラスとする。基本的に他シーンとの依存関係は排除する
-
     private ItemWordInventory itemWordInventory;
     [SerializeField] private ItemWordDatabase itemWordDatabase;
 
     //シーン内のオブジェクト(UI)をSerializeFieldとして格納
-    [SerializeField] private GameObject ItemWordButtonPrefab;//ワードのUIPrefab
+    [SerializeField] private GameObject itemWordButtonPrefab;//ワードのUIPrefab
     [SerializeField] private VerticalLayoutGroup inventoryGroup;
-    [SerializeField] private RecallButton recallButton;//リコールボタン
     [SerializeField] private WakeToEndingButton wakeToEndingButton;//エンディングへ向かうWakeボタン
-    private FlagManager flagManager;
-    [SerializeField] private DiveButton diveButton;
+    private FlagManager flagManager;//FlagManagerはSingletonのInstanceから取得
 
     //データ類
     public SearchWorld CurrentSearchWorld { get; set; }
@@ -46,19 +42,14 @@ public class HomeManager : MonoBehaviour
 
     void Start()
     {
-        //シーン開始
-
-        //FlagManagerを取得
         flagManager = FlagManager.Instance;
-
-        //FlagManagerでフラグデータをロード
         flagManager.LoadSavedFlags();
 
         //エンディングに迎えるならばエンディング用のWakeButtonを表示
         wakeToEndingButton.gameObject.SetActive(false);
         if (flagManager.Get("Dev_WordAGet")) wakeToEndingButton.gameObject.SetActive(true);
 
-        //ItemWordInventoryを開発用に調整
+        //HomeScene開発用にインベントリの中身を仮で作成
         itemWordInventory = ItemWordInventory.Instance;
         Logger.LogElements($"Before Inventory", itemWordInventory.Inventory);
         Logger.Log("Add Word \"a\". Result", itemWordInventory.AddItemWord(itemWordDatabase.GetItemWord("a")));
@@ -69,7 +60,7 @@ public class HomeManager : MonoBehaviour
 
         foreach (ItemEntry item in itemWordInventory.Inventory)
         {
-            GameObject instance = Instantiate(ItemWordButtonPrefab, inventoryGroup.gameObject.transform);
+            GameObject instance = Instantiate(itemWordButtonPrefab, inventoryGroup.gameObject.transform);
             ItemWordButton ItemWordButton = instance.GetComponent<ItemWordButton>();
             ItemWordButton.Initialize(this, item);
         }
@@ -85,7 +76,7 @@ public class HomeManager : MonoBehaviour
 
     public void CombineItemWord()//実際にワードをミックス、世界を生成する
     {
-        CurrentSearchWorld = itemWordInventory.RecallWorld(ElemItemWord1.GetItem().ItemWord, ElemItemWord2.GetItem().ItemWord);//ItemWord二つからSearchWorld一つを生成}
+        CurrentSearchWorld = itemWordInventory.RecallWorld(ElemItemWord1.GetItemEntry().ItemWord, ElemItemWord2.GetItemEntry().ItemWord);//ItemWord二つからSearchWorld一つを生成}
         ElemItemWord1.CheckIsUsed();
         ElemItemWord2.CheckIsUsed();
         ResetSelect();
@@ -93,7 +84,6 @@ public class HomeManager : MonoBehaviour
 
     public void ResetSelect()
     {
-        //リセット
         ElemItemWord1 = null;
         ElemItemWord2 = null;
     }
@@ -101,8 +91,8 @@ public class HomeManager : MonoBehaviour
     public void ShowDebugText()
     {
         string text = "";
-        if (ElemItemWord1) text += "選択: " + ElemItemWord1.GetComponent<ItemWordButton>().GetItem().ItemWord.Word + "\n";
-        if (ElemItemWord2) text += "選択: " + ElemItemWord2.GetComponent<ItemWordButton>().GetItem().ItemWord.Word + "\n";
+        if (ElemItemWord1) text += "選択: " + ElemItemWord1.GetComponent<ItemWordButton>().GetItemEntry().ItemWord.Word + "\n";
+        if (ElemItemWord2) text += "選択: " + ElemItemWord2.GetComponent<ItemWordButton>().GetItemEntry().ItemWord.Word + "\n";
         if (CurrentSearchWorld) text += "現在の世界" + CurrentSearchWorld.WorldName + "\n";
         debugText.text = text;
     }

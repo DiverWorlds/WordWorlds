@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemWordButton : MonoBehaviour
 {
-    private RecallButton recallButton;
     private HomeManager homeManager;
     private ItemEntry item;
-    [SerializeField] private Text text;
+    [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] private Button button;
     public void Initialize(HomeManager homeManager, ItemEntry item)
     {
         this.homeManager = homeManager;
         this.item = item;
-        text.text = item.ItemWord.name;//名前表示
+        textMeshProUGUI.text = item.ItemWord.name;
     }
 
     public void CheckIsUsed()
@@ -26,7 +26,7 @@ public class ItemWordButton : MonoBehaviour
         homeManager.SelectWord(this);
     }
 
-    public ItemEntry GetItem()
+    public ItemEntry GetItemEntry()
     {
         return item;
     }
