@@ -8,6 +8,10 @@ public class SaveTest : MonoBehaviour
         SaveDataManager.Instance.Load();
         ItemWordInventory.Instance.Log();
     }
+    public void LoadLastScene()
+    {
+        SaveDataManager.Instance.LoadLastScene();
+    }
     public void RecallItemWordA_B()
     {
         Logger.Log("RecalledWorld", ItemWordInventory.Instance.RecallWorld(GlobalDB.Instance.ItemWordDB.GetItemWord("a"), GlobalDB.Instance.ItemWordDB.GetItemWord("b")).WorldName);

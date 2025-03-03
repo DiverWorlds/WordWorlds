@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveDataManager : DontDestroySingleton<SaveDataManager>
 {
     //セーブ内容：インベントリ内容、現在のシーン、現在のDive世界で何を拾ったか
-    //最終的に１つのファイルでやりたい
     //TODO: Databaseの参照方法を全体で変える
-    [SerializeField] private string inventorySavePath = "InventorySaveData";
-    [SerializeField] private string currentSceneSavePath = "CurrentSceneSaveData";
+    [SerializeField] private string SaveDataPath = "SaveData";
     private List<ItemEntry> inventoryItems = new();
+    private string lastSceneName = "";
+
     public void Load()
-    {
-        LoadInventory();
-    }
-
-    public void Save()
-    {
-        SaveInventory();
-    }
-
-    private void LoadInventory()
     {
         try
         {
-            string inventoryJsonText = Resources.Load<TextAsset>(inventorySavePath).text;
-            inventoryItems = JsonUtility.FromJson<InventoryConverter>(inventoryJsonText).ToList();
+            string inventoryJsonText = Resources.Load<TextAsset>(SaveDataPath).text;
+            SaveData saveData = JsonUtility.FromJson<SaveData>(inventoryJsonText);
+            inventoryItems = saveData.Inventory;
+            lastSceneName = saveData.LastSceneName;
             ItemWordInventory.Instance.LoadSaveData(inventoryItems);
         }
         catch (Exception e)
@@ -35,12 +28,16 @@ public class SaveDataManager : DontDestroySingleton<SaveDataManager>
             Debug.Log(e);
         }
     }
-
-    private void SaveInventory()
+    public void LoadLastScene()
     {
-        string inventoryJsonText = JsonUtility.ToJson(new InventoryConverter(ItemWordInventory.Instance.Inventory), true);
+        SceneManager.LoadScene(lastSceneName);
+    }
+    public void Save()
+    {
+        lastSceneName = SceneManager.GetActiveScene().name;
+        string inventoryJsonText = JsonUtility.ToJson(new SaveData(ItemWordInventory.Instance.Inventory, lastSceneName), true);
         Logger.Log("inventoryJsonText", inventoryJsonText);
-        File.WriteAllText($"Assets/Resources/{inventorySavePath}.json", inventoryJsonText);
+        File.WriteAllText($"Assets/Resources/{SaveDataPath}.json", inventoryJsonText);
         
     }
 }
