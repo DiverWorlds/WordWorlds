@@ -7,6 +7,6 @@ public class WakeToEndingButton : MonoBehaviour
     {
         //エンディングに向かう処理
         Logger.Log("エンディングへGO!!");
-        SceneManager.LoadScene("Ending");
+        SceneManager.LoadScene("Dev_Ending");
     }
 }
