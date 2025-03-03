@@ -7,6 +7,6 @@ public class RecallButton : MonoBehaviour
 
     public void OnClick()
     {
-        homeManager.CombineItemWord();
+        HomeManager.Instance.CombineItemWord();
     }
 }

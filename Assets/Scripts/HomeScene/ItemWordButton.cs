@@ -4,13 +4,11 @@ using TMPro;
 
 public class ItemWordButton : MonoBehaviour
 {
-    private HomeManager homeManager;
     private ItemEntry item;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] private Button button;
-    public void Initialize(HomeManager homeManager, ItemEntry item)
+    public void Initialize(ItemEntry item)
     {
-        this.homeManager = homeManager;
         this.item = item;
         textMeshProUGUI.text = item.ItemWord.name;
     }
@@ -23,7 +21,7 @@ public class ItemWordButton : MonoBehaviour
 
     public void OnClick()
     {
-        homeManager.SelectWord(this);
+        HomeManager.Instance.SelectWord(this);
     }
 
     public ItemEntry GetItemEntry()

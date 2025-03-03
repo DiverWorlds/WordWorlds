@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HomeManager : Singleton
+public class HomeManager : Singleton<HomeManager>
 {
     private ItemWordInventory itemWordInventory;
     [SerializeField] private ItemWordDatabase itemWordDatabase;
@@ -62,7 +62,7 @@ public class HomeManager : Singleton
         {
             GameObject instance = Instantiate(itemWordButtonPrefab, inventoryGroup.gameObject.transform);
             ItemWordButton ItemWordButton = instance.GetComponent<ItemWordButton>();
-            ItemWordButton.Initialize(this, item);
+            ItemWordButton.Initialize(item);
         }
     }
 
