@@ -11,9 +11,14 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     //TODO: Dive画面用のInventoryPrefabを作る。
     //TODO: Inventoryの中にHomeに戻るボタンを置く
     [SerializeField] private int maxSize = 15;
-    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
+    private SearchWorldDatabase searchWorldDB;
     private List<ItemEntry> inventory = new();
     public ReadOnlyCollection<ItemEntry> Inventory => inventory.AsReadOnly();
+
+    void Start()
+    {
+        searchWorldDB = GlobalDB.Instance.SearchWorldDB;
+    }
 
     public bool AddItemWord(ItemWord itemWord)
     {
@@ -35,7 +40,7 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 
     public SearchWorld RecallWorld(ItemWord itemWord1, ItemWord itemWord2)
     {
-        SearchWorld searchWorld = searchWorldDatabase.GetRecalledWorld(itemWord1, itemWord2);
+        SearchWorld searchWorld = searchWorldDB.GetRecalledWorld(itemWord1, itemWord2);
         if (searchWorld != null)
         {
             UseItemWord(itemWord1, itemWord2);
@@ -47,16 +52,24 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private void UseItemWord(params ItemWord[] itemWords)
     {
         int count = 0;
-        foreach(ItemEntry itemEntry in inventory)
+        foreach (ItemEntry itemEntry in inventory)
         {
             if (itemWords.Contains(itemEntry.ItemWord))
             {
                 itemEntry.IsUsed = true;
                 count++;
-                if (count==itemWords.Length) return;
+                if (count == itemWords.Length) return;
             }
         }
     }
 
-    //TODO: セーブデータからInventory情報を読み取って再度入れるメソッドは、必要があれば後で行う
+    public void LoadSaveData(List<ItemEntry> loadedInventory)
+    {
+        inventory = new(loadedInventory);
+    }
+
+    public void Log()
+    {
+        Logger.LogElements("inventory", ItemWordInventory.Instance.Inventory.Select(e => $"{e.ItemWord.Word}: {e.IsUsed}"));
+    }
 }
