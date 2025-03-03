@@ -1,5 +1,5 @@
 {
-    "Inventory": [
+    "inventory": [
         {
             "itemWord": "a",
             "isUsed": false
