@@ -4,12 +4,13 @@ using UnityEngine.UI;
 public class ItemWordButton : MonoBehaviour
 {
     private RecallButton recallButton;
+    private HomeManager homeManager;
     private ItemEntry item;
     [SerializeField] private Text text;
     [SerializeField] private Button button;
-    public void Initialize(RecallButton recallButton, ItemEntry item)
+    public void Initialize(HomeManager homeManager, ItemEntry item)
     {
-        this.recallButton = recallButton;
+        this.homeManager = homeManager;
         this.item = item;
         text.text = item.ItemWord.name;//名前表示
     }
@@ -22,7 +23,7 @@ public class ItemWordButton : MonoBehaviour
 
     public void OnClick()
     {
-        recallButton.SelectWord(this.gameObject);
+        homeManager.SelectWord(this);
     }
 
     public ItemEntry GetItem()

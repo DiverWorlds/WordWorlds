@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class DiveButton : MonoBehaviour
 {
-    private SearchWorld currentSearchWorld;
-    public SearchWorld CurrentSearchWorld { get; set; }
+    [SerializeField] HomeManager homeManager;
     public void OnClick()
     {
-        if (currentSearchWorld) Debug.Log(currentSearchWorld.WorldName + "にダイブ!!");
-        else Debug.Log("世界がありません...");
+        if (homeManager.CurrentSearchWorld) Logger.Log(homeManager.CurrentSearchWorld.WorldName + "にダイブ!!");
+        else Logger.Log("世界がありません...");
     }
 }
