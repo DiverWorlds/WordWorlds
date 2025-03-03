@@ -15,14 +15,14 @@ public class SearchWorldDatabase : ScriptableObject
 
     public void Initialize()
     {
-        searchWorlds = new (searchWorldList);
+        searchWorlds = new(searchWorldList);
 
         TextAsset recipeCSV = Resources.Load<TextAsset>("searchWorldRecipe");
         string[] recipeDataLines = recipeCSV.text.Replace("\r\n", "\n").Split("\n");
-        for (int i=0; i<recipeDataLines.Length; i++)
+        for (int i = 0; i < recipeDataLines.Length; i++)
         {
             string[] recipeDataLine = recipeDataLines[i].Split(",");
-            if (i==0)
+            if (i == 0)
             {
                 headWords = new(recipeDataLine[1..]);
             }
@@ -37,8 +37,8 @@ public class SearchWorldDatabase : ScriptableObject
     {
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
-        
-        if (indexA==indexB)
+
+        if (indexA == indexB)
         {
             Logger.Log($"同じItemWordが選択されました。: {itemWordA.Word}");
             return null;
@@ -68,7 +68,7 @@ public class SearchWorldDatabase : ScriptableObject
 
     private bool LogNotExistInRecipe(string word, int index)
     {
-        if (index==-1)
+        if (index == -1)
         {
             Logger.Log($"次のItemWordはsearchWorldRecipe内に存在しません。: {word}");
             return true;

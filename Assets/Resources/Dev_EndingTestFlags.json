@@ -1,0 +1,16 @@
+{
+    "flagList": [
+        {
+            "key": "DummyA",
+            "value": true
+        },
+        {
+            "key": "DummyB",
+            "value": false
+        },
+        {
+            "key": "Dev_WordAGet",
+            "value": true
+        }
+    ]
+}
