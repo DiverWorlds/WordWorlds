@@ -6,7 +6,11 @@
         },
         {
             "itemWord": "b",
-            "isUsed": true
+            "isUsed": false
+        },
+        {
+            "itemWord": "c",
+            "isUsed": false
         }
     ],
     "currentScene": "HomeScene"
