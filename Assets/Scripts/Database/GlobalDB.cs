@@ -6,8 +6,9 @@ public class GlobalDB : DontDestroySingleton<GlobalDB>
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     public ItemWordDatabase ItemWordDB => itemWordDatabase;
     public SearchWorldDatabase SearchWorldDB => searchWorldDatabase;
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         itemWordDatabase.Initialize();
         searchWorldDatabase.Initialize();
     }
