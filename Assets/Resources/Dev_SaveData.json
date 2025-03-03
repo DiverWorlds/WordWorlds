@@ -11,7 +11,11 @@
         {
             "itemWord": "c",
             "isUsed": false
+        },
+        {
+            "itemWord": "d",
+            "isUsed": false
         }
     ],
-    "lastScene": "Dev_Ending"
+    "lastScene": "Dev_HomeScene"
 }

@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 4021596938361177131}
   - component: {fileID: 3464421568980125831}
   - component: {fileID: 67338185796720595}
+  - component: {fileID: 3223563014399905574}
   m_Layer: 5
   m_Name: InventoryUI
   m_TagString: Untagged
@@ -497,3 +498,17 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3223563014399905574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8016772235628370507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885f0503533fa47a493faa95fcdfab66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemWordButtonPrefab: {fileID: 8927221065176666005, guid: fa2ff47c1742a4f6faf47a555930b464, type: 3}
+  inventoryGroup: {fileID: 3456546822653990858}
