@@ -6,4 +6,9 @@ public class GlobalDB : DontDestroySingleton<GlobalDB>
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     public ItemWordDatabase ItemWordDB => itemWordDatabase;
     public SearchWorldDatabase SearchWorldDB => searchWorldDatabase;
+    void Start()
+    {
+        itemWordDatabase.Initialize();
+        searchWorldDatabase.Initialize();
+    }
 }

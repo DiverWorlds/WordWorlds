@@ -17,19 +17,16 @@ public class SaveDataManager : DontDestroySingleton<FlagManager>
 
     private bool LoadInventory()
     {
-        // try
-        // {
+        try
+        {
             string inventoryJsonText = Resources.Load<TextAsset>(inventorySavePath).text;
-            Logger.Log("inventoryJsonText", inventoryJsonText);
             inventoryItems = JsonUtility.FromJson<InventoryConverter>(inventoryJsonText).ToList();
-            Logger.LogElements("inventoryItems", inventoryItems.Select(e => e.ItemWord.ToString()));
-            Logger.LogElements("inventoryItems", inventoryItems.Select(e => e.IsUsed));
             return true;
-        // }
-        // catch (Exception e)
-        // {
-        //     Debug.Log(e);
-        //     return false;
-        // }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return false;
+        }
     }
 }

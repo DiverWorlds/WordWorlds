@@ -10,7 +10,6 @@ public class InventoryConverter
 
     public List<ItemEntry> ToList()
     {
-        Logger.LogElements("inventory", inventory.Select(e => e.ItemWord.ToString()));
         return new(inventory);
     }
 
