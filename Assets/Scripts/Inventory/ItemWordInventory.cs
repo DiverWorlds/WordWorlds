@@ -50,6 +50,11 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
         }
     }
 
+    public void LoadSaveData(List<ItemEntry> loadedInventory)
+    {
+        inventory = new(loadedInventory);
+    }
+
     public void Log()
     {
         Logger.LogElements("inventory", ItemWordInventory.Instance.Inventory.Select(e => $"{e.ItemWord.Word}: {e.IsUsed}"));

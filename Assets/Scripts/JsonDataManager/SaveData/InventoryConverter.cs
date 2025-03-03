@@ -13,8 +13,8 @@ public class InventoryConverter
         return new(inventory);
     }
 
-    public InventoryConverter(List<ItemEntry> itemEntries)
+    public InventoryConverter(IEnumerable<ItemEntry> itemEntries)
     {
-        inventory = itemEntries;
+        inventory = itemEntries.ToList();
     }
 }

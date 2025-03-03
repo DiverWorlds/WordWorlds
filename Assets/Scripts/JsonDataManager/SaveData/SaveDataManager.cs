@@ -28,6 +28,7 @@ public class SaveDataManager : DontDestroySingleton<SaveDataManager>
         {
             string inventoryJsonText = Resources.Load<TextAsset>(inventorySavePath).text;
             inventoryItems = JsonUtility.FromJson<InventoryConverter>(inventoryJsonText).ToList();
+            ItemWordInventory.Instance.LoadSaveData(inventoryItems);
         }
         catch (Exception e)
         {
@@ -37,8 +38,9 @@ public class SaveDataManager : DontDestroySingleton<SaveDataManager>
 
     private void SaveInventory()
     {
-        string inventoryJsonText = JsonUtility.ToJson(new InventoryConverter(inventoryItems), true);
+        string inventoryJsonText = JsonUtility.ToJson(new InventoryConverter(ItemWordInventory.Instance.Inventory), true);
         Logger.Log("inventoryJsonText", inventoryJsonText);
-        File.WriteAllText($"Assets/Resources/{inventorySavePath}", inventoryJsonText);
+        File.WriteAllText($"Assets/Resources/{inventorySavePath}.json", inventoryJsonText);
+        
     }
 }
