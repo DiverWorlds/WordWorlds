@@ -10,11 +10,11 @@
         },
         {
             "key": "WordGet_c",
-            "value": false
+            "value": true
         },
         {
             "key": "WordGet_d",
-            "value": false
+            "value": true
         }
     ]
 }
