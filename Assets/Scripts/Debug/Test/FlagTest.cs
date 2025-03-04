@@ -7,24 +7,24 @@ public class FlagTester : MonoBehaviour
     public void LoadInitialFlags()
     {
         FlagManager.Instance.LoadInitialFlags();
-        FlagManager.Instance.LogAllObjects();
+        FlagManager.Instance.LogAllFlags();
     }
     public void LoadSavedFlags()
     {
         FlagManager.Instance.LoadSavedFlags();
-        FlagManager.Instance.LogAllObjects();
+        FlagManager.Instance.LogAllFlags();
     }
 
     public void ChangeAToTrue()
     {
         FlagManager.Instance.Change("DummyA", true);
-        FlagManager.Instance.LogAllObjects();
+        FlagManager.Instance.LogAllFlags();
     }
 
     public void ChangeBToFalse()
     {
         FlagManager.Instance.Change("DummyB", false);
-        FlagManager.Instance.LogAllObjects();
+        FlagManager.Instance.LogAllFlags();
     }
     public void GetABC()
     {
@@ -36,6 +36,6 @@ public class FlagTester : MonoBehaviour
     public void Save()
     {
         FlagManager.Instance.Save();
-        FlagManager.Instance.LogAllObjects();
+        FlagManager.Instance.LogAllFlags();
     }
 }

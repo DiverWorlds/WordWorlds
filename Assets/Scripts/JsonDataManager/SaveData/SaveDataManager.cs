@@ -12,6 +12,11 @@ public class SaveDataManager : DontDestroySingleton<SaveDataManager>
     private List<ItemEntry> inventoryItems = new();
     private string lastSceneName = "";
 
+    void Start()
+    {
+        Load();
+    }
+
     public void Load()
     {
         try

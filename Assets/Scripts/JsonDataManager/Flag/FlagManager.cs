@@ -10,6 +10,19 @@ public class FlagManager : DontDestroySingleton<FlagManager>
     [SerializeField] private string saveFilePath = "SavedFlags";
     private Dictionary<string, bool> flags = new();
 
+    void Start()
+    {
+        LoadInitialFlags();
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.F))
+        {
+            LogAllFlags();
+        }
+    }
+
     public bool LoadInitialFlags()
     {
         return Load(initialFilePath);
@@ -58,7 +71,7 @@ public class FlagManager : DontDestroySingleton<FlagManager>
         }
     }
 
-    public void LogAllObjects()
+    public void LogAllFlags()
     {
         string result = $"{name} Log\n";
         foreach (var flag in flags)

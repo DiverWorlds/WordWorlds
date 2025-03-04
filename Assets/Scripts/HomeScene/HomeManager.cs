@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HomeManager : Singleton<HomeManager>
 {
@@ -41,16 +42,15 @@ public class HomeManager : Singleton<HomeManager>
     void Start()
     {
         flagManager = FlagManager.Instance;
-        flagManager.LoadSavedFlags();
 
         //エンディングに迎えるならばエンディング用のWakeButtonを表示
         wakeToEndingButton.gameObject.SetActive(false);
-        if (flagManager.Get("Dev_WordAGet")) wakeToEndingButton.gameObject.SetActive(true);
+        if (flagManager.Get("WordGet_a") && flagManager.Get("WordGet_b")) wakeToEndingButton.gameObject.SetActive(true);
 
         itemWordInventory = ItemWordInventory.Instance;
     }
 
-    public void SelectWord(ItemWordButton itemWordButton)//UIから合成するワードを選択する
+    public void SelectItemWord(ItemWordButton itemWordButton)//UIから合成するワードを選択する
     {
         if (ElemItemWord1 == null) ElemItemWord1 = itemWordButton;
         else if (ElemItemWord1 == itemWordButton) Logger.Log("同じワードを選ぶことはできません");
@@ -70,6 +70,19 @@ public class HomeManager : Singleton<HomeManager>
     {
         ElemItemWord1 = null;
         ElemItemWord2 = null;
+    }
+
+    public void DiveToSearchWorld()
+    {
+        if (CurrentSearchWorld == null) return;
+        if (SceneManager.GetActiveScene().name.Contains("Dev_"))
+        {
+            SceneManager.LoadScene($"Dev_{CurrentSearchWorld.name}SearchWorld");
+        }
+        else
+        {
+            SceneManager.LoadScene($"{CurrentSearchWorld.name}SearchWorld");
+        }
     }
 
     public void ShowDebugText()
