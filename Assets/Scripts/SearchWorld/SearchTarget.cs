@@ -20,7 +20,8 @@ public class SearchTarget : MonoBehaviour
             DisplayText();
             ItemWordInventory wordInv = ItemWordInventory.Instance;
             wordInv.AddItemWord(foundItemWord);
-            Logger.LogElements("Inventory", wordInv.Inventory.Select(w => w.ItemWord.Word));
+            // フラグ仕様の例としてItemWordの入手をフラグで記録しているが、本来はInventoryにアクセスしてItemWordの入手を確認する。
+            FlagManager.Instance.Change($"Word{foundItemWord.Word}Get", true);
         }
     }
 
