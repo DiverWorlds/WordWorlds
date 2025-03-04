@@ -42,8 +42,6 @@ public class HomeManager : Singleton<HomeManager>
     void Start()
     {
         flagManager = FlagManager.Instance;
-        flagManager.LoadInitialFlags();
-        SaveDataManager.Instance.Load();
 
         //エンディングに迎えるならばエンディング用のWakeButtonを表示
         wakeToEndingButton.gameObject.SetActive(false);
