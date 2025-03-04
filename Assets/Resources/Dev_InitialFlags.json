@@ -1,19 +1,19 @@
 {
     "flagList": [
         {
-            "key": "WordGetA",
+            "key": "WordGet_a",
             "value": false
         },
         {
-            "key": "WordGetB",
+            "key": "WordGet_b",
             "value": false
         },
         {
-            "key": "WordGetC",
+            "key": "WordGet_c",
             "value": false
         },
         {
-            "key": "WordGetD",
+            "key": "WordGet_d",
             "value": false
         }
     ]

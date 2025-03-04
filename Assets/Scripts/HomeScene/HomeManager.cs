@@ -47,7 +47,7 @@ public class HomeManager : Singleton<HomeManager>
 
         //エンディングに迎えるならばエンディング用のWakeButtonを表示
         wakeToEndingButton.gameObject.SetActive(false);
-        if (flagManager.Get("WordGetA") && flagManager.Get("WordGetB")) wakeToEndingButton.gameObject.SetActive(true);
+        if (flagManager.Get("WordGet_a") && flagManager.Get("WordGet_b")) wakeToEndingButton.gameObject.SetActive(true);
 
         itemWordInventory = ItemWordInventory.Instance;
     }
