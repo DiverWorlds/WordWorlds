@@ -1,0 +1,13 @@
+{
+    "inventory": [
+        {
+            "itemWord": "c",
+            "isUsed": false
+        },
+        {
+            "itemWord": "d",
+            "isUsed": false
+        }
+    ],
+    "lastScene": "Dev_HomeScene"
+}
