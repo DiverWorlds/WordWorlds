@@ -986,6 +986,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b26c0a5d2eb874f4e9ca3777b0254e82, type: 3}
+--- !u!114 &1792150121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1214837469127228377, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
+  m_PrefabInstance: {fileID: 7973757136108496490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1873206263 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9044223978707815822, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
@@ -1050,6 +1061,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -83
       objectReference: {fileID: 0}
+    - target: {fileID: 2784330446554186803, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 1792150121}
+    - target: {fileID: 2784330446554186803, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
+      propertyPath: searchWorld
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cbd50f9793cd4136882fc724d02bf1f, type: 2}
     - target: {fileID: 5633043009522828755, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
       propertyPath: m_fontAsset
       value: 

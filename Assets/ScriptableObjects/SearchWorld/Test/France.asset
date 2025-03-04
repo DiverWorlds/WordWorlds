@@ -14,5 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: F
   worldName: "\u30D5\u30E9\u30F3\u30B9"
-  image: {fileID: 0}
-  itemWords: []
