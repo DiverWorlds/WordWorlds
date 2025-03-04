@@ -1,15 +1,19 @@
 {
     "flagList": [
         {
-            "key": "DummyA",
+            "key": "WordGetA",
             "value": false
         },
         {
-            "key": "DummyB",
-            "value": true
+            "key": "WordGetB",
+            "value": false
         },
         {
-            "key": "DummyC",
+            "key": "WordGetC",
+            "value": false
+        },
+        {
+            "key": "WordGetD",
             "value": false
         }
     ]

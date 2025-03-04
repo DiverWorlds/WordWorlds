@@ -7,10 +7,14 @@ using UnityEngine;
 
 public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
+    //TODO: Homeに戻る機能作る
+    //TODO: Inventoryの中にHomeに戻るボタンを置く
     [SerializeField] private int maxSize = 15;
     private SearchWorldDatabase searchWorldDB;
     private List<ItemEntry> inventory = new();
     public ReadOnlyCollection<ItemEntry> Inventory => inventory.AsReadOnly();
+    private Action onInventoryUpdated;
+    public event Action OnInventoryUpdated { add => onInventoryUpdated += value; remove => onInventoryUpdated -= value; }
 
     void Start()
     {
@@ -22,12 +26,18 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
         if (maxSize > inventory.Count() && !inventory.Any(w => w.ItemWord.Equals(itemWord)))
         {
             inventory.Add(new(itemWord));
+            onInventoryUpdated.Invoke();
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    public bool IsContains(ItemWord itemWord)
+    {
+        return inventory.Select(e => e.ItemWord).Contains(itemWord);
     }
 
     public SearchWorld RecallWorld(ItemWord itemWord1, ItemWord itemWord2)

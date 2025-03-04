@@ -9,10 +9,6 @@ public class SearchWorld : ScriptableObject
 {
     [SerializeField] private string id;
     [SerializeField] private string worldName;
-    [SerializeField] private Image image;
-    [SerializeField] private List<ItemWord> itemWords;
     public string Id => id; //csvに記述された、省略された名前
     public string WorldName => worldName; //正式な日本語の名前
-    public Image Image => image;
-    public List<ItemWord> ItemWords => itemWords;
 }

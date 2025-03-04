@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Develop/Dev_{WorldName}SearchWorld.unity.meta
+guid: 8de7496b238154cc3a975b86a9517f47
+========
 guid: 22e8d3f2eaf9049059f5b843511d95cb
+>>>>>>>> a564493186943d4f3b70c25fcbff83fe80b93b5f:Assets/Scenes/Develop/Dev_Ending.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

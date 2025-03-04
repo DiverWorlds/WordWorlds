@@ -52,10 +52,10 @@ public class HomeManager : Singleton<HomeManager>
 
     public void SelectWord(ItemWordButton itemWordButton)//UIから合成するワードを選択する
     {
-        if (!ElemItemWord1) ElemItemWord1 = itemWordButton;
-        else if (ElemItemWord1 == itemWordButton) Debug.Log("同じワードを選ぶことはできません");
-        else if (!ElemItemWord2) ElemItemWord2 = itemWordButton;
-        else Debug.Log("すでに2つのワードが選択されています");
+        if (ElemItemWord1 == null) ElemItemWord1 = itemWordButton;
+        else if (ElemItemWord1 == itemWordButton) Logger.Log("同じワードを選ぶことはできません");
+        else if (ElemItemWord2 == null) ElemItemWord2 = itemWordButton;
+        else Logger.Log("すでに2つのワードが選択されています");
     }
 
     public void CombineItemWord()//実際にワードをミックス、世界を生成する

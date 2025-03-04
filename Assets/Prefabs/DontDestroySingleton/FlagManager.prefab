@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc63b4dcec9d8478eae16a6fed530555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialFilePath: Dev_EndingTestFlags
-  saveFilePath: Dev_EndingTestFlags
+  initialFilePath: InitialFlags
+  saveFilePath: SavedFlags

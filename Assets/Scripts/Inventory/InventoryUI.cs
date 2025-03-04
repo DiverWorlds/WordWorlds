@@ -14,6 +14,11 @@ public class InventoryUI : MonoBehaviour
     {
         itemWordInv = ItemWordInventory.Instance;
         LoadInventoryData();
+        ItemWordInventory.Instance.OnInventoryUpdated += LoadInventoryData;
+    }
+    void OnDestroy()
+    {
+        ItemWordInventory.Instance.OnInventoryUpdated -= LoadInventoryData;
     }
 
     public void LoadInventoryData()
