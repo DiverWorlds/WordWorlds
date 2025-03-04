@@ -510,5 +510,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885f0503533fa47a493faa95fcdfab66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemWordButtonPrefab: {fileID: 8927221065176666005, guid: fa2ff47c1742a4f6faf47a555930b464, type: 3}
+  itemWordUIPrefab: {fileID: 0}
   inventoryGroup: {fileID: 3456546822653990858}
