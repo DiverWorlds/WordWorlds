@@ -20,7 +20,7 @@ public class ItemWordButton : ItemWordIcon
 
     public void OnClick()
     {
-        HomeManager.Instance.SelectWord(this);
+        HomeManager.Instance.SelectItemWord(this);
     }
 
     public ItemEntry GetItemEntry()
