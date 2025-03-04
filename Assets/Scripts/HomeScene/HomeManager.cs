@@ -42,7 +42,8 @@ public class HomeManager : Singleton<HomeManager>
     void Start()
     {
         flagManager = FlagManager.Instance;
-        flagManager.LoadSavedFlags();
+        flagManager.LoadInitialFlags();
+        SaveDataManager.Instance.Load();
 
         //エンディングに迎えるならばエンディング用のWakeButtonを表示
         wakeToEndingButton.gameObject.SetActive(false);
@@ -78,11 +79,11 @@ public class HomeManager : Singleton<HomeManager>
         if (CurrentSearchWorld == null) return;
         if (SceneManager.GetActiveScene().name.Contains("Dev_"))
         {
-            SceneManager.LoadScene($"Dev_{CurrentSearchWorld.WorldName}SearchWorld");
+            SceneManager.LoadScene($"Dev_{CurrentSearchWorld.name}SearchWorld");
         }
         else
         {
-            SceneManager.LoadScene($"{CurrentSearchWorld.WorldName}SearchWorld");
+            SceneManager.LoadScene($"{CurrentSearchWorld.name}SearchWorld");
         }
     }
 
