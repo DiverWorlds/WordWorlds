@@ -2434,7 +2434,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2194420187426991882, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000018585782
+      value: 0.0059834933
       objectReference: {fileID: 0}
     - target: {fileID: 2227244136607861692, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2450,6 +2450,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3223563014399905574, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: itemWordUIPrefab
+      value: 
+      objectReference: {fileID: 8927221065176666005, guid: fa2ff47c1742a4f6faf47a555930b464, type: 3}
+    - target: {fileID: 3223563014399905574, guid: 006016e0964ee4c488d884f69e644058, type: 3}
+      propertyPath: itemWordIconPrefab
       value: 
       objectReference: {fileID: 8927221065176666005, guid: fa2ff47c1742a4f6faf47a555930b464, type: 3}
     - target: {fileID: 3248830289047532337, guid: 006016e0964ee4c488d884f69e644058, type: 3}

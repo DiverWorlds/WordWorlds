@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     // HomeSceneではButton、DiveSceneではIconをアタッチする。
-    [SerializeField] private GameObject itemWordUIPrefab;
+    [SerializeField] private GameObject itemWordIconPrefab;
     [SerializeField] private VerticalLayoutGroup inventoryGroup;
     private ItemWordInventory itemWordInv;
+    private Dictionary<string, ItemWordIcon> itemWordIconDict = new();
 
     void Start()
     {
@@ -16,11 +18,13 @@ public class InventoryUI : MonoBehaviour
 
     public void LoadInventoryData()
     {
-        foreach (ItemEntry item in itemWordInv.Inventory)
+        foreach (ItemEntry itemEntry in itemWordInv.Inventory)
         {
-            GameObject instance = Instantiate(itemWordUIPrefab, inventoryGroup.gameObject.transform);
-            ItemWordIcon itemWordIcon = instance.GetComponent<ItemWordIcon>(); //Buttonとアイコンの親クラス作る
-            itemWordIcon.Initialize(item);
+            if(itemWordIconDict.ContainsKey(itemEntry.ItemWord.Word)) continue;
+            GameObject instance = Instantiate(itemWordIconPrefab, inventoryGroup.gameObject.transform);
+            ItemWordIcon itemWordIcon = instance.GetComponent<ItemWordIcon>();
+            itemWordIconDict.Add(itemEntry.ItemWord.Word, itemWordIcon);
+            itemWordIcon.Initialize(itemEntry);
         }
     }
 
