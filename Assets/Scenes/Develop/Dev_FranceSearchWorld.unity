@@ -449,6 +449,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4513757163555541718, guid: 0de1cb553ebb642b4aefe3ef0627d1ee, type: 3}
   m_PrefabInstance: {fileID: 603248147}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &786075429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6183308295034089667, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
+  m_PrefabInstance: {fileID: 7973757136108496490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885f0503533fa47a493faa95fcdfab66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &986019471 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1588345192124269830, guid: 28a001a733a6547e09dd68e0676e1646, type: 3}
@@ -586,6 +597,34 @@ PrefabInstance:
     - target: {fileID: 1393195922380529939, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
       propertyPath: m_Name
       value: LoadSaveDataButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 786075429}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadInventoryData
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InventoryUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598722112026612003, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2161013299267537054, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
       propertyPath: m_Pivot.x

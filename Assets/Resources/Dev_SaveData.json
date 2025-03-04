@@ -1,14 +1,6 @@
 {
     "inventory": [
         {
-            "itemWord": "a",
-            "isUsed": false
-        },
-        {
-            "itemWord": "b",
-            "isUsed": false
-        },
-        {
             "itemWord": "c",
             "isUsed": false
         },
