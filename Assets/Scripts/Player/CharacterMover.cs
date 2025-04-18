@@ -5,15 +5,15 @@ using UnityEngine;
 public class CharacterMover : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
+    [SerializeField] BoxCollider groundingJudgment;
     private Vector3 playerVelocity;
-    private bool groundedPlayer;
     private float playerSpeed = 2.0f;
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        bool isGrounded = groundingJudgment.isTrigger;
+        if (isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
@@ -24,7 +24,8 @@ public class CharacterMover : MonoBehaviour
         move = move.normalized;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
+        Logger.Log($"{((Input.GetKeyDown(KeyCode.Space) && isGrounded) ? "!!!!" : "")} SpaceKey: {Input.GetKeyDown(KeyCode.Space)}, groundedPlayer: {isGrounded}");
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
