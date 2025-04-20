@@ -6,31 +6,31 @@ public class CharacterMover : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] BoxCollider groundingJudgment;
+    private bool isGrounded = false;
     private Vector3 playerVelocity;
     private float playerSpeed = 2.0f;
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
+    public bool IsGrounded { set { isGrounded = value; } }
     void Update()
     {
-        bool isGrounded = groundingJudgment.isTrigger;
-        if (isGrounded && playerVelocity.y < 0)
+        // 着地、落下処理
+        if (isGrounded && playerVelocity.y != 0)
         {
             playerVelocity.y = 0f;
         }
+        else if (!isGrounded)
+        {
+            playerVelocity.y += gravityValue * Time.deltaTime;
+        }
 
+        // 移動処理
         float axisX = Input.GetAxisRaw("Horizontal");
         float axisY = Input.GetAxisRaw("Vertical");
         Vector3 move = transform.forward * axisY + transform.right * axisX;
+        move.y = 0;
         move = move.normalized;
         controller.Move(move * Time.deltaTime * playerSpeed);
-
-        Logger.Log($"{((Input.GetKeyDown(KeyCode.Space) && isGrounded) ? "!!!!" : "")} SpaceKey: {Input.GetKeyDown(KeyCode.Space)}, groundedPlayer: {isGrounded}");
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 }
