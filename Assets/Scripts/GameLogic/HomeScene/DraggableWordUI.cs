@@ -16,6 +16,22 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         get { return itemEntry; }
     }
     private WordDropper wordDropper;
+    public WordDropper WordDropper
+    {
+        get { return wordDropper; }
+        set
+        {
+            wordDropper = value;
+            if (wordDropper)
+            {
+                this.textMeshProUGUI.color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                this.textMeshProUGUI.color = new Color(1, 0, 0, 1);
+            }
+        }
+    }
     private TextMeshProUGUI textMeshProUGUI;
 
     public void Initialize(Vector2 prevPos, ItemEntry itemEntry)
@@ -54,9 +70,9 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         // オブジェクトをドラッグ前の位置に戻す
         rectTransform.anchoredPosition = prevPos;
 
-        if (wordDropper)
+        if (WordDropper)
         {
-            wordDropper.AddItemWord(this);
+            WordDropper.AddItemWord(this);
             this.gameObject.SetActive(false);
         }
     }
@@ -74,11 +90,11 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        wordDropper = collision.gameObject.GetComponent<WordDropper>();
+        WordDropper = collision.gameObject.GetComponent<WordDropper>();
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        wordDropper = null;
+        WordDropper = null;
     }
 }
