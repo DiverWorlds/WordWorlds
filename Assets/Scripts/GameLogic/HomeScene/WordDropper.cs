@@ -1,16 +1,24 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WordDropper : MonoBehaviour
 {
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
+    private ItemWordInventory itemWordInventory;
+
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private HomeManager homeManager;
+    [SerializeField] private Image background;
     [SerializeField] private TextMeshProUGUI tmp_word_1;
     [SerializeField] private TextMeshProUGUI tmp_word_2;
+    [SerializeField] private Transform AppearancePivot;
+    [SerializeField] private RawImage defaultViewImage;
+    private GameObject WorldAppearance = null;
     private DraggableWordUI[] draggableWordUIs = new DraggableWordUI[2];
     private SearchWorld predictWorld;
+    [SerializeField] private PredictCanvas predictCanvas;
 
 
     private void Start()
@@ -18,6 +26,7 @@ public class WordDropper : MonoBehaviour
         countText.text = "0 / 2";
         tmp_word_1.text = "";
         tmp_word_2.text = "";
+        itemWordInventory = ItemWordInventory.Instance;
     }
     public void AddItemWord(DraggableWordUI draggableWordUI)
     {
@@ -44,6 +53,27 @@ public class WordDropper : MonoBehaviour
     public void PredictResult()
     {
         predictWorld = searchWorldDatabase.GetRecalledWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
+        background.gameObject.SetActive(false);
+        WorldAppearance = Instantiate(predictWorld.WorldAppearance, AppearancePivot);
+        predictCanvas.ShowPredicion(predictWorld.name);
         Logger.Log(predictWorld.name);
+    }
+
+    public void RecallSearchWorld()
+    {
+        itemWordInventory.RecallWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
+    }
+
+    public void OnClickCancel() //予測表示後にキャンセルが押される時
+    {
+        tmp_word_1.text = "";
+        tmp_word_2.text = "";
+        draggableWordUIs[0].gameObject.SetActive(true);
+        draggableWordUIs[0] = null;
+        draggableWordUIs[1].gameObject.SetActive(true);
+        draggableWordUIs[1] = null;
+        countText.text = "0 / 2";
+        background.gameObject.SetActive(true);
+        Destroy(WorldAppearance);
     }
 }
