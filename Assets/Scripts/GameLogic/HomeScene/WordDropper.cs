@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WordDropper : MonoBehaviour
 {
-    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
+    [SerializeField] private Dev_SearchWorldDatabase searchWorldDatabase;
     private ItemWordInventory itemWordInventory;
 
     [SerializeField] private TextMeshProUGUI countText;
@@ -16,7 +16,7 @@ public class WordDropper : MonoBehaviour
     [SerializeField] private Transform AppearancePivot;
     [SerializeField] private RawImage defaultViewImage;
     private GameObject WorldAppearance = null;
-    private DraggableWordUI[] draggableWordUIs = new DraggableWordUI[2];
+    [SerializeField] private DraggableWordUI[] draggableWordUIs = new DraggableWordUI[2];
     private SearchWorld predictWorld;
     [SerializeField] private PredictCanvas predictCanvas;
 
@@ -53,10 +53,17 @@ public class WordDropper : MonoBehaviour
     public void PredictResult()
     {
         predictWorld = searchWorldDatabase.GetRecalledWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
-        background.gameObject.SetActive(false);
-        WorldAppearance = Instantiate(predictWorld.WorldAppearance, AppearancePivot);
-        predictCanvas.ShowPredicion(predictWorld.name);
-        Logger.Log(predictWorld.name);
+        if (predictWorld)
+        {
+            background.gameObject.SetActive(false);
+            WorldAppearance = Instantiate(predictWorld.WorldAppearance, AppearancePivot);
+            predictCanvas.ShowPredicion(predictWorld.name);
+            Logger.Log(predictWorld.name);
+        }
+        else
+        {
+            Invoke("ResetWordsList", 0.001f);
+        }
     }
 
     public void RecallSearchWorld()
@@ -66,6 +73,14 @@ public class WordDropper : MonoBehaviour
 
     public void OnClickCancel() //予測表示後にキャンセルが押される時
     {
+        ResetWordsList();
+        background.gameObject.SetActive(true);
+        Destroy(WorldAppearance);
+    }
+
+    private void ResetWordsList()
+    {
+        Logger.Log("Reset!!!");
         tmp_word_1.text = "";
         tmp_word_2.text = "";
         draggableWordUIs[0].gameObject.SetActive(true);
@@ -73,7 +88,5 @@ public class WordDropper : MonoBehaviour
         draggableWordUIs[1].gameObject.SetActive(true);
         draggableWordUIs[1] = null;
         countText.text = "0 / 2";
-        background.gameObject.SetActive(true);
-        Destroy(WorldAppearance);
     }
 }

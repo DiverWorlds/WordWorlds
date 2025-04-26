@@ -3,8 +3,8 @@ using UnityEngine;
 using System.Linq;
 using System;
 [Serializable]
-[CreateAssetMenu(fileName = "SearchWorldDatabase", menuName = "ScriptableObject/SearchWorldDatabase")]
-public class SearchWorldDatabase : ScriptableObject
+[CreateAssetMenu(fileName = "Dev_SearchWorldDatabase", menuName = "ScriptableObject/Dev_SearchWorldDatabase")]
+public class Dev_SearchWorldDatabase : ScriptableObject
 {
     [SerializeField] private ItemWordDatabase wordDB;
     [SerializeField] private List<SearchWorld> searchWorldList;
@@ -17,7 +17,7 @@ public class SearchWorldDatabase : ScriptableObject
     {
         searchWorlds = new(searchWorldList);
 
-        TextAsset recipeCSV = Resources.Load<TextAsset>("searchWorldRecipe");
+        TextAsset recipeCSV = Resources.Load<TextAsset>("Dev_searchWorldRecipe");
         string[] recipeDataLines = recipeCSV.text.Replace("\r\n", "\n").Split("\n");
         for (int i = 0; i < recipeDataLines.Length; i++)
         {

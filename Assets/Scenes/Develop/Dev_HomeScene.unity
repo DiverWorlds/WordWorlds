@@ -2046,6 +2046,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DraggableWordUIPrefab: {fileID: 6848516476674282597, guid: 4961475ddf3524d9d9f6c02024c37296, type: 3}
   canvas: {fileID: 442869784}
+  width: 250
+  height: 150
 --- !u!224 &1083276685 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2161013299267537054, guid: 6f572d0299031439d90b1d99886835c8, type: 3}
@@ -3095,7 +3097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1696724690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4045,7 +4047,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2194420187426991882, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000048944028
+      value: 0.000064066866
       objectReference: {fileID: 0}
     - target: {fileID: 2227244136607861692, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4058,6 +4060,14 @@ PrefabInstance:
     - target: {fileID: 2227244136607861692, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227244136607861692, guid: 006016e0964ee4c488d884f69e644058, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227244136607861692, guid: 006016e0964ee4c488d884f69e644058, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3223563014399905574, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: itemWordUIPrefab
@@ -4149,7 +4159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6413495221869331743, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_Size
-      value: 1
+      value: 0.99999285
       objectReference: {fileID: 0}
     - target: {fileID: 6413495221869331743, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_Value
@@ -4161,7 +4171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7613093591951282969, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.9999711
+      value: 0.9999959
       objectReference: {fileID: 0}
     - target: {fileID: 7613093591951282969, guid: 006016e0964ee4c488d884f69e644058, type: 3}
       propertyPath: m_AnchorMin.y

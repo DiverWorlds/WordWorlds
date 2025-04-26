@@ -10,7 +10,7 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     //TODO: Homeに戻る機能作る
     //TODO: Inventoryの中にHomeに戻るボタンを置く
     [SerializeField] private int maxSize = 15;
-    private SearchWorldDatabase searchWorldDB;
+    private Dev_SearchWorldDatabase searchWorldDB;
     private List<ItemEntry> inventory = new();
     public ReadOnlyCollection<ItemEntry> Inventory => inventory.AsReadOnly();
     private Action onInventoryUpdated;

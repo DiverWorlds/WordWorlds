@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class DraggableInventory : MonoBehaviour
 {
     [SerializeField] private GameObject DraggableWordUIPrefab;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private float width;
+    [SerializeField] private float height;
     private ItemWordInventory itemWordInv;
-    private Dictionary<string, ItemWordIcon> itemWordIconDict = new();
     private Dictionary<string, DraggableWordUI> draggableWordDict = new();
 
     void Start()
@@ -30,7 +32,7 @@ public class DraggableInventory : MonoBehaviour
             GameObject instance = Instantiate(DraggableWordUIPrefab, canvas.GetComponent<RectTransform>());
             DraggableWordUI draggableWord = instance.GetComponent<DraggableWordUI>();
             draggableWordDict.Add(itemEntry.ItemWord.Word, draggableWord);
-            draggableWord.Initialize(new Vector2(Mathf.Cos(360 / itemWordInv.Inventory.Count * i) * 200, Mathf.Sin(360 / itemWordInv.Inventory.Count * i) * 100), itemEntry);
+            draggableWord.Initialize(new Vector2(Mathf.Cos(2 * Mathf.PI / itemWordInv.Inventory.Count * i) * width, Mathf.Sin(2 * Mathf.PI / itemWordInv.Inventory.Count * i) * height), itemEntry);
             i++;
         }
     }
