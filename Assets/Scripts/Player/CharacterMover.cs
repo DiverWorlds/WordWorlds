@@ -12,6 +12,7 @@ public class CharacterMover : MonoBehaviour
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
     public bool IsGrounded { set { isGrounded = value; } }
+    // 視点移動で体全体が回転しており、着地判定も動いてしまっているため、PlayerオブジェクトをHeadとBodyに分ける
     void Update()
     {
         // 着地、落下処理
