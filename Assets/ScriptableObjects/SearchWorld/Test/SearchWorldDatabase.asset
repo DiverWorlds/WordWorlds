@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411670afc739f44e29306f2dc20fc8c0, type: 3}
   m_Name: SearchWorldDatabase
   m_EditorClassIdentifier: 
+  wordDB: {fileID: 11400000, guid: ca676671d70b740be9860e7a2848d016, type: 2}
   searchWorldList:
   - {fileID: 11400000, guid: cdcdc3b4da64844b68fae6a1b5dde017, type: 2}
   - {fileID: 11400000, guid: ec80d2a6a6608483d8f6fe83bd86b021, type: 2}
