@@ -3,7 +3,7 @@ using UnityEngine;
 public class DatabaseTest : MonoBehaviour
 {
     private ItemWordDatabase itemWordDB;
-    private Dev_SearchWorldDatabase searchWorldDB;
+    private SearchWorldDatabase searchWorldDB;
     void Start()
     {
         itemWordDB = GlobalDB.Instance.ItemWordDB;

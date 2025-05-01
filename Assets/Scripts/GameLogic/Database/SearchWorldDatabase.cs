@@ -4,7 +4,7 @@ using System.Linq;
 using System;
 [Serializable]
 [CreateAssetMenu(fileName = "Dev_SearchWorldDatabase", menuName = "ScriptableObject/Dev_SearchWorldDatabase")]
-public class Dev_SearchWorldDatabase : ScriptableObject
+public class SearchWorldDatabase : ScriptableObject
 {
     [SerializeField] private ItemWordDatabase wordDB;
     [SerializeField] private List<SearchWorld> searchWorldList;

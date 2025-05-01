@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WordDropper : MonoBehaviour
 {
-    [SerializeField] private Dev_SearchWorldDatabase searchWorldDatabase;
+    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private ItemWordInventory itemWordInventory;
 
     [SerializeField] private TextMeshProUGUI countText;

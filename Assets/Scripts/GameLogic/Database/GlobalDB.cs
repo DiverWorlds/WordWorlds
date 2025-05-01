@@ -3,9 +3,9 @@ using UnityEngine;
 public class GlobalDB : DontDestroySingleton<GlobalDB>
 {
     [SerializeField] private ItemWordDatabase itemWordDatabase;
-    [SerializeField] private Dev_SearchWorldDatabase searchWorldDatabase;
+    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     public ItemWordDatabase ItemWordDB => itemWordDatabase;
-    public Dev_SearchWorldDatabase SearchWorldDB => searchWorldDatabase;
+    public SearchWorldDatabase SearchWorldDB => searchWorldDatabase;
     public override void Awake()
     {
         base.Awake();
