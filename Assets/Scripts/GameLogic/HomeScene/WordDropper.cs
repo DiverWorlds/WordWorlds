@@ -19,6 +19,7 @@ public class WordDropper : MonoBehaviour
     [SerializeField] private DraggableWordUI[] draggableWordUIs = new DraggableWordUI[2];
     private SearchWorld predictWorld;
     [SerializeField] private PredictCanvas predictCanvas;
+    [SerializeField] private DraggableInventory draggableInventory;
 
 
     private void Start()
@@ -33,12 +34,14 @@ public class WordDropper : MonoBehaviour
         Logger.Log("ワード：" + draggableWordUI.ItemEntry.ItemWord.name);
         if (!this.draggableWordUIs[0])
         {
+            draggableWordUI.gameObject.SetActive(false);//ドロップされたワードを非表示に
             this.draggableWordUIs[0] = draggableWordUI;
             countText.text = "1 / 2";
             tmp_word_1.text = this.draggableWordUIs[0].ItemEntry.ItemWord.Word;
         }
         else if (!this.draggableWordUIs[1] && draggableWordUI != draggableWordUIs[0])
         {
+            draggableWordUI.gameObject.SetActive(false);//ドロップされたワードを非表示に
             this.draggableWordUIs[1] = draggableWordUI;
             countText.text = "2 / 2";
             tmp_word_2.text = this.draggableWordUIs[1].ItemEntry.ItemWord.Word;
@@ -62,13 +65,19 @@ public class WordDropper : MonoBehaviour
         }
         else
         {
-            Invoke("ResetWordsList", 0.001f);
+            ResetWordsList();
         }
     }
 
     public void RecallSearchWorld()
     {
         itemWordInventory.RecallWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
+        predictCanvas.gameObject.SetActive(false);
+        tmp_word_1.text = "";
+        tmp_word_2.text = "";
+        draggableWordUIs[0] = null;
+        draggableWordUIs[1] = null;
+        draggableInventory.HideInventory();
     }
 
     public void OnClickCancel() //予測表示後にキャンセルが押される時

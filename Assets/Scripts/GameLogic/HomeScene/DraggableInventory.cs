@@ -37,4 +37,13 @@ public class DraggableInventory : MonoBehaviour
         }
     }
 
+    public void HideInventory()
+    {
+        foreach (DraggableWordUI draggableWordUI in draggableWordDict.Values)
+        {
+            Destroy(draggableWordUI.gameObject);
+        }
+        draggableWordDict.Clear();
+    }
+
 }
