@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
-[Serializable]
-public class ExampleEffect : MonoBehaviour, IEffectable
+using UnityEngine.EventSystems;
+public class Test_BearTwinkleEffect : MonoBehaviour
 {
     //この関数でズーム処理やワード入手処理を行う
-    public void PlayEffect()
+    public void OnClick()
     {
         Logger.Log("くまちゃんだ。");
     }
