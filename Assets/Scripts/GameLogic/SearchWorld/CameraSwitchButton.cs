@@ -1,22 +1,22 @@
-using UnityEngine;
+using System.Linq;
 
-public class CameraSwitchButton : MonoBehaviour
+public class CameraSwitchButton : CameraSwitchBase
 {
-    [SerializeField] private string cameraName;
-    [SerializeField] private SearchWorldManager searchWorldManager;
-
+    void Start()
+    {
+        searchWorldManager.OnCameraSwitched += OnCameraSwitched;
+    }
     public void OnClick()
     {
-        if (gameObject.name.Contains("Back"))
+        if (searchWorldManager.CurrentCamera.CameraType == CameraType.Zoom)
         {
-            if (searchWorldManager.CurrentCameraName.Contains("Zoom"))
-            {
-                searchWorldManager.SwitchCamera(cameraName);
-            }
+            searchWorldManager.SwitchCamera(targetCamera);
         }
-        else
-        {
-            searchWorldManager.SwitchCamera(cameraName);
-        }
+    }
+    // ズーム中にさらに画面クリックで移動することはしない想定
+    // 一旦，PlayerState.Normalで，UIでカメラ移動はしない想定
+    private void OnCameraSwitched()
+    {
+        targetCamera = searchWorldManager.CurrentCamera.MovableCameras.First();
     }
 }

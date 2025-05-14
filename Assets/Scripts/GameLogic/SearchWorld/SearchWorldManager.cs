@@ -4,31 +4,35 @@ using UnityEngine;
 
 public class SearchWorldManager : MonoBehaviour
 {
-    [Serializable]
-    private class CameraData
-    {
-        public string name;
-        public Camera camera;
-    }
-
-    [SerializeField] private List<CameraData> cameraList = new();
-    private Dictionary<string, Camera> cameras = new();
-    private string currentCameraName = "";
-    public string CurrentCameraName => currentCameraName;
+    [SerializeField] private List<MyCamera> cameraList = new();
+    private MyCamera currentCamera;
+    private PlayerState playerState = PlayerState.Normal;
+    private Action onCameraSwitched;
+    public MyCamera CurrentCamera => currentCamera;
+    public PlayerState PlayerState => playerState;
+    public event Action OnCameraSwitched { add => onCameraSwitched += value; remove => onCameraSwitched -= value; }
 
     void Start()
     {
-        currentCameraName = cameraList[0].name;
-
-        foreach (CameraData cameraData in cameraList)
+        currentCamera = cameraList[0];
+        for (int i=0; i<cameraList.Count; i++)
         {
-            cameras.Add(cameraData.name, cameraData.camera);
+            if (i==0)
+            {
+                cameraList[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                cameraList[i].gameObject.SetActive(false);
+            }
         }
     }
-    public void SwitchCamera(string cameraName)
+    public void SwitchCamera(MyCamera myCamera)
     {
-        cameras[currentCameraName].gameObject.SetActive(false);
-        currentCameraName = cameraName;
-        cameras[currentCameraName].gameObject.SetActive(true);
+        MyCamera nextCamera = myCamera;
+        currentCamera.gameObject.SetActive(false);
+        currentCamera = nextCamera;
+        nextCamera.gameObject.SetActive(true);
+        onCameraSwitched.Invoke();
     }
 }

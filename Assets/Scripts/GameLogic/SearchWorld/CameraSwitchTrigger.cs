@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraSwitchTrigger : MonoBehaviour, IPointerClickHandler
+public class CameraSwitchTrigger : CameraSwitchBase, IPointerClickHandler
 {
-    [SerializeField] private string cameraName;
-    [SerializeField] private SearchWorldManager searchWorldManager;
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        Logger.Log("Clicked; cameraName", cameraName);
-        searchWorldManager.SwitchCamera(cameraName);
+        Logger.Log("Clicked; cameraName", targetCamera.name);
+        if (searchWorldManager.CurrentCamera.MovableCameras.Contains(targetCamera))
+        {
+            searchWorldManager.SwitchCamera(targetCamera);
+        }
     }
 }

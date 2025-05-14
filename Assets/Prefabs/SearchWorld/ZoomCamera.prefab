@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5215261496005053266, guid: f49e9bfcca10a48feb6fd7bc667d8736, type: 3}
+      propertyPath: cameraType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7870496800572327581, guid: f49e9bfcca10a48feb6fd7bc667d8736, type: 3}
       propertyPath: m_Name
       value: ZoomCamera

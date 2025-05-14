@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 
 public class AddRemoveClickDetection : MonoBehaviour
 {
+    //TODO: アタッチ忘れ検出機能作る
     [MenuItem("GameObject/Click Detection/Add")]
     private static void AddComponents(MenuCommand command)
     {
