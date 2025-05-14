@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
 
 public class AddRemoveClickDetection : MonoBehaviour
 {
     //TODO: アタッチ忘れ検出機能作る
-    [MenuItem("GameObject/Click Detection/Add")]
+    // [MenuItem("GameObject/Click Detection/Add")]
     private static void AddComponents(MenuCommand command)
     {
         GameObject selectedObject = command.context as GameObject;
@@ -33,7 +32,7 @@ public class AddRemoveClickDetection : MonoBehaviour
         }
     }
 
-    [MenuItem("GameObject/Click Detection/Remove")]
+    // [MenuItem("GameObject/Click Detection/Remove")]
     private static void RemoveComponents(MenuCommand command)
     {
         GameObject selectedObject = command.context as GameObject;

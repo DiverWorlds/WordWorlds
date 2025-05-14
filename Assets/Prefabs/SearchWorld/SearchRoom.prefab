@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4727578957874600965}
   m_Layer: 0
   m_Name: RoomRoot
-  m_TagString: Untagged
+  m_TagString: RoomRoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 6544588403649698668}
   - component: {fileID: 5309252117038535296}
   m_Layer: 0
-  m_Name: ExampleRoom
-  m_TagString: Untagged
+  m_Name: SearchRoom
+  m_TagString: SearchRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

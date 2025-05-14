@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5441982940821833044}
   - component: {fileID: 4910906868488595245}
   m_Layer: 0
-  m_Name: ExampleWorld
-  m_TagString: Untagged
+  m_Name: SearchWorld
+  m_TagString: SearchWorld
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SearchWorldManager : MonoBehaviour
 {
+    //TODO: シングルトンにして，クラスからアクセスできるようにする
     [SerializeField] private List<MyCamera> cameraList = new();
     private MyCamera currentCamera;
     private PlayerState playerState = PlayerState.Normal;
