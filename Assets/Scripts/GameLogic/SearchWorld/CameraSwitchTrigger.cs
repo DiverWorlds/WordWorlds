@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class CameraSwitchTrigger : CameraSwitchBase, IPointerClickHandler
 {
-
+    //TODO: Itemスクリプトを作る
     public void OnPointerClick(PointerEventData eventData)
     {
         Logger.Log("Clicked; cameraName", targetCamera.name);

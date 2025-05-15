@@ -36,14 +36,14 @@ public class AddRemoveWorldCollider : MonoBehaviour
         {
             if (roomStructurePart.childCount == 0)
             {
-                if (roomStructurePart.GetComponent<BoxCollider>() == null)
+                if (roomStructurePart.GetComponent<MeshCollider>() == null)
                 {
-                    BoxCollider coll = roomStructurePart.AddComponent<BoxCollider>();
-                    coll.size = new(coll.size.x, coll.size.y, ColliderThickness);
+                    MeshCollider coll = roomStructurePart.AddComponent<MeshCollider>();
+                    // coll.size = new(coll.size.x, coll.size.y, ColliderThickness);
                 }
                 else
                 {
-                    Logger.Log(roomStructurePart.gameObject.name + " は既に BoxCollider を持っています。");
+                    Logger.Log(roomStructurePart.gameObject.name + " は既に MeshCollider を持っています。");
                 }
             }
             else
@@ -79,14 +79,14 @@ public class AddRemoveWorldCollider : MonoBehaviour
         {
             if (roomStructurePart.childCount == 0)
             {
-                var coll = roomStructurePart.GetComponent<BoxCollider>();
+                var coll = roomStructurePart.GetComponent<MeshCollider>();
                 if (coll != null)
                 {
                     DestroyImmediate(coll);
                 }
                 else
                 {
-                    Logger.Log(roomStructurePart.gameObject.name + " は BoxCollider を持っていません。");
+                    Logger.Log(roomStructurePart.gameObject.name + " は MeshCollider を持っていません。");
                 }
             }
             else
