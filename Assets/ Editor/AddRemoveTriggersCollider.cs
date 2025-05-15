@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 
 public class AddRemoveTriggersCollider : MonoBehaviour
 {
+    //TODO: Roomsクリックで全ての部屋に当たり判定つけられるようにする
     private const string EventTriggers = "EventTriggers";
 
     [MenuItem("GameObject/Triggers Collider/Add")]
