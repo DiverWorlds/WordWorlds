@@ -4,6 +4,7 @@ public class ViewPointSwitchButton : ViewPointSwitchBase
 {
     void Start()
     {
+        OnStart();
         searchWorldManager.OnViewPointSwitched += OnViewPointSwitched;
     }
     public void OnClick()

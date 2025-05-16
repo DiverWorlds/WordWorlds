@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SearchWorldManager : MonoBehaviour
+public class SearchWorldManager : Singleton<SearchWorldManager>
 {
     //TODO: シングルトンにして，クラスからアクセスできるようにする
     [SerializeField] private List<ViewPoint> viewPointList = new();
