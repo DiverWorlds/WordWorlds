@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3461801383073853122}
   - component: {fileID: 5520938473225129311}
   m_Layer: 0
-  m_Name: CameraSwitchButton
+  m_Name: ViewPointSwitchButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 28918009969092747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa5d69afbc88486a98ca962fb2706dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 7692bdcd95ddc46caa6d78f1a6a483aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraName: MainCamera_Room1
+  targetViewPoint: {fileID: 0}
   searchWorldManager: {fileID: 0}
 --- !u!1 &5086810226752552319
 GameObject:

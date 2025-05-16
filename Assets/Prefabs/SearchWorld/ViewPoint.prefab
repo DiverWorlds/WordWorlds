@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4319378182773976945}
   - component: {fileID: 5215261496005053266}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: ViewPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,10 +164,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7870496800572327581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f78b4c729824b3f829b7e57f3974dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 05fa17dce25134ec6b4c6fade8c44cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 3924490018276895773}
-  cameraType: 0
+  type: 0
   locatedRoom: {fileID: 0}
-  movableCameras: []
+  movableViewPoints: []
