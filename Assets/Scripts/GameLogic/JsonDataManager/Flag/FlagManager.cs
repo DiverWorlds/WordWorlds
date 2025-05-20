@@ -56,6 +56,11 @@ public class FlagManager : DontDestroySingleton<FlagManager>
         flags[key] = value;
     }
 
+    public bool IsExist(string key)
+    {
+        return flags.ContainsKey(key);
+    }
+
     public bool Save()
     {
         try

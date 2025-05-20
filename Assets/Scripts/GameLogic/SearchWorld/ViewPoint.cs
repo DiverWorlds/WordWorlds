@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ViewPoint : MonoBehaviour
 {
+    //TODO: located RoomをEditor拡張で自動アタッチ
     [SerializeField] private new Camera camera;
     [SerializeField] private ViewPointType type;
     [SerializeField] private SearchRoom locatedRoom;
