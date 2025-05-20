@@ -2,38 +2,38 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SearchWorldManager : MonoBehaviour
+public class SearchWorldManager : Singleton<SearchWorldManager>
 {
     //TODO: シングルトンにして，クラスからアクセスできるようにする
-    [SerializeField] private List<MyCamera> cameraList = new();
-    private MyCamera currentCamera;
+    [SerializeField] private List<ViewPoint> viewPointList = new();
+    private ViewPoint currentViewPoint;
     private PlayerState playerState = PlayerState.Normal;
-    private Action onCameraSwitched;
-    public MyCamera CurrentCamera => currentCamera;
+    private Action onViewPointSwitched;
+    public ViewPoint CurrentViewPoint => currentViewPoint;
     public PlayerState PlayerState => playerState;
-    public event Action OnCameraSwitched { add => onCameraSwitched += value; remove => onCameraSwitched -= value; }
+    public event Action OnViewPointSwitched { add => onViewPointSwitched += value; remove => onViewPointSwitched -= value; }
 
     void Start()
     {
-        currentCamera = cameraList[0];
-        for (int i=0; i<cameraList.Count; i++)
+        currentViewPoint = viewPointList[0];
+        for (int i=0; i<viewPointList.Count; i++)
         {
             if (i==0)
             {
-                cameraList[i].gameObject.SetActive(true);
+                viewPointList[i].gameObject.SetActive(true);
             }
             else
             {
-                cameraList[i].gameObject.SetActive(false);
+                viewPointList[i].gameObject.SetActive(false);
             }
         }
     }
-    public void SwitchCamera(MyCamera myCamera)
+    public void SwitchViewPoint(ViewPoint viewPoint)
     {
-        MyCamera nextCamera = myCamera;
-        currentCamera.gameObject.SetActive(false);
-        currentCamera = nextCamera;
-        nextCamera.gameObject.SetActive(true);
-        onCameraSwitched.Invoke();
+        ViewPoint nextViewPoint = viewPoint;
+        currentViewPoint.gameObject.SetActive(false);
+        currentViewPoint = nextViewPoint;
+        nextViewPoint.gameObject.SetActive(true);
+        onViewPointSwitched.Invoke();
     }
 }

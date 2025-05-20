@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - RoomRoot
-  - SearchRoom
-  - SearchWorld
+  - Rooms
+  - EventTriggers
   layers:
   - Default
   - TransparentFX
