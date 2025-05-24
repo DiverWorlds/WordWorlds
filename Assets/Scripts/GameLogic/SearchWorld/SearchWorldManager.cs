@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SearchWorldManager : Singleton<SearchWorldManager>
 {
-    //TODO: シングルトンにして，クラスからアクセスできるようにする
     [SerializeField] private List<ViewPoint> viewPointList = new();
     [SerializeField] private ViewPointSwitchButton viewPointBackButton;
     private ViewPoint currentViewPoint;
