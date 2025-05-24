@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TargetCondition : MonoBehaviour
+public class EventTargetCondition : MonoBehaviour
 {
     //TODO: CalcOperatorにCustomを追加し，複雑な条件式を入力できるようにする
     private enum CalcOperator
@@ -31,39 +31,50 @@ public class TargetCondition : MonoBehaviour
 
     private bool IsConditionMeet()
     {
-        if (flags.Count == 0)
+        if (IsEventActive())
         {
-            return true;
+            if (flags.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                if (calcOperator == CalcOperator.AND)
+                {
+                    if (flags.All(f => IsFlagMeet(f)))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else /*if (calcOperator == CalcOperator.OR)*/
+                {
+                    if (flags.Any(f => IsFlagMeet(f)))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
         }
         else
         {
-            if (calcOperator == CalcOperator.AND)
-            {
-                if (flags.All(f => IsFlagMeet(f)))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else /*if (calcOperator == CalcOperator.OR)*/
-            {
-                if (flags.Any(f => IsFlagMeet(f)))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            Logger.Log($"{gameObject.name}のイベントは現在有効ではありません．");
+            return false;
         }
-
     }
     private bool IsFlagMeet(Flag flag)
     {
         return flag.Value.Equals(FlagManager.Instance.Get(flag.Key));
+    }
+    private bool IsEventActive()
+    {
+        return SearchWorldManager.Instance.CurrentViewPoint.ActiveEvents.Contains(this);
     }
 }

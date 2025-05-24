@@ -6,6 +6,7 @@ public class SearchWorldManager : Singleton<SearchWorldManager>
 {
     //TODO: シングルトンにして，クラスからアクセスできるようにする
     [SerializeField] private List<ViewPoint> viewPointList = new();
+    [SerializeField] private ViewPointSwitchButton viewPointBackButton;
     private ViewPoint currentViewPoint;
     private PlayerState playerState = PlayerState.Normal;
     private Action onViewPointSwitched;
@@ -16,9 +17,9 @@ public class SearchWorldManager : Singleton<SearchWorldManager>
     void Start()
     {
         currentViewPoint = viewPointList[0];
-        for (int i=0; i<viewPointList.Count; i++)
+        for (int i = 0; i < viewPointList.Count; i++)
         {
-            if (i==0)
+            if (i == 0)
             {
                 viewPointList[i].gameObject.SetActive(true);
             }
@@ -27,13 +28,23 @@ public class SearchWorldManager : Singleton<SearchWorldManager>
                 viewPointList[i].gameObject.SetActive(false);
             }
         }
+        onViewPointSwitched?.Invoke();
     }
     public void SwitchViewPoint(ViewPoint viewPoint)
     {
         ViewPoint nextViewPoint = viewPoint;
+        if (nextViewPoint.Type == ViewPointType.Zoom)
+        {
+            viewPointBackButton.gameObject.SetActive(true);
+            viewPointBackButton.TargetViewPoint = currentViewPoint;
+        }
+        else if (nextViewPoint.Type == ViewPointType.Main)
+        {
+            viewPointBackButton.gameObject.SetActive(false);
+        }
         currentViewPoint.gameObject.SetActive(false);
-        currentViewPoint = nextViewPoint;
         nextViewPoint.gameObject.SetActive(true);
-        onViewPointSwitched.Invoke();
+        currentViewPoint = nextViewPoint;
+        onViewPointSwitched?.Invoke();
     }
 }

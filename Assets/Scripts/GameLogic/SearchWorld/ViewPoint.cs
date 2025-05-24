@@ -7,9 +7,9 @@ public class ViewPoint : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private ViewPointType type;
     [SerializeField] private SearchRoom locatedRoom;
-    [SerializeField] private List<ViewPoint> movableViewPoints;
+    [SerializeField] private List<EventTargetCondition> activeEvents;
     public Camera Camera => camera;
     public ViewPointType Type => type;
     public SearchRoom LocatedRoom => locatedRoom;
-    public List<ViewPoint> MovableViewPoints => movableViewPoints;
+    public List<EventTargetCondition> ActiveEvents => activeEvents;
 }
