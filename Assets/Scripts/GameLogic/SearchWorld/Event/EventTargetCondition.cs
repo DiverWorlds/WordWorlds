@@ -16,7 +16,7 @@ public class EventTargetCondition : MonoBehaviour
     [SerializeField] private List<Flag> flags;
     [SerializeField] private CalcOperator calcOperator = CalcOperator.AND;
 
-    public void OnEventTriggered()
+    public void OnEventTriggered(BaseEventData eventData)
     {
         Logger.Log($"{gameObject.name}: OnEventTriggered()");
         if (IsConditionMeet())

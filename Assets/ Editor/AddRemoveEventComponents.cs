@@ -1,16 +1,15 @@
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using System.Linq;
-using System.Collections.Generic;
-using UnityEngine.Events;
 
 public class AddRemoveEventComponents : MonoBehaviour
 {
     private const string Rooms = "Rooms";
     private const string EventObjects = "EventObjects";
 
+    // Whole----------------------------------------------------------------------------------------
+    // RoomsのMenuItemで，全てのEventObjectにEventTrigger, EventTargetCondition, MeshColliderを追加
     [MenuItem("GameObject/Event Components (Whole)/Add", false, 10)]
     private static void AddComponentsToWhole()
     {
@@ -33,6 +32,7 @@ public class AddRemoveEventComponents : MonoBehaviour
         Logger.Log("全てのEventObjectsにComponentをアタッチする作業が終了しました。");
     }
 
+    // RoomsのMenuItemで，全てのEventObjectのEventTrigger, EventTargetCondition, IEventEffect，MeshColliderを取り除く
     [MenuItem("GameObject/Event Components (Whole)/Remove", false, 11)]
     private static void RemoveComponentsFromWhole()
     {
@@ -61,7 +61,8 @@ public class AddRemoveEventComponents : MonoBehaviour
     {
         return Selection.activeGameObject.CompareTag(Rooms);
     }
-
+    // ---------------------------------------------------------------------------------------------
+    // One------------------------------------------------------------------------------------------
     [MenuItem("GameObject/Event Components/Add", false, 20)]
     private static void AddComponentsToSelection()
     {
@@ -80,22 +81,23 @@ public class AddRemoveEventComponents : MonoBehaviour
     {
         return Selection.activeGameObject.transform.parent.CompareTag(EventObjects);
     }
-
+    // ---------------------------------------------------------------------------------------------
+    // 内部処理--------------------------------------------------------------------------------------
     private static void AddComponents(GameObject eventObject)
     {
-        EnsureComponent<MeshCollider>(eventObject.gameObject);
-        EventTrigger eventTrigger = EnsureComponent<EventTrigger>(eventObject.gameObject);
-        EventTargetCondition eventTargetCondition = EnsureComponent<EventTargetCondition>(eventObject.gameObject);
+        EnsureComponent<MeshCollider>(eventObject);
+        EventTrigger eventTrigger = EnsureComponent<EventTrigger>(eventObject);
+        EventTargetCondition eventTargetCondition = EnsureComponent<EventTargetCondition>(eventObject);
 
-        eventTrigger.triggers = new List<EventTrigger.Entry>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerClick;
-        EventTrigger.TriggerEvent  call = new EventTrigger.TriggerEvent();
-        UnityEditor.Events.UnityEventTools.AddPersistentListener(call);
+        eventTrigger.triggers.Clear();
+        EventTrigger.Entry entry = new()
+        {
+            eventID = EventTriggerType.PointerClick
+        };
+        EventTrigger.TriggerEvent call = new();
+        UnityEditor.Events.UnityEventTools.AddPersistentListener(call, eventTargetCondition.OnEventTriggered);
         entry.callback = call;
         eventTrigger.triggers.Add(entry);
-        Logger.LogElements("triggers", eventTrigger.triggers);
-        Logger.Log("eventID", eventTrigger.triggers[0].eventID);
     }
     private static void RemoveComponents(GameObject eventObject)
     {
@@ -177,4 +179,5 @@ public class AddRemoveEventComponents : MonoBehaviour
             Debug.Log($"{gameObject.name} には {typeof(TInterface).Name} を実装している Script はアタッチされていませんでした。");
         }
     }
+    // ---------------------------------------------------------------------------------------------
 }
