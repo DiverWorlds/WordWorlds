@@ -1124,6 +1124,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1294332617874016566, guid: f9f56907fb32c4e809f254a782257bb8, type: 3}
+      propertyPath: m_TagString
+      value: EventObjects
+      objectReference: {fileID: 0}
     - target: {fileID: 1399971204230429876, guid: f9f56907fb32c4e809f254a782257bb8, type: 3}
       propertyPath: m_Name
       value: SearchWorld
