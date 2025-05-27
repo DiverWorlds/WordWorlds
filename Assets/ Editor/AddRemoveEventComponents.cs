@@ -3,6 +3,8 @@ using UnityEditor;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class AddRemoveEventComponents : MonoBehaviour
 {
@@ -79,24 +81,23 @@ public class AddRemoveEventComponents : MonoBehaviour
         return Selection.activeGameObject.transform.parent.CompareTag(EventObjects);
     }
 
-        private static void AddComponents(GameObject eventObject)
+    private static void AddComponents(GameObject eventObject)
     {
         EnsureComponent<MeshCollider>(eventObject.gameObject);
         EventTrigger eventTrigger = EnsureComponent<EventTrigger>(eventObject.gameObject);
-        if (eventTrigger != null)
-        {
-            eventTrigger.triggers = new()
-            {
-                new EventTrigger.Entry()
-                {
-                    eventID = EventTriggerType.PointerClick
-                }
-            };
-        }
-        EnsureComponent<EventTargetCondition>(eventObject.gameObject);
-    }
+        EventTargetCondition eventTargetCondition = EnsureComponent<EventTargetCondition>(eventObject.gameObject);
 
-        private static void RemoveComponents(GameObject eventObject)
+        eventTrigger.triggers = new List<EventTrigger.Entry>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        EventTrigger.TriggerEvent  call = new EventTrigger.TriggerEvent();
+        UnityEditor.Events.UnityEventTools.AddPersistentListener(call);
+        entry.callback = call;
+        eventTrigger.triggers.Add(entry);
+        Logger.LogElements("triggers", eventTrigger.triggers);
+        Logger.Log("eventID", eventTrigger.triggers[0].eventID);
+    }
+    private static void RemoveComponents(GameObject eventObject)
     {
         RemoveComponents<Collider>(eventObject);
         RemoveComponents<EventTrigger>(eventObject);
