@@ -29,7 +29,9 @@ public class AddRemoveEventComponents : MonoBehaviour
                 }
             }
         }
-        Logger.Log("全てのEventObjectsにComponentをアタッチする作業が終了しました。");
+        Logger.Log("全てのEventObjectsに Component をアタッチしました。");
+        Logger.Log($"<b><color=green>[アナウンス]</color></b>  各 EventObject に適切な EventEffect をアタッチしてください。");
+        Logger.Log($"<b><color=green>[アナウンス]</color></b>  各 ViewPoint の ActiveEvents に適切な EventObject をアタッチしてください。");
     }
 
     // RoomsのMenuItemで，全てのEventObjectのEventTrigger, EventTargetCondition, IEventEffect，MeshColliderを取り除く
@@ -52,7 +54,7 @@ public class AddRemoveEventComponents : MonoBehaviour
                 }
             }
         }
-        Logger.Log("全てのEventObjectsの、Componentを取り除く作業が終了しました。");
+        Logger.Log("全てのEventObjectsの Component をデタッチしました。");
     }
 
     [MenuItem("GameObject/Event Components (Whole)/Add", true, 10)]
@@ -66,7 +68,10 @@ public class AddRemoveEventComponents : MonoBehaviour
     [MenuItem("GameObject/Event Components/Add", false, 20)]
     private static void AddComponentsToSelection()
     {
-        AddComponents(Selection.activeGameObject);
+        var obj = Selection.activeGameObject;
+        AddComponents(obj);
+        Logger.Log($"<b><color=green>[アナウンス]</color></b>  {obj.name} に適切な EventEffect をアタッチしてください。");
+        Logger.Log($"<b><color=green>[アナウンス]</color></b>  適切な ViewPoint の ActiveEvents に {obj.name} をアタッチしてください。");
     }
 
     [MenuItem("GameObject/Event Components/Remove", false, 21)]
@@ -85,25 +90,28 @@ public class AddRemoveEventComponents : MonoBehaviour
     // 内部処理--------------------------------------------------------------------------------------
     private static void AddComponents(GameObject eventObject)
     {
-        EnsureComponent<MeshCollider>(eventObject);
+        MeshCollider meshCollider = EnsureComponent<MeshCollider>(eventObject);
         EventTrigger eventTrigger = EnsureComponent<EventTrigger>(eventObject);
         EventTargetCondition eventTargetCondition = EnsureComponent<EventTargetCondition>(eventObject);
 
-        eventTrigger.triggers.Clear();
-        EventTrigger.Entry entry = new()
+        if (eventTrigger != null && eventTargetCondition != null)
         {
-            eventID = EventTriggerType.PointerClick
-        };
-        EventTrigger.TriggerEvent call = new();
-        UnityEditor.Events.UnityEventTools.AddPersistentListener(call, eventTargetCondition.OnEventTriggered);
-        entry.callback = call;
-        eventTrigger.triggers.Add(entry);
+            eventTrigger.triggers.Clear();
+            EventTrigger.Entry entry = new()
+            {
+                eventID = EventTriggerType.PointerClick
+            };
+            EventTrigger.TriggerEvent call = new();
+            UnityEditor.Events.UnityEventTools.AddPersistentListener(call, eventTargetCondition.OnEventTriggered);
+            entry.callback = call;
+            eventTrigger.triggers.Add(entry);
+        }
     }
     private static void RemoveComponents(GameObject eventObject)
     {
-        RemoveComponents<Collider>(eventObject);
-        RemoveComponents<EventTrigger>(eventObject);
-        RemoveComponents<EventTargetCondition>(eventObject);
+        RemoveComponentsIfExists<Collider>(eventObject);
+        RemoveComponentsIfExists<EventTrigger>(eventObject);
+        RemoveComponentsIfExists<EventTargetCondition>(eventObject);
         RemoveImplementingComponents<IEventEffect>(eventObject);
     }
 
@@ -121,7 +129,7 @@ public class AddRemoveEventComponents : MonoBehaviour
             else
             {
                 Logger.Log($"{gameObject.name} は {collider.GetType().Name} が既にアタッチされています。");
-                return null;
+                return (T)(Component)collider;
             }
         }
         else
@@ -134,12 +142,12 @@ public class AddRemoveEventComponents : MonoBehaviour
             else
             {
                 Logger.Log($"{gameObject.name} は {typeof(T).Name} が既にアタッチされています。");
-                return null;
+                return component;
             }
 
         }
     }
-    private static void RemoveComponents<T>(GameObject gameObject) where T : Component
+    private static void RemoveComponentsIfExists<T>(GameObject gameObject) where T : Component
     {
         T[] components = gameObject.GetComponents<T>();
         if (components.Length > 0)
@@ -148,7 +156,7 @@ public class AddRemoveEventComponents : MonoBehaviour
             {
                 DestroyImmediate(component);
             }
-            Logger.Log($"{gameObject.name} から {typeof(T).Name} を {components.Length} 個取り除きました。");
+            Logger.Log($"{gameObject.name} から {typeof(T).Name} を {components.Length} 個デタッチしました。");
         }
         else
         {
@@ -172,7 +180,7 @@ public class AddRemoveEventComponents : MonoBehaviour
 
         if (removedCount > 0)
         {
-            Debug.Log($"{gameObject.name} から {typeof(TInterface).Name} を実装している Script を {removedCount} 個取り除きました。");
+            Debug.Log($"{gameObject.name} から {typeof(TInterface).Name} を実装している Script を {removedCount} 個デタッチしました。");
         }
         else
         {
