@@ -7,36 +7,25 @@ using TMPro;
 
 public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] private RawImage image;
-    private Vector2 prevPos; //保存しておく初期position
-    private RectTransform rectTransform; // 移動したいオブジェクトのRectTransform
-    private RectTransform parentRectTransform; // 移動したいオブジェクトの親(Panel)のRectTransform
-    private ItemEntry itemEntry;
+    [SerializeField] private RawImage image;//文字画像
+    private Vector2 prevPos; //ドラッグ前の初期position
+    private RectTransform rectTransform; // このオブジェクトのRectTransform
+    [SerializeField] private RectTransform parentRectTransform; // 親のRectTransform(Canvas)
+    private ItemEntry itemEntry;//ワードアイテムの実データ
     public ItemEntry ItemEntry
     {
         get { return itemEntry; }
     }
-    private WordDropper wordDropper;
-    public WordDropper WordDropper
+    private WordDropper wordDropper;//オブジェクトのドラッグ先
+    public WordDropper WordDropper//ドラッグ先のプロパティ
     {
-        get { return wordDropper; }
-        set
-        {
-            wordDropper = value;
-            if (wordDropper)
-            {
-                this.textMeshProUGUI.color = new Color(1, 1, 1, 1);
-            }
-            else
-            {
-                this.textMeshProUGUI.color = new Color(1, 0, 0, 1);
-            }
-        }
+        get;
+        set;
     }
-    [SerializeField] private TextMeshProUGUI textMeshProUGUI;
+    [SerializeField] private TextMeshProUGUI textMeshProUGUI;//開発中、画像がない際にTMProを仮置きする際に使う
 
-    [SerializeField] private Material unUsedMaterial;
-    [SerializeField] private Material isUsedMaterial;
+    [SerializeField] private Material unUsedMaterial;//未使用の際に適用されるマテリアル
+    [SerializeField] private Material isUsedMaterial;//使用済みの際に適用されるマテリアル
 
     public void Initialize(Vector2 prevPos, ItemEntry itemEntry)
     {
@@ -47,16 +36,16 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         this.itemEntry = itemEntry;
         if (ItemEntry.ItemWord.WordImage)
         {
-            this.textMeshProUGUI.gameObject.SetActive(false);
-            this.image.texture = ItemEntry.ItemWord.WordImage;
+            this.textMeshProUGUI.gameObject.SetActive(false);//TMProを無効に
+            this.image.texture = ItemEntry.ItemWord.WordImage;//画像を有効に
             if (itemEntry.IsUsed) image.material = isUsedMaterial;
             else image.material = unUsedMaterial;
         }
         else
         {
-            //デバッグ用、画像
-            this.image.gameObject.SetActive(false);
-            this.textMeshProUGUI.text = itemEntry.ItemWord.Word;
+            //開発中、画像が用意されていないワードに対して
+            this.image.gameObject.SetActive(false);//画像を無効に
+            this.textMeshProUGUI.text = itemEntry.ItemWord.Word;//TMProを有効に
         }
     }
 
@@ -64,7 +53,6 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     public void OnBeginDrag(PointerEventData eventData)
     {
         // ドラッグ前の位置を記憶しておく
-        // RectTransformの場合はpositionではなくanchoredPositionを使う
         if (!ItemEntry.IsUsed) prevPos = rectTransform.anchoredPosition;
 
     }
@@ -75,7 +63,6 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (!ItemEntry.IsUsed)
         {
             // eventData.positionから、親に従うlocalPositionへの変換を行う
-            // オブジェクトの位置をlocalPositionに変更する
             Vector2 localPosition = GetLocalPosition(eventData.position);
             rectTransform.anchoredPosition = localPosition;
         }
@@ -89,7 +76,7 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
             // オブジェクトをドラッグ前の位置に戻す
             rectTransform.anchoredPosition = prevPos;
 
-            if (WordDropper)
+            if (WordDropper)//ドロップ可能な場所でマウスが離れた時
             {
                 WordDropper.AddItemWord(this);
             }
@@ -109,11 +96,11 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        WordDropper = collision.gameObject.GetComponent<WordDropper>();
+        WordDropper = collision.gameObject.GetComponent<WordDropper>();//ドロップ可能な位置に来たらドロッパーを取得
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        WordDropper = null;
+        WordDropper = null;//ドロップ可能な位置から離れたらドロッパーを忘れる
     }
 }
