@@ -1,55 +1,41 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class HomeManager : Singleton<HomeManager>
 {
-    private ItemWordInventory itemWordInventory;
     [SerializeField] private ItemWordDatabase itemWordDatabase;
-
-    //シーン内のオブジェクト(UI)をSerializeFieldとして格納
-    [SerializeField] private WakeToEndingButton wakeToEndingButton;//エンディングへ向かうWakeボタン
+    private ItemWordInventory itemWordInventory;
     private FlagManager flagManager;//FlagManagerはSingletonのInstanceから取得
 
     //データ類
     public SearchWorld CurrentSearchWorld { get; set; }
-    private ItemWordButton elemItemWord1;
+    private ItemWordButton elemItemWord1;//?ボタン？押せないやつじゃない？
+    private ItemWordButton elemItemWord2;
     public ItemWordButton ElemItemWord1
     {
+        get { return elemItemWord1; }
         set
         {
             elemItemWord1 = value;
-            ShowDebugText();
+            LogDebugText();
         }
-        get { return elemItemWord1; }
     }
-
-    private ItemWordButton elemItemWord2;
     public ItemWordButton ElemItemWord2
     {
+        get { return elemItemWord2; }
         set
         {
             elemItemWord2 = value;
-            ShowDebugText();
+            LogDebugText();
         }
-        get { return elemItemWord2; }
     }
-
-    //開発用
-    [SerializeField] private TextMeshProUGUI debugText;
 
     void Start()
     {
         flagManager = FlagManager.Instance;
-
-        //エンディングに迎えるならばエンディング用のWakeButtonを表示
-        wakeToEndingButton.gameObject.SetActive(false);
-        if (flagManager.Get("WordGet_a") && flagManager.Get("WordGet_b")) wakeToEndingButton.gameObject.SetActive(true);
-
         itemWordInventory = ItemWordInventory.Instance;
     }
-
     public void SelectItemWord(ItemWordButton itemWordButton)//UIから合成するワードを選択する
     {
         if (ElemItemWord1 == null) ElemItemWord1 = itemWordButton;
@@ -85,12 +71,12 @@ public class HomeManager : Singleton<HomeManager>
         }
     }
 
-    public void ShowDebugText()
+    private void LogDebugText()
     {
         string text = "";
         if (ElemItemWord1) text += "選択: " + ElemItemWord1.GetComponent<ItemWordButton>().GetItemEntry().ItemWord.Word + "\n";
         if (ElemItemWord2) text += "選択: " + ElemItemWord2.GetComponent<ItemWordButton>().GetItemEntry().ItemWord.Word + "\n";
         if (CurrentSearchWorld) text += "現在の世界" + CurrentSearchWorld.WorldName + "\n";
-        debugText.text = text;
+        Logger.Log(text);
     }
 }
