@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 8313369396208556019}
   - component: {fileID: 2402266650632655607}
   m_Layer: 5
-  m_Name: WordDropper
+  m_Name: ItemWordDropArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,17 +471,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   searchWorldDatabase: {fileID: 11400000, guid: d203c180e41894da0b1b5543b5926ed2, type: 2}
-  countText: {fileID: 7869744021215648843}
-  homeManager: {fileID: 0}
+  droppedItemWordCountText: {fileID: 0}
   background: {fileID: 8253246904676587497}
   tmp_word_1: {fileID: 500957680200144460}
   tmp_word_2: {fileID: 6030802473854708624}
   AppearancePivot: {fileID: 0}
-  defaultViewImage: {fileID: 0}
   draggableWordUIs:
   - {fileID: 0}
   - {fileID: 0}
   predictCanvas: {fileID: 0}
+  draggableInventory: {fileID: 0}
 --- !u!61 &8313369396208556019
 BoxCollider2D:
   m_ObjectHideFlags: 0

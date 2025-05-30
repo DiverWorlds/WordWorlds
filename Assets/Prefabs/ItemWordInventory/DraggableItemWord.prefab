@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 6005969457189480765}
   - component: {fileID: 1573093292665796840}
   m_Layer: 5
-  m_Name: DraggableWordUI
+  m_Name: DraggableItemWord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

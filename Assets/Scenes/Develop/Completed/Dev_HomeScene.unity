@@ -354,7 +354,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4523266756048265154, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: m_Name
-      value: WordDropper
+      value: ItemWordDropArea
       objectReference: {fileID: 0}
     - target: {fileID: 6600436050421552025, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: m_Pivot.x

@@ -11,7 +11,7 @@ public class DraggableInventory : MonoBehaviour
     [SerializeField] private float width;//どれだけの横幅でワードを配置するか
     [SerializeField] private float height;//どれだけの縦幅でワードを配置するか
     private ItemWordInventory itemWordInv;
-    private Dictionary<string, DraggableWordUI> draggableWordDict = new();
+    private Dictionary<string, DraggableItemWord> draggableWordDict = new();
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class DraggableInventory : MonoBehaviour
         {
             if (draggableWordDict.ContainsKey(itemEntry.ItemWord.Word)) continue;
             GameObject instance = Instantiate(DraggableWordUIPrefab, canvas.GetComponent<RectTransform>());
-            DraggableWordUI draggableWord = instance.GetComponent<DraggableWordUI>();
+            DraggableItemWord draggableWord = instance.GetComponent<DraggableItemWord>();
             draggableWordDict.Add(itemEntry.ItemWord.Word, draggableWord);
             draggableWord.Initialize(new Vector2(Mathf.Cos(2 * Mathf.PI / itemWordInv.Inventory.Count * i) * width, Mathf.Sin(2 * Mathf.PI / itemWordInv.Inventory.Count * i) * height), itemEntry);
             i++;
@@ -41,7 +41,7 @@ public class DraggableInventory : MonoBehaviour
 
     public void HideInventory()
     {
-        foreach (DraggableWordUI draggableWordUI in draggableWordDict.Values)
+        foreach (DraggableItemWord draggableWordUI in draggableWordDict.Values)
         {
             Destroy(draggableWordUI.gameObject);
         }
