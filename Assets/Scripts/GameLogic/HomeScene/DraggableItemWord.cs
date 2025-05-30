@@ -7,32 +7,34 @@ using TMPro;
 
 public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] private RawImage image;//文字画像
-    private Vector2 prevPos; //ドラッグ前の初期position
-    private RectTransform rectTransform; // このオブジェクトのRectTransform
+    [SerializeField] private RawImage image; // 文字画像
+    [SerializeField] private TextMeshProUGUI textMeshProUGUI;//imageにアタッチする画像がまだ用意されてない時はTextを表示する．
     [SerializeField] private RectTransform parentRectTransform; // 親のRectTransform(Canvas)
-    private ItemEntry itemEntry;//ワードアイテムの実データ
+    [SerializeField] private Material unusedMaterial;  // 未使用の際に適用されるマテリアル
+    [SerializeField] private Material usedMaterial; // 使用済みの際に適用されるマテリアル
+    private Vector2 initialPos; // ドラッグ前の初期position
+    private RectTransform rectTransform; // このオブジェクトのRectTransform
+    private ItemEntry itemEntry; // ItemWordの実データ
+    private ItemWordDropArea itemWordDropArea;//オブジェクトのドラッグ先
+
+
     public ItemEntry ItemEntry
     {
         get { return itemEntry; }
     }
-    private ItemWordDropArea itemWordDropArea;//オブジェクトのドラッグ先
     public ItemWordDropArea ItemWordDropArea//ドラッグ先のプロパティ
     {
         get;
         set;
     }
-    [SerializeField] private TextMeshProUGUI textMeshProUGUI;//開発中、画像がない際にTMProを仮置きする際に使う
 
-    [SerializeField] private Material unusedMaterial;//未使用の際に適用されるマテリアル
-    [SerializeField] private Material usedMaterial;//使用済みの際に適用されるマテリアル
 
-    public void Initialize(Vector2 prevPos, ItemEntry itemEntry)
+    public void Initialize(Vector2 initialPos, ItemEntry itemEntry)
     {
         rectTransform = GetComponent<RectTransform>();
         parentRectTransform = rectTransform.parent as RectTransform;
-        this.prevPos = prevPos;
-        rectTransform.anchoredPosition = prevPos;
+        this.initialPos = initialPos;
+        SetPosition(initialPos);
         this.itemEntry = itemEntry;
         if (ItemEntry.ItemWord.WordImage)
         {
@@ -53,7 +55,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         // ドラッグ前の位置を記憶しておく
-        if (!ItemEntry.IsUsed) prevPos = rectTransform.anchoredPosition;
+        if (!ItemEntry.IsUsed) initialPos = rectTransform.anchoredPosition;
 
     }
 
@@ -64,7 +66,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         {
             // eventData.positionから、親に従うlocalPositionへの変換を行う
             Vector2 localPosition = GetLocalPosition(eventData.position);
-            rectTransform.anchoredPosition = localPosition;
+            SetPosition(localPosition);
         }
     }
 
@@ -74,7 +76,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if (!ItemEntry.IsUsed)
         {
             // オブジェクトをドラッグ前の位置に戻す
-            rectTransform.anchoredPosition = prevPos;
+            SetPosition(initialPos);
 
             if (ItemWordDropArea)//ドロップ可能な場所でマウスが離れた時
             {
@@ -102,5 +104,9 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private void OnCollisionExit2D(Collision2D collision)
     {
         ItemWordDropArea = null;//ドロップ可能な位置から離れたらドロッパーを忘れる
+    }
+    private void SetPosition(Vector2 position)
+    {
+        rectTransform.anchoredPosition = position;
     }
 }
