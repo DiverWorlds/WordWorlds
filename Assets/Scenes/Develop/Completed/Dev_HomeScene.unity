@@ -352,9 +352,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 442869785}
     m_Modifications:
+    - target: {fileID: 1965040332218106420, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+      propertyPath: m_Name
+      value: AnnounceText
+      objectReference: {fileID: 0}
     - target: {fileID: 4523266756048265154, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: m_Name
       value: ItemWordDropArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608913448920612895, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+      propertyPath: m_Name
+      value: CounterText
       objectReference: {fileID: 0}
     - target: {fileID: 6600436050421552025, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: m_Pivot.x
@@ -464,6 +472,10 @@ PrefabInstance:
       propertyPath: AppearancePivot
       value: 
       objectReference: {fileID: 586889965}
+    - target: {fileID: 8083306143055788645, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+      propertyPath: dropCounterText
+      value: 
+      objectReference: {fileID: 677810834}
     - target: {fileID: 8083306143055788645, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: defaultViewImage
       value: 
@@ -1256,6 +1268,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be1d4e75c5a014c849211e2694d35e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &677810834 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7869744021215648843, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+  m_PrefabInstance: {fileID: 356910084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &677877429
