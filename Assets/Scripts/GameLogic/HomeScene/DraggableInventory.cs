@@ -5,10 +5,11 @@ using System;
 
 public class DraggableInventory : MonoBehaviour
 {
+    //インベントリというより、ワードをインベントリの中身に従って配置するクラス
     [SerializeField] private GameObject DraggableWordUIPrefab;
     [SerializeField] private Canvas canvas;
-    [SerializeField] private float width;
-    [SerializeField] private float height;
+    [SerializeField] private float width;//どれだけの横幅でワードを配置するか
+    [SerializeField] private float height;//どれだけの縦幅でワードを配置するか
     private ItemWordInventory itemWordInv;
     private Dictionary<string, DraggableWordUI> draggableWordDict = new();
 
@@ -23,6 +24,7 @@ public class DraggableInventory : MonoBehaviour
         ItemWordInventory.Instance.OnInventoryUpdated -= LoadInventoryData;
     }
 
+    //ドラッグ可能ワードUIのロードと楕円形配置
     public void LoadInventoryData()
     {
         int i = 0;
