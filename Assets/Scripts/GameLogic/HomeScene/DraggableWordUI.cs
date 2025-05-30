@@ -16,8 +16,8 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         get { return itemEntry; }
     }
-    private WordDropper wordDropper;//オブジェクトのドラッグ先
-    public WordDropper WordDropper//ドラッグ先のプロパティ
+    private ItemWordDropArea wordDropper;//オブジェクトのドラッグ先
+    public ItemWordDropArea WordDropper//ドラッグ先のプロパティ
     {
         get;
         set;
@@ -96,7 +96,7 @@ public class DraggableWordUI : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        WordDropper = collision.gameObject.GetComponent<WordDropper>();//ドロップ可能な位置に来たらドロッパーを取得
+        WordDropper = collision.gameObject.GetComponent<ItemWordDropArea>();//ドロップ可能な位置に来たらドロッパーを取得
     }
 
     private void OnCollisionExit2D(Collision2D collision)

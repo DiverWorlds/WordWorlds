@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PredictCanvas : MonoBehaviour
 {
-    [SerializeField] private WordDropper wordDropper;
+    [SerializeField] private ItemWordDropArea wordDropper;
     [SerializeField] private TextMeshProUGUI worldName;
     public void ShowPredicion(string worldName)
     {

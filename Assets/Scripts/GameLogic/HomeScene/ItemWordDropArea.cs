@@ -3,18 +3,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WordDropper : MonoBehaviour
+public class ItemWordDropArea : MonoBehaviour
 {
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private ItemWordInventory itemWordInventory;
 
     [SerializeField] private TextMeshProUGUI countText;
-    [SerializeField] private HomeManager homeManager;
     [SerializeField] private Image background;//ドロップ可能範囲はこの画像のサイズに依存
     [SerializeField] private TextMeshProUGUI tmp_word_1;
     [SerializeField] private TextMeshProUGUI tmp_word_2;
     [SerializeField] private Transform AppearancePivot;//世界の見た目が表示される場所
-    [SerializeField] private RawImage defaultViewImage;//←なんやこれ
     private GameObject WorldAppearance = null;//世界の見た目の3Dオブジェクト
     [SerializeField] private DraggableWordUI[] draggableWordUIs = new DraggableWordUI[2];//UIのリスト
     private SearchWorld predictWorld;//予測した生成先世界の保存のための変数
