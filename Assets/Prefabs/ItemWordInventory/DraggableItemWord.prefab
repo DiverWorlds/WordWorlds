@@ -268,11 +268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967a016f470fd4511846e87cb8359eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 1878285541382622264}
-  parentRectTransform: {fileID: 0}
+  rawImage: {fileID: 1878285541382622264}
   textMeshProUGUI: {fileID: 7060777664700165270}
-  unUsedMaterial: {fileID: 2100000, guid: 5361c605f60c0469498e3bd19ab34537, type: 2}
-  isUsedMaterial: {fileID: 2100000, guid: 1e9f0904321e848149b3ea2bac1d11d4, type: 2}
+  canvasRectTransform: {fileID: 0}
+  unusedMaterial: {fileID: 0}
+  usedMaterial: {fileID: 0}
 --- !u!61 &1573093292665796840
 BoxCollider2D:
   m_ObjectHideFlags: 0

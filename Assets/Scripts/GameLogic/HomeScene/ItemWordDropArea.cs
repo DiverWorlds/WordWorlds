@@ -16,7 +16,7 @@ public class ItemWordDropArea : MonoBehaviour
     [SerializeField] private DraggableItemWord[] draggableWordUIs = new DraggableItemWord[2];//UIのリスト
     private SearchWorld predictWorld;//予測した生成先世界の保存のための変数
     [SerializeField] private PredictCanvas predictCanvas;
-    [SerializeField] private DraggableInventory draggableInventory;
+    [SerializeField] private ItemWordInventoryUI draggableInventory;
 
 
     private void Start()

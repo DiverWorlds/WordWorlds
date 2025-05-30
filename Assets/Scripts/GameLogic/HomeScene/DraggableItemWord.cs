@@ -7,11 +7,11 @@ using TMPro;
 
 public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] private RawImage image; // 文字画像
-    [SerializeField] private TextMeshProUGUI textMeshProUGUI;//imageにアタッチする画像がまだ用意されてない時はTextを表示する．
-    [SerializeField] private RectTransform parentRectTransform; // 親のRectTransform(Canvas)
+    [SerializeField] private RawImage rawImage;
+    [SerializeField] private TextMeshProUGUI textMeshProUGUI; // imageにアタッチする画像がまだ用意されてない時はTextを表示する．
     [SerializeField] private Material unusedMaterial;  // 未使用の際に適用されるマテリアル
     [SerializeField] private Material usedMaterial; // 使用済みの際に適用されるマテリアル
+    private RectTransform parentRectTransform;
     private Vector2 initialPos; // ドラッグ前の初期position
     private RectTransform rectTransform; // このオブジェクトのRectTransform
     private ItemEntry itemEntry; // ItemWordの実データ
@@ -31,23 +31,24 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void Initialize(Vector2 initialPos, ItemEntry itemEntry)
     {
+        //　GetComponentがどれほど処理に影響があるか試すため，試験的にGetComponentを使用する
         rectTransform = GetComponent<RectTransform>();
-        parentRectTransform = rectTransform.parent as RectTransform;
+        parentRectTransform = transform.parent.GetComponent<RectTransform>();
         this.initialPos = initialPos;
         SetPosition(initialPos);
         this.itemEntry = itemEntry;
+
+        // ItemWordが画像を持っていたらそれを表示し，無ければTextを表示
         if (ItemEntry.ItemWord.WordImage)
         {
-            this.textMeshProUGUI.gameObject.SetActive(false);//TMProを無効に
-            this.image.texture = ItemEntry.ItemWord.WordImage;//画像を有効に
-            if (itemEntry.IsUsed) image.material = usedMaterial;
-            else image.material = unusedMaterial;
+            textMeshProUGUI.gameObject.SetActive(false);
+            rawImage.texture = ItemEntry.ItemWord.WordImage;
+            rawImage.material = itemEntry.IsUsed ? usedMaterial : unusedMaterial;
         }
         else
         {
-            //開発中、画像が用意されていないワードに対して
-            this.image.gameObject.SetActive(false);//画像を無効に
-            this.textMeshProUGUI.text = itemEntry.ItemWord.Word;//TMProを有効に
+            rawImage.gameObject.SetActive(false);
+            textMeshProUGUI.text = itemEntry.ItemWord.Word;
         }
     }
 
@@ -55,13 +56,14 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         // ドラッグ前の位置を記憶しておく
+        Logger.Log("OnBeginDrag");
         if (!ItemEntry.IsUsed) initialPos = rectTransform.anchoredPosition;
-
     }
 
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
+        Logger.Log("OnDrag");
         if (!ItemEntry.IsUsed)
         {
             // eventData.positionから、親に従うlocalPositionへの変換を行う
@@ -73,6 +75,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
+        Logger.Log("OnEndDrag");
         if (!ItemEntry.IsUsed)
         {
             // オブジェクトをドラッグ前の位置に戻す
