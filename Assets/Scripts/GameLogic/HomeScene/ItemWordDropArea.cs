@@ -1,64 +1,72 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ItemWordDropArea : MonoBehaviour
 {
-    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
-    private ItemWordInventory itemWordInventory;
-    [SerializeField] private TextMeshProUGUI dropCounterText;
-    [SerializeField] private Image background;//ドロップ可能範囲はこの画像のサイズに依存
-    [SerializeField] private TextMeshProUGUI tmp_word_1;
-    [SerializeField] private TextMeshProUGUI tmp_word_2;
     [SerializeField] private Transform AppearancePivot;//世界の見た目が表示される場所
-    private GameObject WorldAppearance = null;//世界の見た目の3Dオブジェクト
-    [SerializeField] private DraggableItemWord[] draggableWordUIs = new DraggableItemWord[2];//UIのリスト
-    private SearchWorld predictWorld;//予測した生成先世界の保存のための変数
     [SerializeField] private PredictCanvas predictCanvas;
     [SerializeField] private ItemWordInventoryUI draggableInventory;
+    [SerializeField] private TextMeshProUGUI dropCounterText;
+    [SerializeField] private Image background;//ドロップ可能範囲はこの画像のサイズに依存
+    [SerializeField] private List<Transform> dropPoints;
+    [SerializeField] private SearchWorldDatabase searchWorldDatabase;
+    private SearchWorld predictedWorld;//予測した生成先世界の保存のための変数
+    private GameObject WorldAppearance;//世界の見た目の3Dオブジェクト
+    private DraggableItemWord[] droppedItemWords = new DraggableItemWord[2];
+    private ItemWordInventory itemWordInventory;
 
 
     private void Start()
     {
         SetDropCounterText(0);
-        tmp_word_1.text = "";
-        tmp_word_2.text = "";
         itemWordInventory = ItemWordInventory.Instance;
     }
-    public void AddItemWord(DraggableItemWord draggableWordUI)
+    public void HandleItemWordDrop(DraggableItemWord droppedItemWord)
     {
-        Logger.Log("ワード：" + draggableWordUI.ItemEntry.ItemWord.name);
-        if (!draggableWordUIs[0])
+        Logger.Log("ドロップされたアイテムワード: " + droppedItemWord.ItemEntry.ItemWord.Word);
+        int dropCount = droppedItemWords.Length;
+        droppedItemWords[dropCount] = droppedItemWord;
+        droppedItemWord.transform.position = dropPoints[dropCount].position;
+        if (droppedItemWords[0] == null)
         {
-            draggableWordUI.gameObject.SetActive(false);//ドロップされたワードを非表示に
-            draggableWordUIs[0] = draggableWordUI;
-            SetDropCounterText(1);
-            tmp_word_1.text = draggableWordUIs[0].ItemEntry.ItemWord.Word;
+            SetItemWordToArea(droppedItemWord, 0);
+            SetDropCounterText(++dropCount);
         }
-        else if (!draggableWordUIs[1] && draggableWordUI != draggableWordUIs[0])
+        else if (droppedItemWords[1] == null)
         {
-            draggableWordUI.gameObject.SetActive(false);//ドロップされたワードを非表示に
-            draggableWordUIs[1] = draggableWordUI;
-            SetDropCounterText(2);
-            tmp_word_2.text = draggableWordUIs[1].ItemEntry.ItemWord.Word;
-            PredictResult();
+            SetItemWordToArea(droppedItemWord, 1);
+            SetDropCounterText(++dropCount);
         }
         else
         {
-            Logger.Log("同じものを選んでいるか、容量オーバーです");
+            Logger.Log("ドロップエリアにアイテムワードが2つあります。");
+            return; // すでに2つのアイテムワードがある場合は何もしない
         }
+
+        if (dropCount == 2)
+        {
+            draggableInventory.HideInventory();
+        }
+    }
+    private void SetItemWordToArea(DraggableItemWord droppedItemWord, int index)
+    {
+            droppedItemWords[index] = droppedItemWord;
+            droppedItemWord.transform.position = dropPoints[index].position; // ドロップエリアの位置に移動
     }
 
     public void PredictResult()
     {
-        predictWorld = searchWorldDatabase.GetRecalledWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
-        if (predictWorld)
+        predictedWorld = searchWorldDatabase.PeekRecalledWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);
+        if (predictedWorld is not null)
         {
             background.gameObject.SetActive(false);
-            WorldAppearance = Instantiate(predictWorld.WorldAppearance, AppearancePivot);
-            predictCanvas.ShowPredicion(predictWorld.name);
-            Logger.Log(predictWorld.name);
+            WorldAppearance = Instantiate(predictedWorld.WorldAppearance, AppearancePivot);
+            predictCanvas.ShowPrediction(predictedWorld.name);
+            Logger.Log("予測された世界: ", predictedWorld.name);
         }
         else
         {
@@ -68,13 +76,8 @@ public class ItemWordDropArea : MonoBehaviour
 
     public void RecallSearchWorld()
     {
-        itemWordInventory.RecallWorld(draggableWordUIs[0].ItemEntry.ItemWord, draggableWordUIs[1].ItemEntry.ItemWord);
-        predictCanvas.gameObject.SetActive(false);
-        tmp_word_1.text = "";
-        tmp_word_2.text = "";
-        draggableWordUIs[0] = null;
-        draggableWordUIs[1] = null;
-        draggableInventory.HideInventory();
+        SearchWorld searchWorld = itemWordInventory.RecallWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);
+        SceneManager.LoadScene(searchWorld.Id, LoadSceneMode.Single);
     }
 
     public void OnClickCancel() //予測表示後にキャンセルが押される時
@@ -82,17 +85,16 @@ public class ItemWordDropArea : MonoBehaviour
         ResetWordsList();
         background.gameObject.SetActive(true);
         Destroy(WorldAppearance);
+        Logger.Log($"worldAppearance is {(WorldAppearance == null ? "null" : "not null")}");
     }
 
     private void ResetWordsList()
     {
-        Logger.Log("Reset!!!");
-        tmp_word_1.text = "";
-        tmp_word_2.text = "";
-        draggableWordUIs[0].gameObject.SetActive(true);
-        draggableWordUIs[0] = null;
-        draggableWordUIs[1].gameObject.SetActive(true);
-        draggableWordUIs[1] = null;
+        Logger.Log("ドロップされたItemWordをリセットします。");
+        foreach (var draggableItemWord in droppedItemWords)
+        {
+            draggableItemWord.ResetPosition();
+        }
         SetDropCounterText(0);
     }
     private void SetDropCounterText(int count)

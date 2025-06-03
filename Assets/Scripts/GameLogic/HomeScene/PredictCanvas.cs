@@ -6,7 +6,7 @@ public class PredictCanvas : MonoBehaviour
 {
     [SerializeField] private ItemWordDropArea wordDropper;
     [SerializeField] private TextMeshProUGUI worldName;
-    public void ShowPredicion(string worldName)
+    public void ShowPrediction(string worldName)
     {
         this.worldName.text = worldName;
         this.gameObject.SetActive(true);

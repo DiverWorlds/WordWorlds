@@ -46,7 +46,7 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 
     public SearchWorld RecallWorld(ItemWord itemWord1, ItemWord itemWord2)
     {
-        SearchWorld searchWorld = searchWorldDB.GetRecalledWorld(itemWord1, itemWord2);
+        SearchWorld searchWorld = searchWorldDB.PeekRecalledWorld(itemWord1, itemWord2);
         if (searchWorld != null)
         {
             UseItemWord(itemWord1, itemWord2);

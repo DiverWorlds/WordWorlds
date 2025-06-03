@@ -80,9 +80,15 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
             if (ItemWordDropArea)//ドロップ可能な場所でマウスが離れた時
             {
-                ItemWordDropArea.AddItemWord(this);
+                ItemWordDropArea.HandleItemWordDrop(this);
             }
         }
+    }
+
+    public void ResetPosition()
+    {
+        // ドラッグ前の位置に戻す
+        SetPosition(initialPos);
     }
 
     // ScreenPositionからlocalPositionへの変換関数

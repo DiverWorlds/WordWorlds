@@ -33,7 +33,7 @@ public class SearchWorldDatabase : ScriptableObject
         }
     }
 
-    public SearchWorld GetRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
+    public SearchWorld PeekRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
     {
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
