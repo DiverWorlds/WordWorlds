@@ -10,8 +10,9 @@ public class FlagManager : DontDestroySingleton<FlagManager>
     [SerializeField] private string saveFilePath = "SavedFlags";
     private Dictionary<string, bool> flags = new();
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         LoadInitialFlags();
     }
 

@@ -6,9 +6,11 @@ public class GlobalDB : DontDestroySingleton<GlobalDB>
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     public ItemWordDatabase ItemWordDB => itemWordDatabase;
     public SearchWorldDatabase SearchWorldDB => searchWorldDatabase;
-    public override void Awake()
+    /// <summary>
+    /// AwakeControllerから呼び出してデータベースを初期化する。
+    /// </summary>
+    public void OnAwake()
     {
-        base.Awake();
         itemWordDatabase.Initialize();
         searchWorldDatabase.Initialize();
     }
