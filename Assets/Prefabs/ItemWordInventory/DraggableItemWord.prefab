@@ -270,7 +270,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rawImage: {fileID: 1878285541382622264}
   textMeshProUGUI: {fileID: 7060777664700165270}
-  canvasRectTransform: {fileID: 0}
   unusedMaterial: {fileID: 0}
   usedMaterial: {fileID: 0}
 --- !u!61 &1573093292665796840
@@ -280,7 +279,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6848516476674282597}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

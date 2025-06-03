@@ -16,9 +16,13 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private Action onInventoryUpdated;
     public event Action OnInventoryUpdated { add => onInventoryUpdated += value; remove => onInventoryUpdated -= value; }
 
-    void Start()
+    /// <summary>
+    /// AwakeControllerから呼び出す．
+    /// </summary>
+    public void OnAwake()
     {
         searchWorldDB = GlobalDB.Instance.SearchWorldDB;
+        Logger.LogElements("ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
     }
 
     public bool AddItemWord(ItemWord itemWord)

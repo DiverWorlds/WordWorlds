@@ -56,14 +56,12 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         // ドラッグ前の位置を記憶しておく
-        Logger.Log("OnBeginDrag");
         if (!ItemEntry.IsUsed) initialPos = rectTransform.anchoredPosition;
     }
 
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        Logger.Log("OnDrag");
         if (!ItemEntry.IsUsed)
         {
             // eventData.positionから、親に従うlocalPositionへの変換を行う
@@ -75,7 +73,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        Logger.Log("OnEndDrag");
         if (!ItemEntry.IsUsed)
         {
             // オブジェクトをドラッグ前の位置に戻す

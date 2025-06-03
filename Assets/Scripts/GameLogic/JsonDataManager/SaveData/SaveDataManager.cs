@@ -12,8 +12,9 @@ public class SaveDataManager : DontDestroySingleton<SaveDataManager>
     private List<ItemEntry> inventoryItems = new();
     private string lastSceneName = "";
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         Load();
     }
 
