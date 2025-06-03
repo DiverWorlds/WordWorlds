@@ -9,25 +9,18 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
 {
     [SerializeField] private RawImage rawImage;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI; // imageにアタッチする画像がまだ用意されてない時はTextを表示する．
+    [SerializeField] private ItemWordDropArea itemWordDropArea;
     [SerializeField] private Material unusedMaterial;  // 未使用の際に適用されるマテリアル
     [SerializeField] private Material usedMaterial; // 使用済みの際に適用されるマテリアル
     private RectTransform parentRectTransform;
     private Vector2 initialPos; // ドラッグ前の初期position
     private RectTransform rectTransform; // このオブジェクトのRectTransform
     private ItemEntry itemEntry; // ItemWordの実データ
-    private ItemWordDropArea itemWordDropArea;//オブジェクトのドラッグ先
-
 
     public ItemEntry ItemEntry
     {
         get { return itemEntry; }
     }
-    public ItemWordDropArea ItemWordDropArea//ドラッグ先のプロパティ
-    {
-        get;
-        set;
-    }
-
 
     public void Initialize(Vector2 initialPos, ItemEntry itemEntry)
     {
@@ -62,27 +55,43 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        if (!ItemEntry.IsUsed)
-        {
-            // eventData.positionから、親に従うlocalPositionへの変換を行う
-            Vector2 localPosition = GetLocalPosition(eventData.position);
-            SetPosition(localPosition);
-        }
+        // eventData.positionから、親に従うlocalPositionへの変換を行う
+        Vector2 localPosition = GetLocalPosition(eventData.position);
+        SetPosition(localPosition);
     }
 
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!ItemEntry.IsUsed)
+        //TODO: せっかくColliderがあるので、ドロップエリアのColliderを使ってドロップ位置を判定するようにする
+        Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
+        // ドロップ先のRectTransformを取得
+        if (itemWordDropArea != null)
         {
-            // オブジェクトをドラッグ前の位置に戻す
-            SetPosition(initialPos);
-
-            if (ItemWordDropArea)//ドロップ可能な場所でマウスが離れた時
+            Logger.Log("ドロップエリアが設定されています");
+            RectTransform dropAreaRect = itemWordDropArea.GetComponent<RectTransform>();
+            Vector2 localPoint;
+            // ドラッグ終了時のマウス座標をドロップエリアのローカル座標に変換
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                dropAreaRect,
+                eventData.position,
+                eventData.pressEventCamera,
+                out localPoint
+            );
+            // ドロップエリアの矩形内か判定
+            if (dropAreaRect.rect.Contains(localPoint))
             {
-                ItemWordDropArea.HandleItemWordDrop(this);
+                itemWordDropArea.HandleItemWordDrop(this);
+                return;
+            }
+            else
+            {
+                Logger.Log("ドロップ位置がドロップエリアの矩形外です。初期位置に戻します。");
+                ResetPosition();
+                return;
             }
         }
+        Logger.Log("ドロップエリアが設定されていないか、ドロップ位置が不正です。初期位置に戻します。");
     }
 
     public void ResetPosition()
@@ -100,16 +109,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, screenPosition, Camera.main, out result);
 
         return result;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        ItemWordDropArea = collision.gameObject.GetComponent<ItemWordDropArea>();//ドロップ可能な位置に来たらドロッパーを取得
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        ItemWordDropArea = null;//ドロップ可能な位置から離れたらドロッパーを忘れる
     }
     private void SetPosition(Vector2 position)
     {
