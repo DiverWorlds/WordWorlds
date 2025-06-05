@@ -8,8 +8,8 @@ public class ItemEntry
     [SerializeField] private bool isUsed;
     public ItemWord ItemWord 
     {
-        // TODO: この行でNullReferenceExceptionが発生した．
-        get { return GlobalDB.Instance.ItemWordDB.GetItemWord(itemWord); }
+        get
+        { return GlobalDB.Instance.ItemWordDB.GetItemWord(itemWord);}
         set { itemWord = value.Word; }
     }
     public bool IsUsed 

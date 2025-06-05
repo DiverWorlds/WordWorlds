@@ -5,6 +5,10 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Awake()はGlobalDataより後に実行する．
+/// </summary>
+[DefaultExecutionOrder(-99)]
 public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
     //TODO: Homeに戻る機能作る
@@ -16,11 +20,9 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private Action onInventoryUpdated;
     public event Action OnInventoryUpdated { add => onInventoryUpdated += value; remove => onInventoryUpdated -= value; }
 
-    /// <summary>
-    /// AwakeControllerから呼び出す．
-    /// </summary>
-    public void OnAwake()
+    public override void Awake()
     {
+        base.Awake();
         searchWorldDB = GlobalDB.Instance.SearchWorldDB;
         Logger.LogElements("ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
     }

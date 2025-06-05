@@ -16,6 +16,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private Vector2 initialPos; // ドラッグ前の初期position
     private RectTransform rectTransform; // このオブジェクトのRectTransform
     private ItemEntry itemEntry; // ItemWordの実データ
+    private bool isInDropArea = false; // ドロップ可能な位置にいるかどうか
 
     public ItemEntry ItemEntry
     {
@@ -65,33 +66,16 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         //TODO: せっかくColliderがあるので、ドロップエリアのColliderを使ってドロップ位置を判定するようにする
         Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
-        // ドロップ先のRectTransformを取得
-        if (itemWordDropArea != null)
+        if (isInDropArea)
         {
-            Logger.Log("ドロップエリアが設定されています");
-            RectTransform dropAreaRect = itemWordDropArea.GetComponent<RectTransform>();
-            Vector2 localPoint;
-            // ドラッグ終了時のマウス座標をドロップエリアのローカル座標に変換
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                dropAreaRect,
-                eventData.position,
-                eventData.pressEventCamera,
-                out localPoint
-            );
-            // ドロップエリアの矩形内か判定
-            if (dropAreaRect.rect.Contains(localPoint))
-            {
-                itemWordDropArea.HandleItemWordDrop(this);
-                return;
-            }
-            else
-            {
-                Logger.Log("ドロップ位置がドロップエリアの矩形外です。初期位置に戻します。");
-                ResetPosition();
-                return;
-            }
+            // ドロップエリアにいる場合はドロップ処理を行う
+            itemWordDropArea.HandleItemWordDrop(this);
         }
-        Logger.Log("ドロップエリアが設定されていないか、ドロップ位置が不正です。初期位置に戻します。");
+        else
+        {
+            // ドロップエリアにいない場合は初期位置に戻す
+            ResetPosition();
+        }
     }
 
     public void ResetPosition()
@@ -113,5 +97,16 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private void SetPosition(Vector2 position)
     {
         rectTransform.anchoredPosition = position;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Logger.Log("ドロップエリアに入った: " + collision.gameObject.name);
+        isInDropArea = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+    Logger.Log("ドロップエリアから出た: " + collision.gameObject.name);
+        isInDropArea = false;
     }
 }
