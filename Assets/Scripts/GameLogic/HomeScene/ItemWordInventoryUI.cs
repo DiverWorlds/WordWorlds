@@ -19,11 +19,11 @@ public class ItemWordInventoryUI : MonoBehaviour
     {
         itemWordInv = ItemWordInventory.Instance;
         LoadInventoryData();
-        ItemWordInventory.Instance.OnInventoryUpdated += LoadInventoryData;
+        itemWordInv.OnInventoryUpdated += LoadInventoryData;
     }
     void OnDestroy()
     {
-        ItemWordInventory.Instance.OnInventoryUpdated -= LoadInventoryData;
+        itemWordInv.OnInventoryUpdated -= LoadInventoryData;
     }
 
     // DraggableItemWordを楕円形に配置する

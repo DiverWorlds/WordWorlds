@@ -26,6 +26,13 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
         searchWorldDB = GlobalDB.Instance.SearchWorldDB;
         Logger.LogElements("ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
     }
+    public override void OnApplicationQuit()
+    {
+        searchWorldDB = null;
+        inventory.Clear();
+        onInventoryUpdated = null;
+        base.OnApplicationQuit();
+    }
 
     public bool AddItemWord(ItemWord itemWord)
     {

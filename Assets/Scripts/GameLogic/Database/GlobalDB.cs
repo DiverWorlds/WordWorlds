@@ -17,4 +17,11 @@ public class GlobalDB : DontDestroySingleton<GlobalDB>
         itemWordDatabase.Initialize();
         searchWorldDatabase.Initialize();
     }
+
+    public override void OnApplicationQuit()
+    {
+        itemWordDatabase = null;
+        searchWorldDatabase = null;
+        base.OnApplicationQuit();
+    }
 }

@@ -15,7 +15,7 @@ public class DontDestroySingleton<T> : MonoBehaviour where T : Component
                 instance = (T)FindObjectOfType(typeof(T));
                 if (instance == null)
                 {
-                    SetupInstance();
+                    SetupInstance();// Destroyの時にInstanceが参照されると，Destroy時にInstanceを生成してしまうので，エラーが発生する．
                 }
             }
             return instance;
@@ -23,7 +23,12 @@ public class DontDestroySingleton<T> : MonoBehaviour where T : Component
     }
     public virtual void Awake()
     {
+        Logger.Log("Awake()", gameObject.name);
         RemoveDuplicates();
+    }
+    public virtual void OnApplicationQuit()
+    {
+        instance = null;
     }
     
     private static void SetupInstance()
