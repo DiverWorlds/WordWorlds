@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -24,6 +25,24 @@ public class ItemWordDropArea : MonoBehaviour
     {
         SetDropCounterText(0);
         itemWordInventory = ItemWordInventory.Instance;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DraggableItemWord draggableItemWord = collision.GetComponent<DraggableItemWord>();
+        Logger.Log("ドロップエリアにアイテムワードが入った", draggableItemWord.ItemEntry.ItemWord.Word);
+        if (draggableItemWord != null)
+        {
+            draggableItemWord.IsInDropArea = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        DraggableItemWord draggableItemWord = collision.GetComponent<DraggableItemWord>();
+        Logger.Log("ドロップエリアからアイテムワードが出た", draggableItemWord.ItemEntry.ItemWord.Word);
+        if (draggableItemWord != null)
+        {
+            draggableItemWord.IsInDropArea = false;
+        }
     }
     public void HandleItemWordDrop(DraggableItemWord droppedItemWord)
     {
@@ -54,8 +73,8 @@ public class ItemWordDropArea : MonoBehaviour
     }
     private void SetItemWordToArea(DraggableItemWord droppedItemWord, int index)
     {
-            droppedItemWords[index] = droppedItemWord;
-            droppedItemWord.transform.position = dropPoints[index].position; // ドロップエリアの位置に移動
+        droppedItemWords[index] = droppedItemWord;
+        droppedItemWord.transform.position = dropPoints[index].position; // ドロップエリアの位置に移動
     }
 
     public void PredictResult()

@@ -22,6 +22,10 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         get { return itemEntry; }
     }
+    public bool IsInDropArea
+    {
+        set { isInDropArea = value; }
+    }
 
     public void Initialize(Vector2 initialPos, ItemEntry itemEntry)
     {
@@ -64,15 +68,16 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        //TODO: せっかくColliderがあるので、ドロップエリアのColliderを使ってドロップ位置を判定するようにする
         Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
         if (isInDropArea)
         {
+            Logger.Log("ドロップエリアにいる: " + ItemEntry.ItemWord.Word);
             // ドロップエリアにいる場合はドロップ処理を行う
             itemWordDropArea.HandleItemWordDrop(this);
         }
         else
         {
+            Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
             // ドロップエリアにいない場合は初期位置に戻す
             ResetPosition();
         }
@@ -97,16 +102,5 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private void SetPosition(Vector2 position)
     {
         rectTransform.anchoredPosition = position;
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Logger.Log("ドロップエリアに入った: " + collision.gameObject.name);
-        isInDropArea = true;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-    Logger.Log("ドロップエリアから出た: " + collision.gameObject.name);
-        isInDropArea = false;
     }
 }

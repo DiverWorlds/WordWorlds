@@ -489,6 +489,10 @@ PrefabInstance:
       propertyPath: draggableInventory
       value: 
       objectReference: {fileID: 442869786}
+    - target: {fileID: 8313369396208556019, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
