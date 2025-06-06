@@ -4,6 +4,10 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+///  SaveDataManagerと同じタイミングで実行する．
+/// </summary>
+[DefaultExecutionOrder(-100)]
 public class FlagManager : DontDestroySingleton<FlagManager>
 {
     [SerializeField] private string initialFilePath = "InitialFlags";

@@ -5,6 +5,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Awake()はItemWordInventoryより前に実行する．
+/// </summary>
+[DefaultExecutionOrder(-100)]
 public class SaveDataManager : DontDestroySingleton<SaveDataManager>
 {
     //セーブ内容：インベントリ内容、現在のシーン、現在のDive世界で何を拾ったか

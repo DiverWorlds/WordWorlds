@@ -1,7 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+//TODO: Scene実行を終了すると以下が起こる問題を直す
+/*
+Some objects were not cleaned up when closing the scene. (Did you spawn new GameObjects from OnDestroy?)
+The following scene GameObjects were found:
+GlobalDB
+ItemWordInventory
+*/
 public class HomeManager : Singleton<HomeManager>
 {
     [SerializeField] private ItemWordDatabase itemWordDatabase;
