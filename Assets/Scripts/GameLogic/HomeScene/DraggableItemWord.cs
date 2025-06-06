@@ -9,13 +9,13 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
 {
     [SerializeField] private RawImage rawImage;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI; // imageにアタッチする画像がまだ用意されてない時はTextを表示する．
-    [SerializeField] private ItemWordDropArea itemWordDropArea;
     [SerializeField] private Material unusedMaterial;  // 未使用の際に適用されるマテリアル
     [SerializeField] private Material usedMaterial; // 使用済みの際に適用されるマテリアル
     private RectTransform parentRectTransform;
+    private RectTransform rectTransform;
     private Vector2 initialPos; // ドラッグ前の初期position
-    private RectTransform rectTransform; // このオブジェクトのRectTransform
-    private ItemEntry itemEntry; // ItemWordの実データ
+    private ItemEntry itemEntry;
+    private ItemWordDropArea itemWordDropArea;
     private bool isInDropArea = false; // ドロップ可能な位置にいるかどうか
 
     public ItemEntry ItemEntry
@@ -27,7 +27,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         set { isInDropArea = value; }
     }
 
-    public void Initialize(Vector2 initialPos, ItemEntry itemEntry)
+    public void Initialize(Vector2 initialPos, ItemEntry itemEntry, ItemWordDropArea itemWordDropArea)
     {
         //　GetComponentがどれほど処理に影響があるか試すため，試験的にGetComponentを使用する
         rectTransform = GetComponent<RectTransform>();
@@ -48,6 +48,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
             rawImage.gameObject.SetActive(false);
             textMeshProUGUI.text = itemEntry.ItemWord.Word;
         }
+        this.itemWordDropArea = itemWordDropArea;
     }
 
     // ドラッグ開始時の処理

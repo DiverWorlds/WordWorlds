@@ -779,6 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draggableItemWordPrefab: {fileID: 6005969457189480765, guid: 4961475ddf3524d9d9f6c02024c37296, type: 3}
   draggableItemWordParent: {fileID: 442869785}
+  itemWordDropArea: {fileID: 1319523069}
   width: 250
   height: 150
 --- !u!1001 &532594811
