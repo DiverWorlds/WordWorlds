@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+//TODO: ItemWordDropAreaとDraggableItemWord間の依存関係の解消を検討する．
 public class ItemWordDropArea : MonoBehaviour
 {
     [SerializeField] private Transform AppearancePivot;//世界の見た目が表示される場所
@@ -19,7 +19,7 @@ public class ItemWordDropArea : MonoBehaviour
     private GameObject WorldAppearance;//世界の見た目の3Dオブジェクト
     private DraggableItemWord[] droppedItemWords = new DraggableItemWord[2];
     private ItemWordInventory itemWordInventory;
-
+    public bool IsPredictCanvasActive => predictCanvas.gameObject.activeSelf;
 
     private void Start()
     {

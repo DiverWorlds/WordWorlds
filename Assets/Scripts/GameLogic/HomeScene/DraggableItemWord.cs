@@ -60,43 +60,48 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        // eventData.positionから、親に従うlocalPositionへの変換を行う
-        Vector2 localPosition = GetLocalPosition(eventData.position);
-        SetPosition(localPosition);
+        if (!itemWordDropArea.IsPredictCanvasActive)
+        {
+            Vector2 localPosition = GetLocalPosition(eventData.position);
+            SetPosition(localPosition);
+        }
     }
 
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
-        if (!isPlacedOnDropArea)
+        if (!itemWordDropArea.IsPredictCanvasActive)
         {
-            if (isOverDropArea)
+            Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
+            if (!isPlacedOnDropArea)
             {
-                Logger.Log("ドロップエリアにいる: " + ItemEntry.ItemWord.Word);
-                // ドロップエリアにいる場合はドロップ処理を行う
-                itemWordDropArea.HandleItemWordDrop(this);
-                isPlacedOnDropArea = true;
+                if (isOverDropArea)
+                {
+                    Logger.Log("ドロップエリアにいる: " + ItemEntry.ItemWord.Word);
+                    // ドロップエリアにいる場合はドロップ処理を行う
+                    itemWordDropArea.HandleItemWordDrop(this);
+                    isPlacedOnDropArea = true;
+                }
+                else
+                {
+                    Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
+                    // ドロップエリアにいない場合は初期位置に戻す
+                    ResetPosition();
+                }
             }
             else
             {
-                Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
-                // ドロップエリアにいない場合は初期位置に戻す
-                ResetPosition();
-            }
-        }
-        else
-        {
-            if (isOverDropArea)
-            {
-                Logger.Log("ドロップエリアにいるが、すでに配置済み: " + ItemEntry.ItemWord.Word);
-                itemWordDropArea.RepositionItemWord(this);
-            }
-            else
-            {
-                Logger.Log("ドロップエリアから出た: " + ItemEntry.ItemWord.Word);
-                itemWordDropArea.HandleItemWordRemove(this);
-                isPlacedOnDropArea = false;
+                if (isOverDropArea)
+                {
+                    Logger.Log("ドロップエリアにいるが、すでに配置済み: " + ItemEntry.ItemWord.Word);
+                    itemWordDropArea.RepositionItemWord(this);
+                }
+                else
+                {
+                    Logger.Log("ドロップエリアから出た: " + ItemEntry.ItemWord.Word);
+                    itemWordDropArea.HandleItemWordRemove(this);
+                    isPlacedOnDropArea = false;
+                }
             }
         }
     }
