@@ -11,6 +11,8 @@ ItemWordInventory
 public class HomeManager : Singleton<HomeManager>
 {
     [SerializeField] private ItemWordDatabase itemWordDatabase;
+    [SerializeField] private ItemWordDropArea itemWordDropArea;
+    [SerializeField] private PredictCanvas predictCanvas;
     private ItemWordInventory itemWordInventory;
     private FlagManager flagManager;//FlagManagerはSingletonのInstanceから取得
 
@@ -18,6 +20,8 @@ public class HomeManager : Singleton<HomeManager>
     public SearchWorld CurrentSearchWorld { get; set; }
     private ItemWordButton elemItemWord1;//?ボタン？押せないやつじゃない？
     private ItemWordButton elemItemWord2;
+    public ItemWordDropArea ItemWordDropArea => itemWordDropArea;
+    public PredictCanvas PredictCanvas => predictCanvas;
     public ItemWordButton ElemItemWord1
     {
         get { return elemItemWord1; }

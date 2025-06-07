@@ -347,7 +347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9f991e303854e389469ddb192fb113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wordDropper: {fileID: 1319523069}
   worldName: {fileID: 1886928934}
 --- !u!1001 &356910084
 PrefabInstance:
@@ -2361,6 +2360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemWordDatabase: {fileID: 11400000, guid: ca676671d70b740be9860e7a2848d016, type: 2}
+  itemWordDropArea: {fileID: 1319523069}
+  predictCanvas: {fileID: 354525890}
 --- !u!1 &1667699645
 GameObject:
   m_ObjectHideFlags: 0

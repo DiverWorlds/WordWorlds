@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class PredictCanvas : MonoBehaviour
 {
-    [SerializeField] private ItemWordDropArea wordDropper;
     [SerializeField] private TextMeshProUGUI worldName;
+    private ItemWordDropArea itemWordDropArea;
+
+    void Start()
+    {
+        itemWordDropArea = HomeManager.Instance.ItemWordDropArea;
+    }
     public void ShowPrediction(string worldName)
     {
         this.worldName.text = worldName;
@@ -13,11 +18,12 @@ public class PredictCanvas : MonoBehaviour
 
     public void OnClickDecide()
     {
-        wordDropper.RecallSearchWorld();
+        itemWordDropArea.RecallSearchWorld();
     }
 
     public void OnClickCancel()
     {
+        itemWordDropArea.CancelRecalling();
         gameObject.SetActive(false);
     }
 }
