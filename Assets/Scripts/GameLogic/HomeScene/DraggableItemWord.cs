@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-
+//TODO: 本の上に置いている状態から元の位置に戻せるようにする．
 public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private RawImage rawImage;
@@ -14,6 +14,9 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private RectTransform parentRectTransform;
     private RectTransform rectTransform;
     private Vector2 initialPos; // ドラッグ前の初期position
+    private Vector3 initialScale;
+    private float scaleOnDropAreaMultiplier = 1.7f;
+    private Vector3 scaleOnDropArea;
     private ItemEntry itemEntry;
     private ItemWordDropArea itemWordDropArea;
     private bool isInDropArea = false; // ドロップ可能な位置にいるかどうか
@@ -34,6 +37,8 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
         this.initialPos = initialPos;
         SetPosition(initialPos);
+        initialScale = transform.localScale;
+        scaleOnDropArea = initialScale * scaleOnDropAreaMultiplier;
         this.itemEntry = itemEntry;
 
         // ItemWordが画像を持っていたらそれを表示し，無ければTextを表示
@@ -88,6 +93,17 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         // ドラッグ前の位置に戻す
         SetPosition(initialPos);
+        SetInitialScale();
+    }
+    public void SetInitialScale()
+    {
+        // 初期スケールに戻す
+        transform.localScale = initialScale;
+    }
+    public void SetScaleOnDropArea()
+    {
+        // ドロップエリアにいるときのスケールに変更
+        transform.localScale = scaleOnDropArea;
     }
 
     // ScreenPositionからlocalPositionへの変換関数
@@ -104,4 +120,5 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         rectTransform.anchoredPosition = position;
     }
+    
 }

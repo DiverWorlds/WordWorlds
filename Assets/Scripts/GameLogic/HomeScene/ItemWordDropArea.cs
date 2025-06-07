@@ -48,17 +48,17 @@ public class ItemWordDropArea : MonoBehaviour
     {
         Logger.Log("ドロップされたアイテムワード: " + droppedItemWord.ItemEntry.ItemWord.Word);
         int dropCount = droppedItemWords.Count(x => x != null);
-        Logger.Log("dropCount", dropCount);
-        Logger.LogElements("droppedItemWords", droppedItemWords.Select(x => x?.ItemEntry.ItemWord.Word).ToArray());
         if (droppedItemWords[0] == null)
         {
             SetItemWordToArea(droppedItemWord, 0);
             SetDropCounterText(++dropCount);
+            droppedItemWord.SetScaleOnDropArea();
         }
         else if (droppedItemWords[1] == null)
         {
             SetItemWordToArea(droppedItemWord, 1);
             SetDropCounterText(++dropCount);
+            droppedItemWord.SetScaleOnDropArea();
         }
         else
         {
