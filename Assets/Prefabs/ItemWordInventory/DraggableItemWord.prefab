@@ -147,7 +147,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190335
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -271,9 +271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rawImage: {fileID: 1878285541382622264}
   textMeshProUGUI: {fileID: 7060777664700165270}
-  itemWordDropArea: {fileID: 0}
-  unusedMaterial: {fileID: 0}
-  usedMaterial: {fileID: 0}
+  unusedMaterial: {fileID: 2100000, guid: 5361c605f60c0469498e3bd19ab34537, type: 2}
+  usedMaterial: {fileID: 2100000, guid: 1e9f0904321e848149b3ea2bac1d11d4, type: 2}
 --- !u!61 &6434077045974046614
 BoxCollider2D:
   m_ObjectHideFlags: 0
