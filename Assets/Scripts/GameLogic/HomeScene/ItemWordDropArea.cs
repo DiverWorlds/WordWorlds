@@ -47,9 +47,9 @@ public class ItemWordDropArea : MonoBehaviour
     public void HandleItemWordDrop(DraggableItemWord droppedItemWord)
     {
         Logger.Log("ドロップされたアイテムワード: " + droppedItemWord.ItemEntry.ItemWord.Word);
-        int dropCount = droppedItemWords.Length;
-        droppedItemWords[dropCount] = droppedItemWord;
-        droppedItemWord.transform.position = dropPoints[dropCount].position;
+        int dropCount = droppedItemWords.Count(x => x != null);
+        Logger.Log("dropCount", dropCount);
+        Logger.LogElements("droppedItemWords", droppedItemWords.Select(x => x?.ItemEntry.ItemWord.Word).ToArray());
         if (droppedItemWords[0] == null)
         {
             SetItemWordToArea(droppedItemWord, 0);
@@ -68,7 +68,7 @@ public class ItemWordDropArea : MonoBehaviour
 
         if (dropCount == 2)
         {
-            draggableInventory.HideInventory();
+            PredictResult();
         }
     }
     private void SetItemWordToArea(DraggableItemWord droppedItemWord, int index)
@@ -96,7 +96,9 @@ public class ItemWordDropArea : MonoBehaviour
     public void RecallSearchWorld()
     {
         SearchWorld searchWorld = itemWordInventory.RecallWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);
-        SceneManager.LoadScene(searchWorld.Id, LoadSceneMode.Single);
+        //TODO: 今後，遷移先のSearchWorld系Sceneを作成したら、以下のコメントアウトを外す
+        // SceneManager.LoadScene(searchWorld.Id, LoadSceneMode.Single);
+        Logger.Log($"{searchWorld.WorldName}のシーンに遷移します。");
     }
 
     public void OnClickCancel() //予測表示後にキャンセルが押される時

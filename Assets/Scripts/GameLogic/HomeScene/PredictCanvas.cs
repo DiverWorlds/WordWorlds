@@ -9,7 +9,7 @@ public class PredictCanvas : MonoBehaviour
     public void ShowPrediction(string worldName)
     {
         this.worldName.text = worldName;
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void OnClickDecide()
@@ -19,6 +19,6 @@ public class PredictCanvas : MonoBehaviour
 
     public void OnClickCancel()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
