@@ -50,14 +50,14 @@ public class ItemWordDropArea : MonoBehaviour
         int dropCount = droppedItemWords.Count(x => x != null);
         if (droppedItemWords[0] == null)
         {
-            SetItemWordToArea(droppedItemWord, 0);
-            SetDropCounterText(++dropCount);
+            SetItemWordToHere(droppedItemWord, 0);
+            SetDropCounterText(dropCount + 1);
             droppedItemWord.SetScaleOnDropArea();
         }
         else if (droppedItemWords[1] == null)
         {
-            SetItemWordToArea(droppedItemWord, 1);
-            SetDropCounterText(++dropCount);
+            SetItemWordToHere(droppedItemWord, 1);
+            SetDropCounterText(dropCount + 1);
             droppedItemWord.SetScaleOnDropArea();
         }
         else
@@ -71,12 +71,24 @@ public class ItemWordDropArea : MonoBehaviour
             PredictResult();
         }
     }
-    private void SetItemWordToArea(DraggableItemWord droppedItemWord, int index)
+    public void HandleItemWordRemove(DraggableItemWord removedItemWord)
     {
-        droppedItemWords[index] = droppedItemWord;
-        droppedItemWord.transform.position = dropPoints[index].position; // ドロップエリアの位置に移動
+        Logger.Log("ドロップエリアからアイテムワードが削除された: " + removedItemWord.ItemEntry.ItemWord.Word);
+        int index = System.Array.IndexOf(droppedItemWords, removedItemWord);
+        droppedItemWords[index] = null;
+        SetDropCounterText(droppedItemWords.Count(x => x != null));
+        removedItemWord.ResetPosition();
+        removedItemWord.SetInitialScale();
     }
-
+    public void RepositionItemWord(DraggableItemWord droppedItemWord)
+    {
+        int index = System.Array.IndexOf(droppedItemWords, droppedItemWord);
+        if (index >= 0)
+        {
+            droppedItemWord.transform.position = dropPoints[index].position;
+            droppedItemWord.SetScaleOnDropArea();
+        }
+    }
     public void PredictResult()
     {
         predictedWorld = searchWorldDatabase.PeekRecalledWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);
@@ -118,6 +130,12 @@ public class ItemWordDropArea : MonoBehaviour
         }
         SetDropCounterText(0);
     }
+    private void SetItemWordToHere(DraggableItemWord droppedItemWord, int index)
+    {
+        droppedItemWords[index] = droppedItemWord;
+        droppedItemWord.transform.position = dropPoints[index].position; // ドロップエリアの位置に移動
+    }
+
     private void SetDropCounterText(int count)
     {
         dropCounterText.text = $"{count} / 2";

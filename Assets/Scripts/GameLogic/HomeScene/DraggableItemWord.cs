@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-//TODO: 本の上に置いている状態から元の位置に戻せるようにする．
-public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+using UnityEngine.XR;
+public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [SerializeField] private RawImage rawImage;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI; // imageにアタッチする画像がまだ用意されてない時はTextを表示する．
@@ -19,7 +19,8 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private Vector3 scaleOnDropArea;
     private ItemEntry itemEntry;
     private ItemWordDropArea itemWordDropArea;
-    private bool isInDropArea = false; // ドロップ可能な位置にいるかどうか
+    private bool isOverDropArea = false; // ドラッグ中にDropArea内に侵入したかどうか
+    private bool isPlacedOnDropArea = false; // DropAreaと初期位置のどちらに配置された状態か
 
     public ItemEntry ItemEntry
     {
@@ -27,7 +28,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     }
     public bool IsInDropArea
     {
-        set { isInDropArea = value; }
+        set { isOverDropArea = value; }
     }
 
     public void Initialize(Vector2 initialPos, ItemEntry itemEntry, ItemWordDropArea itemWordDropArea)
@@ -56,13 +57,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
         this.itemWordDropArea = itemWordDropArea;
     }
 
-    // ドラッグ開始時の処理
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        // ドラッグ前の位置を記憶しておく
-        if (!ItemEntry.IsUsed) initialPos = rectTransform.anchoredPosition;
-    }
-
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
@@ -75,17 +69,35 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnEndDrag(PointerEventData eventData)
     {
         Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
-        if (isInDropArea)
+        if (!isPlacedOnDropArea)
         {
-            Logger.Log("ドロップエリアにいる: " + ItemEntry.ItemWord.Word);
-            // ドロップエリアにいる場合はドロップ処理を行う
-            itemWordDropArea.HandleItemWordDrop(this);
+            if (isOverDropArea)
+            {
+                Logger.Log("ドロップエリアにいる: " + ItemEntry.ItemWord.Word);
+                // ドロップエリアにいる場合はドロップ処理を行う
+                itemWordDropArea.HandleItemWordDrop(this);
+                isPlacedOnDropArea = true;
+            }
+            else
+            {
+                Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
+                // ドロップエリアにいない場合は初期位置に戻す
+                ResetPosition();
+            }
         }
         else
         {
-            Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
-            // ドロップエリアにいない場合は初期位置に戻す
-            ResetPosition();
+            if (isOverDropArea)
+            {
+                Logger.Log("ドロップエリアにいるが、すでに配置済み: " + ItemEntry.ItemWord.Word);
+                itemWordDropArea.RepositionItemWord(this);
+            }
+            else
+            {
+                Logger.Log("ドロップエリアから出た: " + ItemEntry.ItemWord.Word);
+                itemWordDropArea.HandleItemWordRemove(this);
+                isPlacedOnDropArea = false;
+            }
         }
     }
 
@@ -93,7 +105,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         // ドラッグ前の位置に戻す
         SetPosition(initialPos);
-        SetInitialScale();
     }
     public void SetInitialScale()
     {
