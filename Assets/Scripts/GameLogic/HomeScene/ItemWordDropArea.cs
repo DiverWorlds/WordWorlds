@@ -51,19 +51,19 @@ public class ItemWordDropArea : MonoBehaviour
         if (droppedItemWords[0] == null)
         {
             SetItemWordToHere(droppedItemWord, 0);
-            SetDropCounterText(dropCount + 1);
+            SetDropCounterText(++dropCount);
             droppedItemWord.SetScaleOnDropArea();
         }
         else if (droppedItemWords[1] == null)
         {
             SetItemWordToHere(droppedItemWord, 1);
-            SetDropCounterText(dropCount + 1);
+            SetDropCounterText(++dropCount);
             droppedItemWord.SetScaleOnDropArea();
         }
         else
         {
             Logger.Log("ドロップエリアにアイテムワードが2つあります。");
-            return; // すでに2つのアイテムワードがある場合は何もしない
+            droppedItemWord.ResetPosition();
         }
 
         if (dropCount == 2)
@@ -126,8 +126,10 @@ public class ItemWordDropArea : MonoBehaviour
         Logger.Log("ドロップされたItemWordをリセットします。");
         foreach (var draggableItemWord in droppedItemWords)
         {
+            draggableItemWord.SetInitialScale();
             draggableItemWord.ResetPosition();
         }
+        droppedItemWords = new DraggableItemWord[2];
         SetDropCounterText(0);
     }
     private void SetItemWordToHere(DraggableItemWord droppedItemWord, int index)

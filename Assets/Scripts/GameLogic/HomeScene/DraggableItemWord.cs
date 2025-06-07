@@ -60,7 +60,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     // ドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        if (!itemWordDropArea.IsPredictCanvasActive)
+        if (!itemEntry.IsUsed && !itemWordDropArea.IsPredictCanvasActive)
         {
             Vector2 localPosition = GetLocalPosition(eventData.position);
             SetPosition(localPosition);
@@ -70,9 +70,9 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!itemWordDropArea.IsPredictCanvasActive)
+        Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
+        if (!itemEntry.IsUsed && !itemWordDropArea.IsPredictCanvasActive)
         {
-            Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
             if (!isPlacedOnDropArea)
             {
                 if (isOverDropArea)
@@ -94,6 +94,8 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
                 if (isOverDropArea)
                 {
                     Logger.Log("ドロップエリアにいるが、すでに配置済み: " + ItemEntry.ItemWord.Word);
+                    Logger.Log("isOverDropArea", isOverDropArea);
+                    Logger.Log("isPlacedOnDropArea", isPlacedOnDropArea);
                     itemWordDropArea.RepositionItemWord(this);
                 }
                 else
@@ -110,6 +112,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         // ドラッグ前の位置に戻す
         SetPosition(initialPos);
+        isPlacedOnDropArea = false;
     }
     public void SetInitialScale()
     {
