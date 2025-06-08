@@ -25,6 +25,12 @@ public class ItemWordDropArea : MonoBehaviour
         SetDropCounterText(0);
         itemWordInventory = ItemWordInventory.Instance;
     }
+    /// <summary>
+    /// ドロップされたアイテムワードを処理します。
+    /// 「2つ目がドロップされ，それらがRecipeにない組み合わせの場合」にfalse，それ以外はtrueを返します。
+    /// </summary>
+    /// <param name="droppedItemWord"></param>
+    /// <returns></returns>
     public bool HandleItemWordDrop(DraggableItemWord droppedItemWord)
     {
         Logger.Log("ドロップされたアイテムワード: " + droppedItemWord.ItemEntry.ItemWord.Word);
@@ -46,6 +52,7 @@ public class ItemWordDropArea : MonoBehaviour
         else
         {
             Logger.Log("ドロップエリアにアイテムワードが2つあります。");
+            Logger.Log("これは想定されていない状態です。");
             return false;
         }
 
@@ -64,6 +71,7 @@ public class ItemWordDropArea : MonoBehaviour
             else
             {
                 ResetWordsList();
+                return false;
             }
         }
 
@@ -79,7 +87,7 @@ public class ItemWordDropArea : MonoBehaviour
     }
     private bool PredictResult()
     {
-        Logger.Log("PrediqtResultを実行します。");
+        Logger.Log("PredictResultを実行します。");
         Logger.Log("Word0: " + droppedItemWords[0].ItemEntry.ItemWord.Word);
         Logger.Log("Word1: " + droppedItemWords[1].ItemEntry.ItemWord.Word);
         predictedWorld = searchWorldDatabase.PeekRecalledWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);

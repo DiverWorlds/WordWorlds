@@ -133,7 +133,9 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     public void SetInitialScale()
     {
         // 初期スケールに戻す
+        Logger.Log($"{itemEntry.ItemWord.Word}: 初期スケールに戻す前のスケール: " + transform.localScale);
         transform.localScale = initialScale;
+        Logger.Log($"{itemEntry.ItemWord.Word}: 初期スケールに戻した後のスケール: " + transform.localScale);
     }
     private void SetScaleOnDropArea()
     {
