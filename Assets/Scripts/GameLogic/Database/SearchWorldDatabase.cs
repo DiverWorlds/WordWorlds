@@ -38,11 +38,8 @@ public class SearchWorldDatabase : ScriptableObject
 
     public SearchWorld PeekRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
     {
-        Logger.Log("a; PeekRecalledWorld called with: " + itemWordA.Word + ", " + itemWordB.Word);
-        Logger.LogElements("a; headWords", headWords);
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
-        Logger.Log("a; indexA == indexB", indexA == indexB);
         if (LogNotExistInRecipe(itemWordA.Word, indexA) | LogNotExistInRecipe(itemWordB.Word, indexB))
         {
             return null;

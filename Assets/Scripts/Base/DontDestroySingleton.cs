@@ -23,7 +23,6 @@ public class DontDestroySingleton<T> : MonoBehaviour where T : Component
     }
     public virtual void Awake()
     {
-        Logger.Log("Awake()", gameObject.name);
         RemoveDuplicates();
     }
     public virtual void OnApplicationQuit()

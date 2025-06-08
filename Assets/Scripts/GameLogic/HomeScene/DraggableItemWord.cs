@@ -38,7 +38,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
         homeManager = HomeManager.Instance;
         this.initialPos = initialPos;
         lastPosition = initialPos;
-        SetPosition(initialPos);
+        SetAndRecordPosition(initialPos);
         initialScale = transform.localScale;
         scaleOnDropArea = initialScale * scaleOnDropAreaMultiplier;
         this.itemEntry = itemEntry;
@@ -74,7 +74,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (IsDragAvailable()) SetPosition(GetLocalPosition(eventData.position));
+        if (IsDragAvailable()) SetAndRecordPosition(GetLocalPosition(eventData.position));
     }
 
     // ドラッグ終了時の処理
@@ -87,7 +87,7 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
                 if (isOverDropArea)
                 {
                     Logger.Log("ドロップエリアにいるが、すでに配置済み: " + ItemEntry.ItemWord.Word);
-                    SetPosition(lastPosition);
+                    SetAndRecordPosition(lastPosition);
                 }
                 else
                 {
@@ -111,31 +111,28 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
                     }
                     else
                     {
-                        SetPosition(lastPosition);
+                        SetAndRecordPosition(lastPosition);
                     }
                 }
                 else
                 {
                     Logger.Log("ドロップエリアにいない: " + ItemEntry.ItemWord.Word);
                     // ドロップエリアにいない場合は初期位置に戻す
-                    SetPosition(lastPosition);
+                    SetAndRecordPosition(lastPosition);
                 }
             }
         }
-        lastPosition = rectTransform.anchoredPosition; // ドラッグ終了時の位置を保存
     }
     public void AutoMoveToInitialPosition()
     {
         // ドラッグ前の位置に戻す
-        SetPosition(initialPos);
+        SetAndRecordPosition(initialPos);
         isPlacedOnDropArea = false;
     }
     public void SetInitialScale()
     {
         // 初期スケールに戻す
-        Logger.Log($"{itemEntry.ItemWord.Word}: 初期スケールに戻す前のスケール: " + transform.localScale);
         transform.localScale = initialScale;
-        Logger.Log($"{itemEntry.ItemWord.Word}: 初期スケールに戻した後のスケール: " + transform.localScale);
     }
     private void SetScaleOnDropArea()
     {
@@ -153,9 +150,10 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
 
         return result;
     }
-    public void SetPosition(Vector2 position)
+    public void SetAndRecordPosition(Vector2 position)
     {
         rectTransform.anchoredPosition = position;
+        lastPosition = rectTransform.anchoredPosition;
     }
     private bool IsDragAvailable()
     {
