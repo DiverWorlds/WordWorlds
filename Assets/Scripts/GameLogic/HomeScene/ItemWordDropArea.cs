@@ -31,12 +31,14 @@ public class ItemWordDropArea : MonoBehaviour
         bool hasEmptySlot = false;
         if (droppedItemWords[0] == null)
         {
+            Logger.Log("1つ目をセット");
             droppedItemWords[0] = droppedItemWord;
             droppedItemWord.SetPosition(dropPoints[0].position);
             hasEmptySlot = true;
         }
         else if (droppedItemWords[1] == null)
         {
+            Logger.Log("2つ目をセット");
             droppedItemWords[1] = droppedItemWord;
             droppedItemWord.SetPosition(dropPoints[1].position);
             hasEmptySlot = true;
@@ -77,6 +79,9 @@ public class ItemWordDropArea : MonoBehaviour
     }
     private bool PredictResult()
     {
+        Logger.Log("PrediqtResultを実行します。");
+        Logger.Log("Word0: " + droppedItemWords[0].ItemEntry.ItemWord.Word);
+        Logger.Log("Word1: " + droppedItemWords[1].ItemEntry.ItemWord.Word);
         predictedWorld = searchWorldDatabase.PeekRecalledWorld(droppedItemWords[0].ItemEntry.ItemWord, droppedItemWords[1].ItemEntry.ItemWord);
         if (predictedWorld is not null)
         {
@@ -110,11 +115,13 @@ public class ItemWordDropArea : MonoBehaviour
     private void ResetWordsList()
     {
         Logger.Log("ドロップされた2つのItemWordをリセットします。");
-        Logger.LogElements("droppedItemWords", droppedItemWords.Select(x => x.ItemEntry.ItemWord.Word).ToArray());
+        Logger.LogElements("droppedItemWords", droppedItemWords.Select(x => x?.ItemEntry.ItemWord.Word).ToArray());
         foreach (var draggableItemWord in droppedItemWords)
         {
+            if (draggableItemWord == null) continue; // nullチェックを追加
             draggableItemWord.SetInitialScale();
             draggableItemWord.AutoMoveToInitialPosition();
+            Logger.Log("ItemWordを戻した", draggableItemWord.ItemEntry.ItemWord.Word);
         }
         droppedItemWords = new DraggableItemWord[2];
         SetDropCounterText(0);

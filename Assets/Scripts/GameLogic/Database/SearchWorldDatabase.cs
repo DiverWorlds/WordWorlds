@@ -11,6 +11,9 @@ public class SearchWorldDatabase : ScriptableObject
     private HashSet<SearchWorld> searchWorlds;
     public HashSet<SearchWorld> SearchWorlds => searchWorlds;
     private List<string[]> recipeData = new();
+    /// <summary>
+    /// searchWorldRecipe.csvのヘッダーとなるItemWordのリスト。
+    /// </summary>
     private List<string> headWords = new();
 
     public void Initialize()
@@ -35,16 +38,18 @@ public class SearchWorldDatabase : ScriptableObject
 
     public SearchWorld PeekRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
     {
+        Logger.Log("a; PeekRecalledWorld called with: " + itemWordA.Word + ", " + itemWordB.Word);
+        Logger.LogElements("a; headWords", headWords);
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
-
+        Logger.Log("a; indexA == indexB", indexA == indexB);
+        if (LogNotExistInRecipe(itemWordA.Word, indexA) | LogNotExistInRecipe(itemWordB.Word, indexB))
+        {
+            return null;
+        }
         if (indexA == indexB)
         {
             Logger.Log($"同じItemWordが選択されました。: {itemWordA.Word}");
-            return null;
-        }
-        if (LogNotExistInRecipe(itemWordA.Word, indexA) || LogNotExistInRecipe(itemWordB.Word, indexB))
-        {
             return null;
         }
 

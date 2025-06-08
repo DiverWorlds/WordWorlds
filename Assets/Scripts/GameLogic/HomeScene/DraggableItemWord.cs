@@ -62,7 +62,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
         if (collision.GetComponent<ItemWordDropArea>() != null)
         {
             isOverDropArea = true;
-            Logger.Log("DropAreaに入った", ItemEntry.ItemWord.Word);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -70,7 +69,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
         if (collision.GetComponent<ItemWordDropArea>() != null)
         {
             isOverDropArea = false;
-            Logger.Log("DropAreaから出た", ItemEntry.ItemWord.Word);
         }
     }
 
@@ -82,7 +80,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
     // ドラッグ終了時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        Logger.Log("ドロップ処理開始: " + ItemEntry.ItemWord.Word);
         if (IsDragAvailable())
         {
             if (isPlacedOnDropArea)
