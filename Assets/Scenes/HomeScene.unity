@@ -641,6 +641,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1220727686}
     - target: {fileID: 8083306143055788645, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
+      propertyPath: DropAreaHintCanvas
+      value: 
+      objectReference: {fileID: 462378485}
+    - target: {fileID: 8083306143055788645, guid: cf8b999a9fb0147f19a551bd240c674b, type: 3}
       propertyPath: draggableInventory
       value: 
       objectReference: {fileID: 442869786}

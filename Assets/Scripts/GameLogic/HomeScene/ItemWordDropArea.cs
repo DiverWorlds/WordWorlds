@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 //TODO: ItemWordDropAreaとDraggableItemWord間の依存関係の解消を検討する．
@@ -12,6 +11,7 @@ public class ItemWordDropArea : MonoBehaviour
     [SerializeField] private ItemWordInventoryUI draggableInventory;
     [SerializeField] private TextMeshProUGUI dropCounterText;
     [SerializeField] private Image background;//ドロップ可能範囲はこの画像のサイズに依存
+    [SerializeField] private Canvas DropAreaHintCanvas;
     [SerializeField] private List<RectTransform> dropPointObjects;
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private SearchWorld predictedWorld;//予測した生成先世界の保存のための変数
@@ -94,6 +94,7 @@ public class ItemWordDropArea : MonoBehaviour
         if (predictedWorld is not null)
         {
             background.gameObject.SetActive(false);
+            DropAreaHintCanvas.gameObject.SetActive(false);
             WorldAppearance = Instantiate(predictedWorld.WorldAppearance, AppearancePivot);
             Logger.Log("予測された世界: ", predictedWorld.name);
             return true;
@@ -116,6 +117,7 @@ public class ItemWordDropArea : MonoBehaviour
     {
         ResetWordsList();
         background.gameObject.SetActive(true);
+        DropAreaHintCanvas.gameObject.SetActive(true);
         Destroy(WorldAppearance);
     }
 

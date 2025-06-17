@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+// TODO: HomeSceneのRefactor
 public class ItemWordInventoryUI : MonoBehaviour
 {
     //インベントリというより、ワードをインベントリの中身に従って配置するクラス
