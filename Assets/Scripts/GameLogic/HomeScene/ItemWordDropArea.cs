@@ -12,10 +12,11 @@ public class ItemWordDropArea : MonoBehaviour
     [SerializeField] private ItemWordInventoryUI draggableInventory;
     [SerializeField] private TextMeshProUGUI dropCounterText;
     [SerializeField] private Image background;//ドロップ可能範囲はこの画像のサイズに依存
-    [SerializeField] private List<Transform> dropPoints;
+    [SerializeField] private List<RectTransform> dropPointObjects;
     [SerializeField] private SearchWorldDatabase searchWorldDatabase;
     private SearchWorld predictedWorld;//予測した生成先世界の保存のための変数
     private GameObject WorldAppearance;//世界の見た目の3Dオブジェクト
+    private List<Vector2> dropPoints = new List<Vector2>();
     private DraggableItemWord[] droppedItemWords = new DraggableItemWord[2];
     private ItemWordInventory itemWordInventory;
     private int DropCount => droppedItemWords.Count(x => x != null);
@@ -23,6 +24,10 @@ public class ItemWordDropArea : MonoBehaviour
     private void Start()
     {
         SetDropCounterText(0);
+        foreach (var dropPointObject in dropPointObjects)
+        {
+            dropPoints.Add(dropPointObject.position);
+        }
         itemWordInventory = ItemWordInventory.Instance;
     }
     /// <summary>
@@ -37,13 +42,14 @@ public class ItemWordDropArea : MonoBehaviour
         if (droppedItemWords[0] == null)
         {
             droppedItemWords[0] = droppedItemWord;
-            droppedItemWord.SetAndRecordPosition(dropPoints[0].position);
+            //TODO: ItemWordの左上を基準にdropPointへ移動してしまう問題あり．
+            droppedItemWord.SetAndRecordPosition(dropPoints[0]);
             hasEmptySlot = true;
         }
         else if (droppedItemWords[1] == null)
         {
             droppedItemWords[1] = droppedItemWord;
-            droppedItemWord.SetAndRecordPosition(dropPoints[1].position);
+            droppedItemWord.SetAndRecordPosition(dropPoints[1]);
             hasEmptySlot = true;
         }
         else

@@ -234,11 +234,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AppearancePivot: {fileID: 0}
-  predictCanvas: {fileID: 0}
   draggableInventory: {fileID: 0}
   dropCounterText: {fileID: 7869744021215648843}
   background: {fileID: 8253246904676587497}
-  dropPoints:
+  dropPointObjects:
   - {fileID: 298093467978366236}
   - {fileID: 4463678945973205221}
   searchWorldDatabase: {fileID: 11400000, guid: d203c180e41894da0b1b5543b5926ed2, type: 2}
