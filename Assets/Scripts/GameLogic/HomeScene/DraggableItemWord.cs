@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.XR;
-using NUnit.Framework;
 public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [SerializeField] private RawImage rawImage;
@@ -30,7 +28,6 @@ public class DraggableItemWord : MonoBehaviour, IDragHandler, IEndDragHandler
         get { return lastPosition; }
         set
         {
-            Logger.Log("LastPositionを更新: " + value);
             lastPosition = value;
         }
     }
