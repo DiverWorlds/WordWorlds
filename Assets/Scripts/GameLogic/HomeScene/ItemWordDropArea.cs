@@ -42,14 +42,15 @@ public class ItemWordDropArea : MonoBehaviour
         if (droppedItemWords[0] == null)
         {
             droppedItemWords[0] = droppedItemWord;
-            //TODO: ItemWordの左上を基準にdropPointへ移動してしまう問題あり．
-            droppedItemWord.SetAndRecordPosition(dropPoints[0]);
+            Vector2 localPoint = WorldToLocal(dropPoints[0], droppedItemWord.transform.parent as RectTransform);
+            droppedItemWord.SetAndRecordPosition(localPoint);
             hasEmptySlot = true;
         }
         else if (droppedItemWords[1] == null)
         {
             droppedItemWords[1] = droppedItemWord;
-            droppedItemWord.SetAndRecordPosition(dropPoints[1]);
+            Vector2 localPoint = WorldToLocal(dropPoints[1], droppedItemWord.transform.parent as RectTransform);
+            droppedItemWord.SetAndRecordPosition(localPoint);
             hasEmptySlot = true;
         }
         else
@@ -122,7 +123,7 @@ public class ItemWordDropArea : MonoBehaviour
     {
         foreach (var draggableItemWord in droppedItemWords)
         {
-            if (draggableItemWord == null) continue; // nullチェックを追加
+            if (draggableItemWord == null) continue;
             draggableItemWord.SetInitialScale();
             draggableItemWord.AutoMoveToInitialPosition();
         }
@@ -132,5 +133,12 @@ public class ItemWordDropArea : MonoBehaviour
     private void SetDropCounterText(int count)
     {
         dropCounterText.text = $"{count} / 2";
+    }
+    private Vector2 WorldToLocal(Vector2 worldPosition, RectTransform parent)
+    {
+        // 世界座標をローカル座標に変換
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, worldPosition, null, out localPoint);
+        return localPoint;
     }
 }
