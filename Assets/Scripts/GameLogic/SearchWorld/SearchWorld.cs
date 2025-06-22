@@ -9,6 +9,7 @@ public class SearchWorld : ScriptableObject
 {
     [SerializeField] private string id;
     [SerializeField] private string worldName;
+    // TODO: worldPreviewに改名
     [SerializeField] private GameObject worldAppearance;
     /// <summary>
     /// csvに記述された、省略された名前。
