@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 [Serializable]
-[CreateAssetMenu(fileName = "SearchWorldDatabase", menuName = "ScriptableObject/SearchWorldDatabase")]
+[CreateAssetMenu(fileName = "Dev_SearchWorldDatabase", menuName = "ScriptableObject/Dev_SearchWorldDatabase")]
 public class SearchWorldDatabase : ScriptableObject
 {
     [SerializeField] private ItemWordDatabase wordDB;
@@ -11,13 +11,16 @@ public class SearchWorldDatabase : ScriptableObject
     private HashSet<SearchWorld> searchWorlds;
     public HashSet<SearchWorld> SearchWorlds => searchWorlds;
     private List<string[]> recipeData = new();
+    /// <summary>
+    /// searchWorldRecipe.csvのヘッダーとなるItemWordのリスト。
+    /// </summary>
     private List<string> headWords = new();
 
     public void Initialize()
     {
         searchWorlds = new(searchWorldList);
 
-        TextAsset recipeCSV = Resources.Load<TextAsset>("searchWorldRecipe");
+        TextAsset recipeCSV = Resources.Load<TextAsset>("Dev_searchWorldRecipe");
         string[] recipeDataLines = recipeCSV.text.Replace("\r\n", "\n").Split("\n");
         for (int i = 0; i < recipeDataLines.Length; i++)
         {
@@ -33,18 +36,17 @@ public class SearchWorldDatabase : ScriptableObject
         }
     }
 
-    public SearchWorld GetRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
+    public SearchWorld PeekRecalledWorld(ItemWord itemWordA, ItemWord itemWordB)
     {
         int indexA = headWords.IndexOf(itemWordA.Word);
         int indexB = headWords.IndexOf(itemWordB.Word);
-
+        if (LogNotExistInRecipe(itemWordA.Word, indexA) | LogNotExistInRecipe(itemWordB.Word, indexB))
+        {
+            return null;
+        }
         if (indexA == indexB)
         {
             Logger.Log($"同じItemWordが選択されました。: {itemWordA.Word}");
-            return null;
-        }
-        if (LogNotExistInRecipe(itemWordA.Word, indexA) || LogNotExistInRecipe(itemWordB.Word, indexB))
-        {
             return null;
         }
 

@@ -7,6 +7,58 @@
         {
             "itemWord": "d",
             "isUsed": false
+        },
+        {
+            "itemWord": "火炎",
+            "isUsed": true
+        },
+        {
+            "itemWord": "静寂",
+            "isUsed": false
+        },
+        {
+            "itemWord": "自宅",
+            "isUsed": false
+        },
+        {
+            "itemWord": "孤独",
+            "isUsed": false
+        },
+        {
+            "itemWord": "閃光",
+            "isUsed": false
+        },
+        {
+            "itemWord": "墓標",
+            "isUsed": false
+        },
+        {
+            "itemWord": "深緑",
+            "isUsed": false
+        },
+        {
+            "itemWord": "抱擁",
+            "isUsed": false
+        },
+        {
+            "itemWord": "喪失",
+            "isUsed": false
+        },
+        {
+            "itemWord": "忘却",
+            "isUsed": false
+        },
+        {
+            "itemWord": "下着",
+            "isUsed": false
+        },
+        {
+            "itemWord": "怒号",
+            "isUsed": false
+        },
+        {
+            "itemWord": "祈求",
+            "isUsed": false
         }
     ],
     "lastScene": "Dev_HomeScene"

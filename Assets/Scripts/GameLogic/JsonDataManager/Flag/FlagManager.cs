@@ -4,14 +4,19 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+///  SaveDataManagerと同じタイミングで実行する．
+/// </summary>
+[DefaultExecutionOrder(-100)]
 public class FlagManager : DontDestroySingleton<FlagManager>
 {
     [SerializeField] private string initialFilePath = "InitialFlags";
     [SerializeField] private string saveFilePath = "SavedFlags";
     private Dictionary<string, bool> flags = new();
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         LoadInitialFlags();
     }
 
