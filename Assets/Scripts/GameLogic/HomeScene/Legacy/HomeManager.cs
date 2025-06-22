@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ The following scene GameObjects were found:
 GlobalDB
 ItemWordInventory
 */
+/*
 public class HomeManager : Singleton<HomeManager>
 {
     [SerializeField] private ItemWordDatabase itemWordDatabase;
@@ -90,3 +92,4 @@ public class HomeManager : Singleton<HomeManager>
         Logger.Log(text);
     }
 }
+*/
