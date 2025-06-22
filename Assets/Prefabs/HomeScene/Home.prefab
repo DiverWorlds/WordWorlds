@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c8cf45c4f604c4d87484920e97d304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldPreviewParent: {fileID: 0}
+  WorldPreviewParent: {fileID: 8788295404515777865}
   diveController: {fileID: 0}
   inventoryUI: {fileID: 0}
 --- !u!1 &8285741436779476828
