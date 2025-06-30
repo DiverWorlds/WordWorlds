@@ -36,6 +36,7 @@ public class HomeManager : Singleton<HomeManager>
         if (inventoryUI != null)
         {
             inventoryUI.OnWorldPredicted += OnWorldPredicted;
+            inventoryUI.Initialize(true);
         }
     }
     public void OnWorldPredicted(SearchWorld searchWorld)

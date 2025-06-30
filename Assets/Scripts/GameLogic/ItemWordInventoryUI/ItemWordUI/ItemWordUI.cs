@@ -9,6 +9,8 @@ public class ItemWordUI : MonoBehaviour
     [SerializeField] private Material unusedMaterial;
     [SerializeField] private Material usedMaterial;
     [SerializeField] private DragUIElement dragUIElement;
+    [SerializeField] private RawImage rawImage;
+    [SerializeField] private TextMeshProUGUI textMeshPro;
     private ItemEntry itemEntry;
     private bool isInteractable;
     private Vector3 initialScale;
@@ -18,21 +20,18 @@ public class ItemWordUI : MonoBehaviour
 
     public void Initialize(ItemEntry itemEntry, bool isInteractable, Vector2 initialPosition, DropArea dropArea)
     {
-        RawImage rawImage = GetComponent<RawImage>();
-        TextMeshProUGUI textMeshPro = GetComponent<TextMeshProUGUI>();
-
         // ItemWordが画像を持っていたらそれを表示し，無ければTextを表示
         if (itemEntry.ItemWord.WordImage != null)
         {
-            textMeshPro.enabled = false;
-            rawImage.enabled = true;
+            rawImage.gameObject.SetActive(true);
+            textMeshPro.gameObject.SetActive(false);
             rawImage.texture = itemEntry.ItemWord.WordImage;
             rawImage.material = itemEntry.IsUsed ? usedMaterial : unusedMaterial;
         }
         else
         {
-            textMeshPro.enabled = true;
-            rawImage.enabled = false;
+            rawImage.gameObject.SetActive(false);
+            textMeshPro.gameObject.SetActive(true);
             textMeshPro.text = itemEntry.ItemWord.Word;
         }
 
