@@ -73,8 +73,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if (IsDroppedOutToInArea())
             {
-                Logger.Log("isOverDropArea", IsOverDropArea());
-                Logger.Log("isPlacedInDropArea", isPlacedInDropArea);
                 Logger.Log("ドロップエリアに入った", gameObject.name);
                 dropArea.HandleDrop(this);
                 isPlacedInDropArea = true;
@@ -82,8 +80,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             }
             else if (IsDroppedInToOutArea())
             {
-                Logger.Log("isOverDropArea", IsOverDropArea());
-                Logger.Log("isPlacedInDropArea", isPlacedInDropArea);
                 Logger.Log("ドロップエリアから出た", gameObject.name);
                 dropArea.HandleRemove(this);
                 isPlacedInDropArea = false;
@@ -91,14 +87,10 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             }
             else if (IsDropCanceledOutArea())
             {
-                Logger.Log("isOverDropArea", IsOverDropArea());
-                Logger.Log("isPlacedInDropArea", isPlacedInDropArea);
                 SetPosition(initialPosition);
             }
             else if (IsDropCanceledInArea())
             {
-                Logger.Log("isOverDropArea", IsOverDropArea());
-                Logger.Log("isPlacedInDropArea", isPlacedInDropArea);
                 SetPosition(lastPosition);
             }
             lastPosition = transform.localPosition;
@@ -123,7 +115,7 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     private bool IsDroppedInToOutArea()
     {
-        return IsOverDropArea() && isPlacedInDropArea;
+        return !IsOverDropArea() && isPlacedInDropArea;
     }
     private bool IsDropCanceledOutArea()
     {
@@ -131,6 +123,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     private bool IsDropCanceledInArea()
     {
-        return !IsOverDropArea() && isPlacedInDropArea;
+        return IsOverDropArea() && isPlacedInDropArea;
     }
 }
