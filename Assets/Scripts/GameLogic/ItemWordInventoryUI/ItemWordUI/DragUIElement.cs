@@ -101,8 +101,11 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     private Vector2 GetLocalPosition(Vector2 screenPosition)
     {
-        Vector2 result = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, screenPosition, Camera.main, out result);
+        Vector2 result;
+        var cam = parentRectTransform != null && parentRectTransform.GetComponent<Canvas>().renderMode != RenderMode.ScreenSpaceOverlay
+            ? Camera.main
+            : null;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, screenPosition, cam, out result);
         return result;
     }
     private bool IsDroppedOutToInArea()
