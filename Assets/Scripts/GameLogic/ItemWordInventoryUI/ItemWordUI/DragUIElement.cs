@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+    private MonoBehaviour coreComponent;
     private bool isDraggable;
     private bool isPlacedInDropArea;
     private Action onDroppedInArea;
@@ -14,11 +15,14 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     private RectTransform parentRectTransform;
     private DropArea dropArea;
     private RectTransform dropAreaRectTransform;
+
+    public MonoBehaviour CoreComponent => coreComponent;
     public event Action OnDroppedInArea { add => onDroppedInArea += value; remove => onDroppedInArea -= value; }
     public event Action OnDroppedOutArea { add => onDroppedOutArea += value; remove => onDroppedOutArea -= value; }
 
-    public void Initialize(bool isDraggable, Vector2 initialPosition, DropArea dropArea)
+    public void Initialize(MonoBehaviour coreComponent, bool isDraggable, Vector2 initialPosition, DropArea dropArea)
     {
+        this.coreComponent = coreComponent;
         this.isDraggable = isDraggable;
         this.initialPosition = initialPosition;
         lastPosition = initialPosition;
@@ -45,8 +49,8 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             Debug.LogError("DropAreaのRectTransformを取得できていません。");
         }
 
-        Rect uiElementRect = GetWorldRect(rectTransform);
-        Rect dropAreaRect = GetWorldRect(dropAreaRectTransform);
+        Rect uiElementRect = WorldRectGetter.Get(rectTransform);
+        Rect dropAreaRect = WorldRectGetter.Get(dropAreaRectTransform);
         if (uiElementRect.Overlaps(dropAreaRect))
         {
             return true;
@@ -99,21 +103,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         Vector2 result = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, screenPosition, Camera.main, out result);
         return result;
-    }
-    private Rect GetWorldRect(RectTransform rectTransform)
-    {
-        Vector3[] corners = new Vector3[4];
-        rectTransform.GetWorldCorners(corners);
-
-        // 左下（最小点）と右上（最大点）を計算
-        Vector2 min = corners[0]; // 左下
-        Vector2 max = corners[2]; // 右上
-
-        // 幅と高さを計算
-        float width = max.x - min.x;
-        float height = max.y - min.y;
-
-        return new Rect(min.x, min.y, width, height);
     }
     private bool IsDroppedOutToInArea()
     {

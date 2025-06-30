@@ -35,7 +35,7 @@ public class ItemWordUI : MonoBehaviour
             textMeshPro.text = itemEntry.ItemWord.Word;
         }
 
-        dragUIElement.Initialize(IsDraggable(), initialPosition, dropArea);
+        dragUIElement.Initialize(this, IsDraggable(), initialPosition, dropArea);
         dragUIElement.OnDroppedInArea += () => { ChangeScale(dropAreaScale); };
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
         this.itemEntry = itemEntry;
