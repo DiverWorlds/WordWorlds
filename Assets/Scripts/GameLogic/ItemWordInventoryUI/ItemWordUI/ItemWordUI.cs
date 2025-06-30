@@ -36,16 +36,25 @@ public class ItemWordUI : MonoBehaviour
             textMeshPro.text = itemEntry.ItemWord.Word;
         }
 
-        dragUIElement.Initialize(this, IsDraggable(), initialPosition, dropArea);
+        this.isInteractable = isInteractable;
+        dragUIElement.Initialize(this, IsDraggable(isInteractable, itemEntry.IsUsed), initialPosition, dropArea);
         dragUIElement.OnDroppedInArea += () => { ChangeScale(dropAreaScale); };
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
-        this.isInteractable = isInteractable;
         initialScale = transform.localScale;
         dropAreaScale = initialScale * DROP_AREA_SCALE_MULTIPLIER;
     }
-    private bool IsDraggable()
+
+    /// <summary>
+    /// アイテムがドラッグ可能かどうかを判定します。
+    /// </summary>
+    /// <param name="isInteractable">アイテムが操作可能かどうか。</param>
+    /// <param name="isUsed">アイテムが既に使用済みかどうか。</param>
+    /// <returns>
+    /// アイテムが操作可能かつ未使用の場合は <c>true</c>、それ以外は <c>false</c> を返します。
+    /// </returns>
+    private bool IsDraggable(bool isInteractable, bool isUsed)
     {
-        return isInteractable && !itemEntry.IsUsed;
+        return isInteractable && !isUsed;
     }
     private void ChangeScale(Vector3 scale)
     {
