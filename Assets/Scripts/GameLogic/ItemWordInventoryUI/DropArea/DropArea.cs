@@ -34,4 +34,18 @@ public class DropArea : MonoBehaviour
             onAreaFullFilled.Invoke();
         }
     }
+
+    public void HandleRemove(DragUIElement dragUIElement)
+    {
+        for (int i = 0; i < MAX_VALUE; i++)
+        {
+            if (placedItemWords[i].Equals(dragUIElement))
+            {
+                placedItemWords[i] = null;
+            }
+        }
+        
+        int droppedObjectsCount = placedItemWords.Where(w => w != null).Count();
+        counterTextController.SetCounter(droppedObjectsCount);
+    }
 }
