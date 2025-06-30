@@ -64,6 +64,7 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        //TODO: Area内にドロップするとエラー発生
         if (isDraggable) SetPosition(GetLocalPosition(eventData.position));
     }
     public void OnEndDrag(PointerEventData eventData)

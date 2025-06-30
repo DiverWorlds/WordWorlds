@@ -42,6 +42,7 @@ public class ItemWordUI : MonoBehaviour
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
         initialScale = transform.localScale;
         dropAreaScale = initialScale * DROP_AREA_SCALE_MULTIPLIER;
+        gameObject.name = gameObject.name + "_" + itemEntry.ItemWord.Word;
     }
 
     /// <summary>
