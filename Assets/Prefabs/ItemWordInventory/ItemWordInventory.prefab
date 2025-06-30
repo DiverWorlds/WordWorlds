@@ -494,6 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5639088734367884918}
+  - component: {fileID: 2675940841838627888}
   m_Layer: 0
   m_Name: ItemWordInventory
   m_TagString: Untagged
@@ -518,6 +519,22 @@ Transform:
   - {fileID: 5434383989121780030}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2675940841838627888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7742060846739575287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85adcd891b67428ea431bd4cfbcd987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemWordUIPrefab: {fileID: 4337115136142519642, guid: 2ee051df6033b4436b2f9c46075211e3, type: 3}
+  searchWorldDatabase: {fileID: 0}
+  dropArea: {fileID: 2221850228867214632}
+  itemWordUIParent: {fileID: 8221744714296830314}
 --- !u!1 &7795639518342321186
 GameObject:
   m_ObjectHideFlags: 0

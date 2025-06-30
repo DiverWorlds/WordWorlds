@@ -8,25 +8,25 @@ public class DropArea : MonoBehaviour
     private const int MAX_VALUE = 2;
     [SerializeField] private List<Transform> dropSlots;
     [SerializeField] private CounterTextController counterTextController;
-    private DragUIElement[] placedItemWords = new DragUIElement[MAX_VALUE];
+    private DragUIElement[] placedUIElements = new DragUIElement[MAX_VALUE];
     private Action onAreaFullFilled;
-    public DragUIElement[] PlacedItemWords => placedItemWords;
+    public DragUIElement[] PlacedUIElements => placedUIElements;
     public event Action OnAreaFullFilled { add => onAreaFullFilled += value; remove => onAreaFullFilled -= value; }
 
     public void HandleDrop(DragUIElement droppedElement)
     {
-        // 先着順でdropSlotにdroppedObjectを配置し，placedItemWordsに記録する．
+        // 先着順でdropSlotにdroppedElementを配置し，placedUIElementsに記録する．
         for (int i = 0; i < MAX_VALUE; i++)
         {
-            if (placedItemWords[i] == null)
+            if (placedUIElements[i] == null)
             {
-                placedItemWords[i] = droppedElement;
+                placedUIElements[i] = droppedElement;
                 droppedElement.transform.localPosition = dropSlots[i].localPosition;
                 break;
             }
         }
 
-        int droppedObjectsCount = placedItemWords.Where(w => w != null).Count();
+        int droppedObjectsCount = placedUIElements.Where(w => w != null).Count();
         counterTextController.SetCounter(droppedObjectsCount);
 
         if (droppedObjectsCount == MAX_VALUE)
@@ -39,13 +39,13 @@ public class DropArea : MonoBehaviour
     {
         for (int i = 0; i < MAX_VALUE; i++)
         {
-            if (placedItemWords[i].Equals(removedElement))
+            if (placedUIElements[i].Equals(removedElement))
             {
-                placedItemWords[i] = null;
+                placedUIElements[i] = null;
             }
         }
         
-        int droppedObjectsCount = placedItemWords.Where(w => w != null).Count();
+        int droppedObjectsCount = placedUIElements.Where(w => w != null).Count();
         counterTextController.SetCounter(droppedObjectsCount);
     }
 }

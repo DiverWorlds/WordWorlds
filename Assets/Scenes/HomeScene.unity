@@ -894,6 +894,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home
       objectReference: {fileID: 0}
+    - target: {fileID: 4139257936174990890, guid: 634100ec3e2634d61b3505a698616710, type: 3}
+      propertyPath: searchWorldDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: d203c180e41894da0b1b5543b5926ed2, type: 2}
     - target: {fileID: 8584441978273553389, guid: 634100ec3e2634d61b3505a698616710, type: 3}
       propertyPath: m_Name
       value: ItemWordInventory

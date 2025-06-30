@@ -13,6 +13,7 @@ public class ItemWordUI : MonoBehaviour
     private bool isInteractable;
     private Vector3 initialScale;
     private Vector3 dropAreaScale;
+    public ItemEntry ItemEntry => itemEntry;
 
 
     public void Initialize(ItemEntry itemEntry, bool isInteractable, Vector2 initialPosition, DropArea dropArea)
