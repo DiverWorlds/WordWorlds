@@ -10,12 +10,12 @@ public class ItemWordUI : MonoBehaviour
     [SerializeField] private Material usedMaterial;
     [SerializeField] private DragUIElement dragUIElement;
     private ItemEntry itemEntry;
-    private ItemWordInventoryUI itemWordInventoryUI;
+    private bool isInteractable;
     private Vector3 initialScale;
     private Vector3 dropAreaScale;
 
 
-    public void Initialize(ItemEntry itemEntry, ItemWordInventoryUI itemWordInventoryUI)
+    public void Initialize(ItemEntry itemEntry, bool isInteractable, Vector2 initialPosition, DropArea dropArea)
     {
         RawImage rawImage = GetComponent<RawImage>();
         TextMeshProUGUI textMeshPro = GetComponent<TextMeshProUGUI>();
@@ -35,17 +35,17 @@ public class ItemWordUI : MonoBehaviour
             textMeshPro.text = itemEntry.ItemWord.Word;
         }
 
-        dragUIElement.IsDraggable = IsDraggable();
+        dragUIElement.Initialize(IsDraggable(), initialPosition, dropArea);
         dragUIElement.OnDroppedInArea += () => { ChangeScale(dropAreaScale); };
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
         this.itemEntry = itemEntry;
-        this.itemWordInventoryUI = itemWordInventoryUI;
+        // this.isInteractable = isInteractable;
         initialScale = transform.localScale;
         dropAreaScale = initialScale * DROP_AREA_SCALE_MULTIPLIER;
     }
     private bool IsDraggable()
     {
-        return /*itemWordInventoryUI.IsInteractable &&*/ !itemEntry.IsUsed;
+        return isInteractable && !itemEntry.IsUsed;
     }
     private void ChangeScale(Vector3 scale)
     {

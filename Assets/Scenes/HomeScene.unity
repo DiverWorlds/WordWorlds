@@ -894,6 +894,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home
       objectReference: {fileID: 0}
+    - target: {fileID: 8584441978273553389, guid: 634100ec3e2634d61b3505a698616710, type: 3}
+      propertyPath: m_Name
+      value: ItemWordInventory
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

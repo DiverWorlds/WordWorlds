@@ -13,15 +13,15 @@ public class DropArea : MonoBehaviour
     public DragUIElement[] PlacedItemWords => placedItemWords;
     public event Action OnAreaFullFilled { add => onAreaFullFilled += value; remove => onAreaFullFilled -= value; }
 
-    public void HandleDrop(DragUIElement droppedObject)
+    public void HandleDrop(DragUIElement droppedElement)
     {
         // 先着順でdropSlotにdroppedObjectを配置し，placedItemWordsに記録する．
         for (int i = 0; i < MAX_VALUE; i++)
         {
             if (placedItemWords[i] == null)
             {
-                placedItemWords[i] = droppedObject;
-                droppedObject.transform.localPosition = dropSlots[i].localPosition;
+                placedItemWords[i] = droppedElement;
+                droppedElement.transform.localPosition = dropSlots[i].localPosition;
                 break;
             }
         }
@@ -35,11 +35,11 @@ public class DropArea : MonoBehaviour
         }
     }
 
-    public void HandleRemove(DragUIElement dragUIElement)
+    public void HandleRemove(DragUIElement removedElement)
     {
         for (int i = 0; i < MAX_VALUE; i++)
         {
-            if (placedItemWords[i].Equals(dragUIElement))
+            if (placedItemWords[i].Equals(removedElement))
             {
                 placedItemWords[i] = null;
             }

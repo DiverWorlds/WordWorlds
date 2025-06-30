@@ -4,54 +4,22 @@ using UnityEngine.EventSystems;
 
 public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
 {
-    private MonoBehaviour contentData;
     private bool isDraggable;
     private bool isPlacedInDropArea;
-    private bool isOverDropArea;
-    private Vector2 initialPosition;
-    private Vector2 lastPosition;
     private Action onDroppedInArea;
     private Action onDroppedOutArea;
+    private Vector2 initialPosition;
+    private Vector2 lastPosition;
     private RectTransform rectTransform;
     private RectTransform parentRectTransform;
     private DropArea dropArea;
     private RectTransform dropAreaRectTransform;
-    public bool IsDraggable
-    {
-        set { isDraggable = value; }
-    }
     public event Action OnDroppedInArea { add => onDroppedInArea += value; remove => onDroppedInArea -= value; }
     public event Action OnDroppedOutArea { add => onDroppedOutArea += value; remove => onDroppedOutArea -= value; }
 
-    void Update()
+    public void Initialize(bool isDraggable, Vector2 initialPosition, DropArea dropArea)
     {
-        if (dropAreaRectTransform == null)
-        {
-            Debug.LogError("DropAreaのRectTransformが設定されていません。");
-            return;
-        }
-        // DragUIElementとDropAreaが同じオブジェクトを親に持つことが前提の実装であるので注意．
-        Rect uiElementRect = GetWorldRect(rectTransform);
-        Rect dropAreaRect = GetWorldRect(dropAreaRectTransform);
-        if (uiElementRect.Overlaps(dropAreaRect))
-        {
-            if (!isOverDropArea)
-            {
-                isOverDropArea = true;
-                Logger.Log("ドロップエリアに重なった", contentData.gameObject.name);
-            }
-        }
-        else
-        {
-            if (isOverDropArea)
-            {
-                isOverDropArea = false;
-                Logger.Log("ドロップエリアから離れた", contentData.gameObject.name);
-            }
-        }
-    }
-    public void Initialize(Vector2 initialPosition, DropArea dropArea)
-    {
+        this.isDraggable = isDraggable;
         this.initialPosition = initialPosition;
         lastPosition = initialPosition;
         rectTransform = transform.GetComponent<RectTransform>();
@@ -59,6 +27,36 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         this.dropArea = dropArea;
         dropAreaRectTransform = dropArea.GetComponent<RectTransform>();
     }
+
+    /// <summary>
+    /// このUI要素のドラッグ操作が終了した際の処理を行います。
+    /// ドロップ位置に応じて、要素が有効なドロップエリアに配置されたか、ドロップエリアから外されたか、
+    /// またはドロップがキャンセルされたかを判定します。
+    /// 要素の状態や位置を更新し、適切なイベントを呼び出します。
+    /// </summary>
+    private bool IsOverDropArea()
+    {
+        if (rectTransform == null)
+        {
+            Debug.LogError("DragUIElementのRectTransformを取得できていません。");
+        }
+        if (dropAreaRectTransform == null)
+        {
+            Debug.LogError("DropAreaのRectTransformを取得できていません。");
+        }
+
+        Rect uiElementRect = GetWorldRect(rectTransform);
+        Rect dropAreaRect = GetWorldRect(dropAreaRectTransform);
+        if (uiElementRect.Overlaps(dropAreaRect))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         if (isDraggable) SetPosition(GetLocalPosition(eventData.position));
@@ -69,14 +67,14 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if (IsDroppedOutToInArea())
             {
-                Logger.Log("ドロップエリアに入った", contentData.gameObject.name);
+                Logger.Log("ドロップエリアに入った", gameObject.name);
                 dropArea.HandleDrop(this);
                 isPlacedInDropArea = true;
                 onDroppedInArea.Invoke();
             }
             else if (IsDroppedInToOutArea())
             {
-                Logger.Log("ドロップエリアから出た", contentData.gameObject.name);
+                Logger.Log("ドロップエリアから出た", gameObject.name);
                 dropArea.HandleRemove(this);
                 isPlacedInDropArea = false;
                 onDroppedOutArea.Invoke();
@@ -91,6 +89,10 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             }
             lastPosition = transform.localPosition;
         }
+    }
+    private void SetPosition(Vector2 position)
+    {
+        rectTransform.anchoredPosition = position;
     }
     private Vector2 GetLocalPosition(Vector2 screenPosition)
     {
@@ -113,24 +115,20 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
 
         return new Rect(min.x, min.y, width, height);
     }
-    private void SetPosition(Vector2 position)
-    {
-        rectTransform.anchoredPosition = position;
-    }
     private bool IsDroppedOutToInArea()
     {
-        return isOverDropArea && isPlacedInDropArea;
+        return IsOverDropArea() && isPlacedInDropArea;
     }
     private bool IsDroppedInToOutArea()
     {
-        return isOverDropArea && !isPlacedInDropArea;
+        return IsOverDropArea() && !isPlacedInDropArea;
     }
     private bool IsDropCanceledOutArea()
     {
-        return !isOverDropArea && !isPlacedInDropArea;
+        return !IsOverDropArea() && !isPlacedInDropArea;
     }
     private bool IsDropCanceledInArea()
     {
-        return !isOverDropArea && isPlacedInDropArea;
+        return !IsOverDropArea() && isPlacedInDropArea;
     }
 }
