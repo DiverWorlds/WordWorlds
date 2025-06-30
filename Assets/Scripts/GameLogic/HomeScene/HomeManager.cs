@@ -29,18 +29,21 @@ public class HomeManager : Singleton<HomeManager>
         {
             Debug.LogError("DropArea is not assigned in HomeManager.");
         }
-        if (dropArea != null)
+        if (diveController != null)
         {
-            // dropArea.OnWorldRecalled += OnWorldRecalled;
             diveController.OnRecallingCanceled += OnRecallingCanceled;
         }
+        if (inventoryUI != null)
+        {
+            inventoryUI.OnWorldPredicted += OnWorldPredicted;
+        }
     }
-    public void OnWorldRecalled(SearchWorld searchWorld)
+    public void OnWorldPredicted(SearchWorld searchWorld)
     {
         recalledWorld = searchWorld;
         diveController.RecalledWorld = recalledWorld;
         DisplayWorldPreview();
-        ShowDiveController();
+        diveController.gameObject.SetActive(true);
     }
     public void OnRecallingCanceled()
     {
@@ -56,9 +59,5 @@ public class HomeManager : Singleton<HomeManager>
     private void RemoveWorldPreview()
     {
         Destroy(worldPreview);
-    }
-    private void ShowDiveController()
-    {
-        diveController.gameObject.SetActive(true);
     }
 }

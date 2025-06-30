@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldPreviewParent: {fileID: 8788295404515777865}
-  diveController: {fileID: 0}
-  inventoryUI: {fileID: 0}
-  dropArea: {fileID: 0}
+  diveController: {fileID: 7152630370897962413}
+  inventoryUI: {fileID: 4139257936174990890}
+  dropArea: {fileID: 182072734403864370}
 --- !u!1 &8285741436779476828
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,13 +132,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7742060846739575287, guid: 5df8be2a39f614691bab288c2b8006de, type: 3}
       propertyPath: m_Name
-      value: DropArea
+      value: ItemWordInventory
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5df8be2a39f614691bab288c2b8006de, type: 3}
+--- !u!114 &182072734403864370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2221850228867214632, guid: 5df8be2a39f614691bab288c2b8006de, type: 3}
+  m_PrefabInstance: {fileID: 2041048916994886170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70383c6b81f304452a296edbcf9c196e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4139257936174990890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2675940841838627888, guid: 5df8be2a39f614691bab288c2b8006de, type: 3}
+  m_PrefabInstance: {fileID: 2041048916994886170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85adcd891b67428ea431bd4cfbcd987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5913598489891875948 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5639088734367884918, guid: 5df8be2a39f614691bab288c2b8006de, type: 3}
@@ -192,6 +214,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4860118815915183049, guid: a3c9cc3759be7481295562b22e512df9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6112784613058878008, guid: a3c9cc3759be7481295562b22e512df9, type: 3}
       propertyPath: m_Name
       value: DiveController
@@ -210,3 +236,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4590937155696566016, guid: a3c9cc3759be7481295562b22e512df9, type: 3}
   m_PrefabInstance: {fileID: 8319940735699291644}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7152630370897962413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1167946785002596433, guid: a3c9cc3759be7481295562b22e512df9, type: 3}
+  m_PrefabInstance: {fileID: 8319940735699291644}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd46e6759dbe42229e43caf5a4899ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -11,12 +11,25 @@ public class ItemWordInventoryUI : MonoBehaviour
     [SerializeField] private Canvas itemWordUIParent;
     private ItemWordInventory itemWordInv;
     private bool isInteractable;
-    // private Action<SearchWorld> onWorldPredicted;
-    // public event Action<SearchWorld> OnWorldPredicted { add => onWorldPredicted += value; remove => onWorldPredicted -= value; }
+    private Action<SearchWorld> onWorldPredicted;
+    public event Action<SearchWorld> OnWorldPredicted { add => onWorldPredicted += value; remove => onWorldPredicted -= value; }
 
     public void Initialize(bool isInteractable)
     {
         itemWordInv = ItemWordInventory.Instance;
+        this.isInteractable = isInteractable;
+        dropArea.OnAreaFullFilled += () =>
+        {
+            SearchWorld predictedWorld = GetPredictedWorld();
+            if (predictedWorld != null)
+            {
+                onWorldPredicted.Invoke(predictedWorld);
+            }
+            else
+            {
+                Logger.Log("予測されるSearchWorldがありません。");
+            }
+        };
         GenerateItemWordUIs();
     }
     private void GenerateItemWordUIs()
