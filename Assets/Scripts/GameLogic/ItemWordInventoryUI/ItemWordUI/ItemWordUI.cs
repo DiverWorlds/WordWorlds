@@ -20,6 +20,7 @@ public class ItemWordUI : MonoBehaviour
 
     public void Initialize(ItemEntry itemEntry, bool isInteractable, Vector2 initialPosition, DropArea dropArea)
     {
+        this.itemEntry = itemEntry;
         // ItemWordが画像を持っていたらそれを表示し，無ければTextを表示
         if (itemEntry.ItemWord.WordImage != null)
         {
@@ -38,8 +39,7 @@ public class ItemWordUI : MonoBehaviour
         dragUIElement.Initialize(this, IsDraggable(), initialPosition, dropArea);
         dragUIElement.OnDroppedInArea += () => { ChangeScale(dropAreaScale); };
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
-        this.itemEntry = itemEntry;
-        // this.isInteractable = isInteractable;
+        this.isInteractable = isInteractable;
         initialScale = transform.localScale;
         dropAreaScale = initialScale * DROP_AREA_SCALE_MULTIPLIER;
     }

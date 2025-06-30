@@ -25,6 +25,7 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         this.coreComponent = coreComponent;
         this.isDraggable = isDraggable;
         this.initialPosition = initialPosition;
+        transform.localPosition = initialPosition;
         lastPosition = initialPosition;
         rectTransform = transform.GetComponent<RectTransform>();
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
