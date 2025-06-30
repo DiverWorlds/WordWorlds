@@ -82,6 +82,7 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             {
                 Logger.Log("ドロップエリアから出た", gameObject.name);
                 dropArea.HandleRemove(this);
+                SetPosition(initialPosition);
                 isPlacedInDropArea = false;
                 onDroppedOutArea.Invoke();
             }

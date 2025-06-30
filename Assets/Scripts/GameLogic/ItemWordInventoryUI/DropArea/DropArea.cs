@@ -42,6 +42,7 @@ public class DropArea : MonoBehaviour
             if (placedUIElements[i].Equals(removedElement))
             {
                 placedUIElements[i] = null;
+                break;
             }
         }
         
