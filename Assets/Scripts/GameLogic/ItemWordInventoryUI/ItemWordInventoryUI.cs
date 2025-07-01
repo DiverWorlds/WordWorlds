@@ -28,6 +28,7 @@ public class ItemWordInventoryUI : MonoBehaviour
             else
             {
                 Logger.Log("予測されるSearchWorldがありません。");
+                dropArea.ResetPlacedElements();
             }
         };
         GenerateItemWordUIs();
@@ -50,12 +51,21 @@ public class ItemWordInventoryUI : MonoBehaviour
         {
             return predictedWorld;
         }
-        return null;
+        else
+        {
+            Logger.Log("予測されるSearchWorldがありません。");
+            return null;
+        }
+    }
+    public void ResetElementsPlace()
+    {
+        dropArea.ResetPlacedElements();
     }
     private List<ItemWord> GetPlacedItemWords(DragUIElement[] placedUIElements)
     {
         return placedUIElements
-            .Select(e => (e.CoreComponent as ItemWordUI)?.ItemEntry.ItemWord)
+            .Where(w => w != null)
+            .Select(e => (e.CoreComponent as ItemWordUI).ItemEntry.ItemWord)
             .Where(itemWord => itemWord != null)
             .ToList();
     }

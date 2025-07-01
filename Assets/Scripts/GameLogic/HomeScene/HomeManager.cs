@@ -6,7 +6,6 @@ public class HomeManager : Singleton<HomeManager>
     [SerializeField] private Transform WorldPreviewParent;
     [SerializeField] private DiveController diveController;
     [SerializeField] private ItemWordInventoryUI inventoryUI;
-    [SerializeField] private DropArea dropArea;
     private SearchWorld recalledWorld;
     private GameObject worldPreview;
     public SearchWorld RecalledWorld { get; set; }
@@ -25,13 +24,10 @@ public class HomeManager : Singleton<HomeManager>
         {
             Debug.LogError("ItemWordInventoryUI is not assigned in HomeManager.");
         }
-        if (dropArea == null)
-        {
-            Debug.LogError("DropArea is not assigned in HomeManager.");
-        }
         if (diveController != null)
         {
             diveController.OnRecallingCanceled += OnRecallingCanceled;
+            diveController.OnRecallingCanceled += inventoryUI.ResetElementsPlace;
         }
         if (inventoryUI != null)
         {

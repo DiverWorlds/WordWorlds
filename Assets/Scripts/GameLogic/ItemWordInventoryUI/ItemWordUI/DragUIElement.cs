@@ -32,6 +32,13 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         this.dropArea = dropArea;
         dropAreaRectTransform = dropArea.GetComponent<RectTransform>();
     }
+    public void ResetPosition()
+    {
+        SetPosition(initialPosition);
+        isPlacedInDropArea = false;
+        dropArea.HandleRemove(this);
+        onDroppedOutArea?.Invoke();
+    }
 
     /// <summary>
     /// このUI要素のドラッグ操作が終了した際の処理を行います。
