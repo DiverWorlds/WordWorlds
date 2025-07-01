@@ -236,7 +236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1244, y: -729}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3686309189083574178
@@ -346,7 +346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1422, y: 551}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7722213257634779859
@@ -416,8 +416,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30A8\u30EC\u30E2\u30EA\u30A2\u3092\u30C9\u30E9\u30C3\u30B0"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 14c82fb7588d7447ea8a78a3522cba1e, type: 2}
-  m_sharedMaterial: {fileID: -1457876385829287005, guid: 14c82fb7588d7447ea8a78a3522cba1e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 32cccb1c1a0b546f58e99a4bf591eda3, type: 2}
+  m_sharedMaterial: {fileID: -1683452782806594319, guid: 32cccb1c1a0b546f58e99a4bf591eda3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -757,8 +757,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 2 / 2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 14c82fb7588d7447ea8a78a3522cba1e, type: 2}
-  m_sharedMaterial: {fileID: -1457876385829287005, guid: 14c82fb7588d7447ea8a78a3522cba1e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 32cccb1c1a0b546f58e99a4bf591eda3, type: 2}
+  m_sharedMaterial: {fileID: -1683452782806594319, guid: 32cccb1c1a0b546f58e99a4bf591eda3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
