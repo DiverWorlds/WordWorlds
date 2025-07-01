@@ -81,17 +81,17 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             if (IsDroppedOutToInArea())
             {
                 Logger.Log("ドロップエリアに入った", gameObject.name);
+                onDroppedInArea.Invoke();
                 dropArea.HandleDrop(this);
                 isPlacedInDropArea = true;
-                onDroppedInArea.Invoke();
             }
             else if (IsDroppedInToOutArea())
             {
                 Logger.Log("ドロップエリアから出た", gameObject.name);
+                onDroppedOutArea.Invoke();
                 dropArea.HandleRemove(this);
                 SetPosition(initialPosition);
                 isPlacedInDropArea = false;
-                onDroppedOutArea.Invoke();
             }
             else if (IsDropCanceledOutArea())
             {

@@ -12,7 +12,6 @@ public class ItemWordUI : MonoBehaviour
     [SerializeField] private RawImage rawImage;
     [SerializeField] private TextMeshProUGUI textMeshPro;
     private ItemEntry itemEntry;
-    private bool isInteractable;
     private Vector3 initialScale;
     private Vector3 dropAreaScale;
     public ItemEntry ItemEntry => itemEntry;
@@ -36,7 +35,6 @@ public class ItemWordUI : MonoBehaviour
             textMeshPro.text = itemEntry.ItemWord.Word;
         }
 
-        this.isInteractable = isInteractable;
         dragUIElement.Initialize(this, IsDraggable(isInteractable, itemEntry.IsUsed), initialPosition, dropArea);
         dragUIElement.OnDroppedInArea += () => { ChangeScale(dropAreaScale); };
         dragUIElement.OnDroppedOutArea += () => { ChangeScale(initialScale); };
@@ -59,6 +57,7 @@ public class ItemWordUI : MonoBehaviour
     }
     private void ChangeScale(Vector3 scale)
     {
+        Logger.Log($"ItemWordUI{gameObject.name}のスケールを変更: {scale}");
         transform.localScale = scale;
     }
 }
