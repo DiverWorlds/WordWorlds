@@ -57,7 +57,6 @@ public class ItemWordUI : MonoBehaviour
     }
     private void ChangeScale(Vector3 scale)
     {
-        Logger.Log($"ItemWordUI{gameObject.name}のスケールを変更: {scale}");
         transform.localScale = scale;
     }
 }

@@ -24,7 +24,7 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     {
         base.Awake();
         searchWorldDB = GlobalDB.Instance.SearchWorldDB;
-        Logger.LogElements("ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
+        Logger.LogElements("Current ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
     }
     public override void OnApplicationQuit()
     {

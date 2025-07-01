@@ -46,15 +46,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     private bool IsOverDropArea()
     {
-        if (rectTransform == null)
-        {
-            Debug.LogError("DragUIElementのRectTransformを取得できていません。");
-        }
-        if (dropAreaRectTransform == null)
-        {
-            Debug.LogError("DropAreaのRectTransformを取得できていません。");
-        }
-
         Rect uiElementRect = WorldRectGetter.Get(rectTransform);
         Rect dropAreaRect = WorldRectGetter.Get(dropAreaRectTransform);
         if (uiElementRect.Overlaps(dropAreaRect))
@@ -83,14 +74,12 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if (IsDroppedOutToInArea())
             {
-                Logger.Log("ドロップエリアに入った", gameObject.name);
                 isPlacedInDropArea = true;
                 onDroppedInArea.Invoke();
                 dropArea.HandleDrop(this);
             }
             else if (IsDroppedInToOutArea())
             {
-                Logger.Log("ドロップエリアから出た", gameObject.name);
                 isPlacedInDropArea = false;
                 SetPosition(initialPosition);
                 onDroppedOutArea.Invoke();
