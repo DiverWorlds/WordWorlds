@@ -24,7 +24,7 @@ public class DropArea : MonoBehaviour
             if (placedUIElements[i] == null)
             {
                 placedUIElements[i] = droppedElement;
-                droppedElement.transform.localPosition = dropSlots[i].localPosition;
+                droppedElement.SetPosition(WorldToLocal(dropSlots[i].position, transform.parent as RectTransform));
                 break;
             }
         }
@@ -62,5 +62,12 @@ public class DropArea : MonoBehaviour
             }
         }
         counterTextController.SetCounter(0);
+    }
+    private Vector2 WorldToLocal(Vector2 worldPosition, RectTransform parent)
+    {
+        // 世界座標をローカル座標に変換
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, worldPosition, null, out localPoint);
+        return localPoint;
     }
 }

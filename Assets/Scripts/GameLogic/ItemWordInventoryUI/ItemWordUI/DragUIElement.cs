@@ -33,6 +33,10 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         this.dropArea = dropArea;
         dropAreaRectTransform = dropArea.GetComponent<RectTransform>();
     }
+    public void SetPosition(Vector2 position)
+    {
+        rectTransform.anchoredPosition = position;
+    }
     public void ResetPosition()
     {
         SetPosition(initialPosition);
@@ -102,10 +106,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             }
             lastPosition = transform.localPosition;
         }
-    }
-    private void SetPosition(Vector2 position)
-    {
-        rectTransform.anchoredPosition = position;
     }
     private Vector2 GetLocalPosition(Vector2 screenPosition)
     {
