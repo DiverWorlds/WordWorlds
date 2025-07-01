@@ -19,6 +19,6 @@ public class DatabaseTest : MonoBehaviour
     }
     public void Recall_a_b_A()
     {
-        Logger.Log($"Succeeded Recall: Word 'a' and Word 'b' to World \"{searchWorldDB.GetRecalledWorld(itemWordDB.GetItemWord("a"), itemWordDB.GetItemWord("b")).name}\"");
+        Logger.Log($"Succeeded Recall: Word 'a' and Word 'b' to World \"{searchWorldDB.PeekRecalledWorld(itemWordDB.GetItemWord("a"), itemWordDB.GetItemWord("b")).name}\"");
     }
 }

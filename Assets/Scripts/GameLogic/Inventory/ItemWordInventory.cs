@@ -5,6 +5,10 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Awake()はGlobalDataより後に実行する．
+/// </summary>
+[DefaultExecutionOrder(-99)]
 public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 {
     //TODO: Homeに戻る機能作る
@@ -16,9 +20,18 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
     private Action onInventoryUpdated;
     public event Action OnInventoryUpdated { add => onInventoryUpdated += value; remove => onInventoryUpdated -= value; }
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         searchWorldDB = GlobalDB.Instance.SearchWorldDB;
+        Logger.LogElements("Current ItemWordInventory", inventory.Select(e => e.ItemWord.Word));
+    }
+    public override void OnApplicationQuit()
+    {
+        searchWorldDB = null;
+        inventory.Clear();
+        onInventoryUpdated = null;
+        base.OnApplicationQuit();
     }
 
     public bool AddItemWord(ItemWord itemWord)
@@ -42,7 +55,7 @@ public class ItemWordInventory : DontDestroySingleton<ItemWordInventory>
 
     public SearchWorld RecallWorld(ItemWord itemWord1, ItemWord itemWord2)
     {
-        SearchWorld searchWorld = searchWorldDB.GetRecalledWorld(itemWord1, itemWord2);
+        SearchWorld searchWorld = searchWorldDB.PeekRecalledWorld(itemWord1, itemWord2);
         if (searchWorld != null)
         {
             UseItemWord(itemWord1, itemWord2);

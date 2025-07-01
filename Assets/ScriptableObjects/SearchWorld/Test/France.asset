@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: F
   worldName: "\u30D5\u30E9\u30F3\u30B9"
+  worldPreview: {fileID: 4222709081572623703, guid: 4a2be647f00be46fcace1f5d5c042855, type: 3}
