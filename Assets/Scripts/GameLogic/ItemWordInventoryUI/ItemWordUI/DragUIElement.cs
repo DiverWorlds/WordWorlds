@@ -24,10 +24,11 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         this.coreComponent = coreComponent;
         this.isDraggable = isDraggable;
+        isPlacedInDropArea = false;
         this.initialPosition = initialPosition;
-        transform.localPosition = initialPosition;
         lastPosition = initialPosition;
         rectTransform = transform.GetComponent<RectTransform>();
+        SetPosition(initialPosition);
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
         this.dropArea = dropArea;
         dropAreaRectTransform = dropArea.GetComponent<RectTransform>();
@@ -39,13 +40,6 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
         dropArea.HandleRemove(this);
         onDroppedOutArea?.Invoke();
     }
-
-    /// <summary>
-    /// このUI要素のドラッグ操作が終了した際の処理を行います。
-    /// ドロップ位置に応じて、要素が有効なドロップエリアに配置されたか、ドロップエリアから外されたか、
-    /// またはドロップがキャンセルされたかを判定します。
-    /// 要素の状態や位置を更新し、適切なイベントを呼び出します。
-    /// </summary>
     private bool IsOverDropArea()
     {
         if (rectTransform == null)
@@ -71,9 +65,14 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        //TODO: Area内にドロップするとエラー発生
         if (isDraggable) SetPosition(GetLocalPosition(eventData.position));
     }
+    /// <summary>
+    /// このUI要素のドラッグ操作が終了した際の処理を行います。
+    /// ドロップ位置に応じて、要素が有効なドロップエリアに配置されたか、ドロップエリアから外されたか、
+    /// またはドロップがキャンセルされたかを判定します。
+    /// 要素の状態や位置を更新し、適切なイベントを呼び出します。
+    /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
         if (isDraggable)
@@ -81,17 +80,17 @@ public class DragUIElement : MonoBehaviour, IDragHandler, IEndDragHandler
             if (IsDroppedOutToInArea())
             {
                 Logger.Log("ドロップエリアに入った", gameObject.name);
+                isPlacedInDropArea = true;
                 onDroppedInArea.Invoke();
                 dropArea.HandleDrop(this);
-                isPlacedInDropArea = true;
             }
             else if (IsDroppedInToOutArea())
             {
                 Logger.Log("ドロップエリアから出た", gameObject.name);
+                isPlacedInDropArea = false;
+                SetPosition(initialPosition);
                 onDroppedOutArea.Invoke();
                 dropArea.HandleRemove(this);
-                SetPosition(initialPosition);
-                isPlacedInDropArea = false;
             }
             else if (IsDropCanceledOutArea())
             {
