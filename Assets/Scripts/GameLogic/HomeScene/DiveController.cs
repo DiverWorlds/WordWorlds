@@ -9,17 +9,17 @@ public class DiveController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI searchWorldNameText;
     [SerializeField] private Button diveButton;
     [SerializeField] private Button cancelButton;
-    private SearchWorld recalledWorld;
+    private SearchWorld predictedWorld;
     private Action onRecallingCanceled;
     public SearchWorld RecalledWorld
-    { set { recalledWorld = value; } }
+    { set { predictedWorld = value; } }
     public event Action OnRecallingCanceled { add => onRecallingCanceled += value; remove => onRecallingCanceled -= value; }
 
     void OnEnable()
     {
-        if (recalledWorld != null)
+        if (predictedWorld != null)
         {
-            searchWorldNameText.text = recalledWorld.WorldName;
+            searchWorldNameText.text = predictedWorld.WorldName;
         }
         else
         {
@@ -31,20 +31,16 @@ public class DiveController : MonoBehaviour
         diveButton.onClick.AddListener(Dive);
         cancelButton.onClick.AddListener(CancelDiving);
     }
-    public void Hide()
-    {
-        searchWorldNameText.text = "-";
-        recalledWorld = null;
-    }
     public void Dive()
     {
         //TODO: 今後，遷移先のSearchWorld系Sceneを作成したら、以下のコメントアウトを外す
         // SceneManager.LoadScene(searchWorld.Id, LoadSceneMode.Single);
-        Logger.Log($"{recalledWorld.WorldName}のシーンに遷移します。");
+        Logger.Log($"{predictedWorld.WorldName}のシーンに遷移します。");
     }
     public void CancelDiving()
     {
-        recalledWorld = null;
+        predictedWorld = null;
+        searchWorldNameText.text = "-";
         onRecallingCanceled.Invoke();
         gameObject.SetActive(false);
     }

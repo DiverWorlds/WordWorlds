@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class HomeManager : Singleton<HomeManager>
 {
-    //TODO: ButtonはInspectorでアタッチするのではなくScriptでAddListenerで追加するようにする
-    [SerializeField] private Transform WorldPreviewParent;
+    [SerializeField] private Transform worldPreviewParent;
     [SerializeField] private DiveController diveController;
     [SerializeField] private ItemWordInventoryUI inventoryUI;
-    private SearchWorld recalledWorld;
     private GameObject worldPreview;
     public SearchWorld RecalledWorld { get; set; }
 
     void Start()
     {
-        if (WorldPreviewParent == null)
+        if (worldPreviewParent == null)
         {
             Debug.LogError("WorldPreviewParent is not assigned in HomeManager.");
         }
@@ -26,8 +24,8 @@ public class HomeManager : Singleton<HomeManager>
         }
         if (diveController != null)
         {
-            diveController.OnRecallingCanceled += OnRecallingCanceled;
-            diveController.OnRecallingCanceled += inventoryUI.ResetElementsPlace;
+            diveController.OnRecallingCanceled += RemoveWorldPreview;
+            diveController.OnRecallingCanceled += inventoryUI.ResetPlacedElements;
         }
         if (inventoryUI != null)
         {
@@ -35,21 +33,15 @@ public class HomeManager : Singleton<HomeManager>
             inventoryUI.Initialize(true);
         }
     }
-    public void OnWorldPredicted(SearchWorld searchWorld)
+    private void OnWorldPredicted(SearchWorld searchWorld)
     {
-        recalledWorld = searchWorld;
-        diveController.RecalledWorld = recalledWorld;
-        DisplayWorldPreview();
+        diveController.RecalledWorld = searchWorld;
+        DisplayWorldPreview(searchWorld);
         diveController.gameObject.SetActive(true);
     }
-    public void OnRecallingCanceled()
+    private void DisplayWorldPreview(SearchWorld searchWorld)
     {
-        RemoveWorldPreview();
-    }
-    
-    private void DisplayWorldPreview()
-    {
-        worldPreview = Instantiate(recalledWorld.WorldPreview, WorldPreviewParent);
+        worldPreview = Instantiate(searchWorld.WorldPreview, worldPreviewParent);
         worldPreview.transform.localPosition = Vector3.zero;
         worldPreview.transform.localRotation = Quaternion.identity;
     }

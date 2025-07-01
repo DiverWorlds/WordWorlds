@@ -32,6 +32,10 @@ public class ItemWordInventoryUI : MonoBehaviour
         };
         GenerateItemWordUIs();
     }
+    public void ResetPlacedElements()
+    {
+        dropArea.ResetPlacedElements();
+    }
     private void GenerateItemWordUIs()
     {
         Rect dropAreaRect = WorldRectGetter.Get(dropArea.GetComponent<RectTransform>());
@@ -42,7 +46,7 @@ public class ItemWordInventoryUI : MonoBehaviour
             itemWordUI.Initialize(itemWordInv.Inventory[i], isInteractable, aroundEclipsePos, dropArea);
         }
     }
-    public SearchWorld GetPredictedWorld()
+    private SearchWorld GetPredictedWorld()
     {
         List<ItemWord> placedItemWords = GetPlacedItemWords(dropArea.PlacedUIElements);
         SearchWorld predictedWorld = searchWorldDatabase.PeekRecalledWorld(placedItemWords[0], placedItemWords[1]);
@@ -55,10 +59,6 @@ public class ItemWordInventoryUI : MonoBehaviour
             Logger.Log("予測されるSearchWorldがありません。");
             return null;
         }
-    }
-    public void ResetElementsPlace()
-    {
-        dropArea.ResetPlacedElements();
     }
     private List<ItemWord> GetPlacedItemWords(DragUIElement[] placedUIElements)
     {
