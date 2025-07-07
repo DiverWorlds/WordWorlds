@@ -128,8 +128,18 @@ public class AddRemoveEventComponents : MonoBehaviour
             }
             else
             {
-                Logger.Log($"{gameObject.name} は {collider.GetType().Name} が既にアタッチされています。");
-                return (T)(Component)collider;
+                if (collider is T tCollider)
+                {
+                    Logger.Log($"{gameObject.name} は {collider.GetType().Name} が既にアタッチされています。");
+                    return tCollider;
+                }
+                else
+                {
+                    // 1つ前のコミットでの実装だと，returnでエラーが発生していた．l.131のように条件式内の変数から型を取得するとエラーが起きなかった．
+                    // このセクションに実行が移ることはないと思うが，メソッドの仕様上nullを返すようにする
+                    //TODO: ここの実装を改善
+                    return null;
+                }
             }
         }
         else
