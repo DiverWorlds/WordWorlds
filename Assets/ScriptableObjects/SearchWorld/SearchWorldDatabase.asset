@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411670afc739f44e29306f2dc20fc8c0, type: 3}
+  m_Name: SearchWorldDatabase
+  m_EditorClassIdentifier: 
+  wordDB: {fileID: 0}
+  searchWorldList:
+  - {fileID: 11400000, guid: fe8871e7d6cc24aa791440b3d83d0877, type: 2}
